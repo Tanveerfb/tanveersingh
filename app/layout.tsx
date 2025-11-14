@@ -5,6 +5,9 @@ import "../styles/globals.scss";
 import ThemeProvider from "@/theme/ThemeProvider";
 import navbarContent from "@/content/navbar.json";
 import footerContent from "@/content/footer.json";
+import CustomCursor from "@/modules/Cursor/CustomCursor";
+import MatrixConsole from "@/modules/Console/MatrixConsole";
+import { Meltdown } from "@/modules/Chaos/Meltdown";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,11 +23,15 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ThemeProvider>
+          <CustomCursor />
+          <MatrixConsole />
+          <Meltdown />
           <header>
             <Navbar
               brand={navbarContent.brand}
               menu={navbarContent.menu}
               themeToggleLabel={navbarContent.themeToggleLabel}
+              rebootLabel={navbarContent.rebootLabel}
             />
           </header>
           <main id="page-content">

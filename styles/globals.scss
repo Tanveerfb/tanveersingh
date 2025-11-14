@@ -3,6 +3,10 @@
 @import "./components.scss";
 @import "./themes/cyberpunk.scss";
 @import "./mixins.scss";
+@import "./features/intro.scss";
+@import "./features/cursor.scss";
+@import "./features/console.scss";
+@import "./features/meltdown.scss";
 /* Neutral global styling (structure & basic readability only) */
 
 body {

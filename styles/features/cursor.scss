@@ -1,0 +1,114 @@
+.custom-cursor-enabled * {
+  cursor: none !important;
+}
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 26px;
+  height: 26px;
+  pointer-events: none;
+  transform: translate3d(-50%, -50%, 0);
+  transition: transform 70ms ease-out, opacity 200ms ease-out;
+  z-index: 12000;
+  opacity: 0;
+}
+
+.custom-cursor--visible {
+  opacity: 1;
+}
+
+.custom-cursor--meltdown {
+  width: 34px;
+  height: 34px;
+  filter: drop-shadow(0 0 12px rgba(255, 0, 51, 0.65));
+}
+
+.cursor-core {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  background: rgba(0, 255, 210, 0.08);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.custom-cursor--meltdown .cursor-core {
+  border-color: #ff0033;
+  box-shadow: 0 0 16px rgba(255, 0, 51, 0.9), inset 0 0 12px rgba(255, 0, 51, 0.35);
+  background: rgba(255, 0, 51, 0.12);
+  animation: cursor-core-pulse 0.08s steps(2, start) infinite;
+}
+
+.custom-cursor--lock .cursor-core {
+  transform: scale(1.18);
+  box-shadow: 0 0 14px var(--accent);
+}
+
+.custom-cursor--meltdown.custom-cursor--lock .cursor-core {
+  transform: scale(1.32);
+  box-shadow: 0 0 22px rgba(255, 0, 51, 0.95);
+}
+
+.cursor-lock {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 255, 210, 0.45);
+  box-shadow: 0 0 12px rgba(0, 255, 210, 0.6);
+  opacity: 0;
+  transform: scale(0.6);
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.custom-cursor--meltdown .cursor-lock {
+  border-color: rgba(255, 0, 51, 0.7);
+  box-shadow: 0 0 18px rgba(255, 0, 51, 0.65);
+  animation: cursor-lock-jitter 0.12s steps(2, start) infinite;
+}
+
+.custom-cursor--lock .cursor-lock {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.custom-cursor--meltdown.custom-cursor--lock .cursor-lock {
+  transform: scale(1.12);
+}
+
+@keyframes cursor-core-pulse {
+  0% {
+    filter: brightness(0.9);
+  }
+  100% {
+    filter: brightness(1.6);
+  }
+}
+
+@keyframes cursor-lock-jitter {
+  0% {
+    transform: scale(0.95) rotate(-2deg);
+  }
+  100% {
+    transform: scale(1.08) rotate(2deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .custom-cursor {
+    transition: none;
+  }
+
+  .cursor-core,
+  .cursor-lock {
+    transition: none;
+  }
+
+  .custom-cursor--meltdown .cursor-core,
+  .custom-cursor--meltdown .cursor-lock {
+    animation: none;
+  }
+}

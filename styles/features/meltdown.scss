@@ -1,0 +1,270 @@
+.meltdown-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  background: rgba(10, 0, 0, 0.35);
+  mix-blend-mode: screen;
+  backdrop-filter: blur(2px);
+}
+
+.meltdown-overlay.is-active {
+  opacity: 1;
+}
+
+.meltdown-flicker {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 0, 0, 0.4), transparent 55%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0, rgba(255, 0, 0, 0.1) 100%);
+  animation: meltdown-flicker 0.08s steps(2, start) infinite;
+  mix-blend-mode: screen;
+}
+
+.meltdown-alert {
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ff3b3b;
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  font-weight: 700;
+  text-shadow: 0 0 18px rgba(255, 0, 0, 0.95), 0 0 24px rgba(255, 255, 255, 0.4);
+  animation: meltdown-strobe 0.12s steps(2, start) infinite;
+}
+
+.meltdown-text {
+  display: block;
+  letter-spacing: 0.2rem;
+  margin-block: 0.6rem;
+}
+
+.meltdown-glitch {
+  position: absolute;
+  inset-inline: 8%;
+  height: 6px;
+  background: rgba(255, 55, 55, 0.8);
+  mix-blend-mode: overlay;
+  animation: meltdown-glitch-bars 0.2s steps(2, start) infinite;
+}
+
+.meltdown-glitch--one {
+  top: 42%;
+}
+
+.meltdown-glitch--two {
+  top: 58%;
+}
+
+.meltdown-shatter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2vw;
+  mix-blend-mode: screen;
+}
+
+.meltdown-shatter .fragment {
+  display: block;
+  width: clamp(8rem, 12vw, 14rem);
+  height: clamp(8rem, 12vw, 14rem);
+  border: 2px solid rgba(255, 0, 51, 0.7);
+  box-shadow: 0 0 24px rgba(0, 255, 255, 0.4);
+  backdrop-filter: blur(4px);
+  animation: meltdown-fragment 0.3s ease-in-out infinite alternate;
+}
+
+.meltdown-shatter .fragment-a {
+  transform: translate(-20%, -8%) rotate(-12deg);
+  border-color: rgba(0, 255, 255, 0.7);
+}
+
+.meltdown-shatter .fragment-b {
+  transform: scale(1.2) rotate(4deg);
+  border-color: rgba(255, 0, 51, 0.9);
+}
+
+.meltdown-shatter .fragment-c {
+  transform: translate(18%, 10%) rotate(17deg);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.meltdown-chaos {
+  position: absolute;
+  inset: 10% 12%;
+  display: grid;
+  gap: 0.8rem;
+  color: #00ffbf;
+  font-family: var(--font-mono, "VT323", monospace);
+  font-size: clamp(1rem, 1.8vw, 1.6rem);
+  background: rgba(10, 10, 10, 0.45);
+  padding: 1.2rem 1.8rem;
+  border: 1px solid rgba(0, 255, 128, 0.45);
+  box-shadow: 0 0 24px rgba(0, 255, 200, 0.35);
+  animation: meltdown-chaos-flicker 0.14s steps(3, start) infinite;
+}
+
+.meltdown-chaos .chaos-line {
+  margin: 0;
+  text-shadow: 0 0 6px rgba(0, 255, 200, 0.55);
+  animation: meltdown-line-glitch 0.24s steps(2, start) infinite;
+}
+
+.meltdown-chaos .chaos-line-1 {
+  color: #ff4f9f;
+}
+
+.meltdown-chaos .chaos-line-2 {
+  color: #ffd166;
+}
+
+.meltdown-chaos .chaos-line-3 {
+  color: #9c6bff;
+}
+
+.meltdown-blackout {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  animation: meltdown-blackout 0.5s ease-out forwards;
+}
+
+.meltdown-recovery,
+.meltdown-stable {
+  position: absolute;
+  inset-block-start: 18%;
+  inset-inline: 12%;
+  padding: 1.4rem 2.2rem;
+  background: rgba(8, 8, 12, 0.75);
+  border: 1px solid rgba(0, 180, 255, 0.6);
+  box-shadow: 0 0 24px rgba(0, 180, 255, 0.35);
+  font-family: var(--font-mono, "VT323", monospace);
+  font-size: clamp(1rem, 1.6vw, 1.4rem);
+  color: #7cd1ff;
+  animation: meltdown-recover-fade 0.6s ease forwards;
+}
+
+.meltdown-recovery p,
+.meltdown-stable p {
+  margin: 0.2rem 0;
+}
+
+.meltdown-stable {
+  color: #9cff85;
+  border-color: rgba(156, 255, 133, 0.6);
+  box-shadow: 0 0 28px rgba(156, 255, 133, 0.35);
+}
+
+.cursor-danger {
+  border: 2px solid rgba(255, 0, 51, 0.8);
+  box-shadow: 0 0 16px rgba(255, 0, 85, 0.8);
+  background: rgba(255, 0, 0, 0.12);
+}
+
+body.meltdown-distort {
+  filter: hue-rotate(120deg) brightness(1.4) contrast(1.8) blur(2px);
+  animation: meltdown-shake 0.1s infinite;
+  transform-origin: center;
+}
+
+@keyframes meltdown-flicker {
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+
+@keyframes meltdown-strobe {
+  0%,
+  100% {
+    filter: brightness(1.6);
+  }
+  50% {
+    filter: brightness(0.6);
+  }
+}
+
+@keyframes meltdown-glitch-bars {
+  0% {
+    opacity: 0.1;
+    transform: translateX(-2%);
+  }
+  100% {
+    opacity: 0.95;
+    transform: translateX(2%);
+  }
+}
+
+@keyframes meltdown-fragment {
+  from {
+    filter: invert(0);
+  }
+  to {
+    filter: invert(1);
+  }
+}
+
+@keyframes meltdown-chaos-flicker {
+  0% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes meltdown-line-glitch {
+  0% {
+    transform: translateX(-1%);
+  }
+  100% {
+    transform: translateX(1%);
+  }
+}
+
+@keyframes meltdown-blackout {
+  0% {
+    background: rgba(255, 255, 255, 0.95);
+  }
+  20% {
+    background: rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    background: rgba(0, 0, 0, 1);
+  }
+}
+
+@keyframes meltdown-recover-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes meltdown-shake {
+  0% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  50% {
+    transform: translate3d(1px, 1px, 0);
+  }
+  100% {
+    transform: translate3d(0, -1px, 0);
+  }
+}

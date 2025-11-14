@@ -2,11 +2,15 @@ import Hero from "../modules/Hero/Hero";
 import IdentityCard from "../modules/IdentityCard/IdentityCard";
 import SectionTiles from "../modules/SectionTiles/SectionTiles";
 import StatusStrip from "../modules/StatusStrip/StatusStrip";
+import VideoBackground from "@/modules/Background/VideoBackground";
+import IntroSequence from "@/modules/Intro/IntroSequence";
 import tiles from "@/content/tiles.json";
 
 export default function Home() {
   return (
     <>
+      <IntroSequence />
+      <VideoBackground />
       <section id="hero-section">
         <div className="container">
           <Hero />

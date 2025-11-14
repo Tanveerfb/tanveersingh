@@ -3,6 +3,7 @@
 import { useContext } from "react";
 import Link from "next/link";
 import { ThemeContext } from "@/theme/ThemeContext";
+import { triggerReboot } from "@/modules/Intro/IntroSequence";
 
 interface MenuItem {
   label: string;
@@ -13,9 +14,15 @@ interface NavbarProps {
   brand: string;
   menu: MenuItem[];
   themeToggleLabel: string;
+  rebootLabel: string;
 }
 
-export default function Navbar({ brand, menu, themeToggleLabel }: NavbarProps) {
+export default function Navbar({
+  brand,
+  menu,
+  themeToggleLabel,
+  rebootLabel,
+}: NavbarProps) {
   const { theme, setTheme } = useContext(ThemeContext);
   const themes = ["cyberpunk", "genshin", "starrail"];
 
@@ -39,6 +46,9 @@ export default function Navbar({ brand, menu, themeToggleLabel }: NavbarProps) {
           ))}
           <button type="button" onClick={cycleTheme}>
             {themeToggleLabel}
+          </button>
+          <button type="button" onClick={triggerReboot}>
+            {rebootLabel}
           </button>
         </div>
       </div>
