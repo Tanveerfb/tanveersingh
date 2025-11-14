@@ -1,0 +1,17 @@
+{
+  "header": "Gallery",
+  "items": [
+    {
+      "title": "Kafka",
+      "image": "/placeholder-kafka.png"
+    },
+    {
+      "title": "Seele",
+      "image": "/placeholder-seele.png"
+    },
+    {
+      "title": "Motoko Kusanagi",
+      "image": "/placeholder-motoko.png"
+    }
+  ]
+}

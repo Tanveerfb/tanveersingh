@@ -1,0 +1,24 @@
+{
+  "header": "Portfolio",
+  "projects": [
+    {
+      "title": "Personal Portfolio Website",
+      "description": "Modular, theme-switching Next.js portfolio.",
+      "tags": ["Next.js", "Tailwind", "SCSS", "Modular Design"],
+      "link": "/",
+      "image": "/placeholder-project-1.png"
+    },
+    {
+      "title": "Content Creator Branding",
+      "description": "Twitch overlays, YouTube thumbnails, PNGTubers.",
+      "tags": ["Design", "Branding", "Photoshop"],
+      "image": "/placeholder-project-2.png"
+    },
+    {
+      "title": "Freelance Web Work",
+      "description": "Landing pages and dashboards for small clients.",
+      "tags": ["React", "Firebase", "SQL"],
+      "image": "/placeholder-project-3.png"
+    }
+  ]
+}

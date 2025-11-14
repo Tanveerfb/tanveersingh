@@ -1,0 +1,12 @@
+/* Base component styles */
+
+section {
+  padding: 2rem 0;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+}

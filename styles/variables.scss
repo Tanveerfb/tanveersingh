@@ -1,0 +1,39 @@
+/* Theme variables */
+
+:root {
+  --bg: #0d0d0e;
+  --bg-alt: #131314;
+  --panel: #1a1a1c;
+  --text: #e8e8e8;
+  --text-muted: #9aa0a6;
+  --accent: #ffe600;
+  --accent-alt: #00eaff;
+  --border: #2a2a2d;
+  --glow-strong: rgba(0, 234, 255, 0.45);
+  --glow-soft: rgba(255, 230, 0, 0.3);
+}
+
+[data-theme="cyberpunk"] {
+  --bg: #0d0d0e;
+  --bg-alt: #131314;
+  --panel: #1a1a1c;
+  --text: #e8e8e8;
+  --text-muted: #9aa0a6;
+  --accent: #ffe600;
+  --accent-alt: #00eaff;
+  --border: #2a2a2d;
+  --glow-strong: rgba(0, 234, 255, 0.45);
+  --glow-soft: rgba(255, 230, 0, 0.3);
+}
+
+[data-theme="genshin"] {
+  --bg: #faf7f2;
+  --text: #3d3d3d;
+  --border: #d9c7a5;
+}
+
+[data-theme="starrail"] {
+  --bg: #0f0f15;
+  --text: #e8e8e8;
+  --border: #2d2d3a;
+}

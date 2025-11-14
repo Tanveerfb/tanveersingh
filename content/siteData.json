@@ -1,0 +1,326 @@
+{
+  "profile": {
+    "name": "Tanveer Singh",
+    "role": "ICT Support Engineer",
+    "location": "Parramatta, NSW 2150",
+    "phone": "+61 4 2444 1490",
+    "email": "tsingh0897@gmail.com",
+    "github": "https://github.com/tanveerfb",
+    "linkedin": "https://linkedin.com/in/tanveerfb"
+  },
+
+  "summary": "ICT Support Engineer experienced with Microsoft 365 (SharePoint, Microsoft Forms, Power Automate), web development (Node.js, PHP, Next.js), and cloud tooling (Firebase, Vercel). Known for delivering internal portals, public websites, and maintaining smooth office operations with end-to-end ownership.",
+
+  "identityStats": {
+    "engineer": {
+      "title": "Engineer Profile",
+      "stats": [
+        "SharePoint & Microsoft 365",
+        "Node.js / PHP Backend",
+        "Next.js Frontend",
+        "Cloud Tools (Firebase, Vercel)",
+        "Internal Portal Development",
+        "Company Website Development"
+      ]
+    },
+    "creator": {
+      "title": "Creator Profile",
+      "stats": [
+        "Content Creation",
+        "Video Editing (DaVinci Resolve)",
+        "Graphic/Thumbnail Design",
+        "Streaming (Twitch Affiliate)",
+        "Tech & Gaming Media"
+      ]
+    }
+  },
+
+  "skills": {
+    "web": ["HTML", "CSS", "JavaScript"],
+    "frameworks": ["Next.js"],
+    "backend": ["PHP", "Node.js"],
+    "databases": ["SQL", "MySQL"],
+    "cloud": ["Firebase", "Vercel"],
+    "versionControl": ["Git"],
+    "microsoft365": ["SharePoint", "Microsoft Forms", "Power Automate"],
+    "markup": ["Markdown"],
+    "tools": [
+      "VS Code",
+      "Jekyll",
+      "Adobe Dreamweaver",
+      "Eclipse IDE",
+      "JetBrains IntelliJ IDEA",
+      "XAMPP Control Panel",
+      "Windows Terminal",
+      "Microsoft Office"
+    ]
+  },
+
+  "experience": [
+    {
+      "company": "Nobility Care Australia Pty Ltd",
+      "role": "ICT Support Engineer",
+      "date": "Feb 2023 – Present",
+      "location": "Parramatta, NSW",
+      "responsibilities": [
+        "Manage SharePoint sites, structure, and permissions",
+        "Build and maintain Microsoft Forms",
+        "Developer of internal company portal",
+        "Developer of public website",
+        "Manage site utilities and vendor coordination",
+        "Generalist IT responsibilities: endpoints, access, operations"
+      ]
+    },
+    {
+      "company": "Domino's",
+      "role": "Delivery Expert",
+      "date": "July 2023 – Part-time",
+      "location": "Caringbah / Bexley",
+      "responsibilities": [
+        "Route planning and accurate deliveries",
+        "Maintain prep and cleaning standards",
+        "Manage consumable stock",
+        "Meet and exceed service metrics"
+      ]
+    },
+    {
+      "company": "El Jannah",
+      "role": "Team Member",
+      "date": "July 2020 – Jan 2021",
+      "location": "Smithfield",
+      "responsibilities": [
+        "Stock management",
+        "Cleaning & organizing",
+        "Time management"
+      ]
+    },
+    {
+      "company": "Deliveroo",
+      "role": "Delivery Driver",
+      "date": "Nov 2016 – May 2018",
+      "location": "Sydney",
+      "responsibilities": [
+        "Deliveries",
+        "Customer communication",
+        "Time management"
+      ]
+    },
+    {
+      "company": "Nando's",
+      "role": "Team Member",
+      "date": "July 2016 – Nov 2018",
+      "location": "Brighton Le-Sands / Cronulla",
+      "responsibilities": [
+        "Deliveries",
+        "Customer communication",
+        "Time management"
+      ]
+    }
+  ],
+
+  "projects": [
+    {
+      "title": "Independent IT Projects",
+      "status": "Completed",
+      "description": "Developed multiple company landing pages; additional project details not disclosed."
+    },
+    {
+      "title": "Private Java Assessments (50+)",
+      "focus": [
+        "File I/O (read/write)",
+        "Data creation from parsed files",
+        "Modularization of code"
+      ],
+      "tech": ["Java"]
+    }
+  ],
+
+  "education": [
+    {
+      "title": "Professional Year (IT)",
+      "institution": "ATMC",
+      "date": "Jan 2021 – Present"
+    },
+    {
+      "title": "Bachelor of Information Technology",
+      "institution": "Kent Institute, Sydney",
+      "date": "Jan 2016 – Jan 2021"
+    }
+  ],
+
+  "strengths": {
+    "softSkills": [
+      "Working under pressure",
+      "Responsibility",
+      "Communication",
+      "Customer service",
+      "Time management"
+    ],
+    "languages": ["English", "Punjabi", "Hindi/Urdu"]
+  },
+
+  "creator": {
+    "profiles": {
+      "youtube": "Dukesenior22",
+      "twitch": "DukeSenior",
+      "twitchStatus": "Affiliate",
+      "streamingExperienceYears": 3,
+      "youtubeExperienceYears": 1
+    },
+    "shows": [
+      {
+        "title": "DDP — Drinks with Duke & Phoenix",
+        "type": "Talkshow",
+        "status": "Past"
+      }
+    ],
+    "tournaments": [
+      {
+        "game": "Phasmophobia",
+        "count": 4,
+        "description": "Hosted four community tournaments for the game Phasmophobia."
+      }
+    ],
+    "gamesActive": [
+      "Genshin Impact",
+      "Honkai Star Rail",
+      "Seven Deadly Sins Grand Cross",
+      "Phasmophobia",
+      "Dragon Ball Z Dokkan Battle",
+      "Dragon Ball Legends",
+      "Euro Truck Simulator 2",
+      "Supermarket Simulator"
+    ],
+    "gamesCompleted": [
+      "Cyberpunk 2077",
+      "High on Life",
+      "The Walking Dead Telltale Series",
+      "Max Payne 1",
+      "Max Payne 2",
+      "Max Payne 3",
+      "GTA Vice City",
+      "GTA San Andreas",
+      "GTA IV",
+      "GTA V",
+      "NFS Underground",
+      "NFS Underground 2",
+      "NFS Most Wanted (2006)",
+      "NFS Most Wanted (2012)",
+      "NFS The Run",
+      "NFS Hot Pursuit",
+      "NFS Heat",
+      "NFS Unbound"
+    ],
+
+    "gamePosters": [
+      {
+        "title": "Genshin Impact",
+        "poster": "/posters/genshin-impact.jpg"
+      },
+      {
+        "title": "Honkai Star Rail",
+        "poster": "/posters/honkai-star-rail.jpg"
+      },
+      {
+        "title": "Seven Deadly Sins Grand Cross",
+        "poster": "/posters/seven-deadly-sins-grand-cross.jpg"
+      },
+      {
+        "title": "Phasmophobia",
+        "poster": "/posters/phasmophobia.jpg"
+      },
+      {
+        "title": "Dragon Ball Z Dokkan Battle",
+        "poster": "/posters/dragon-ball-z-dokkan-battle.jpg"
+      },
+      {
+        "title": "Dragon Ball Legends",
+        "poster": "/posters/dragon-ball-legends.jpg"
+      },
+      {
+        "title": "Euro Truck Simulator 2",
+        "poster": "/posters/euro-truck-simulator-2.jpg"
+      },
+      {
+        "title": "Supermarket Simulator",
+        "poster": "/posters/supermarket-simulator.jpg"
+      },
+      {
+        "title": "Cyberpunk 2077",
+        "poster": "/posters/cyberpunk-2077.jpg"
+      },
+      {
+        "title": "High on Life",
+        "poster": "/posters/high-on-life.jpg"
+      },
+      {
+        "title": "The Walking Dead Telltale Series",
+        "poster": "/posters/the-walking-dead-telltale-series.jpg"
+      },
+      {
+        "title": "Max Payne 1",
+        "poster": "/posters/max-payne-1.jpg"
+      },
+      {
+        "title": "Max Payne 2",
+        "poster": "/posters/max-payne-2.jpg"
+      },
+      {
+        "title": "Max Payne 3",
+        "poster": "/posters/max-payne-3.jpg"
+      },
+      {
+        "title": "GTA Vice City",
+        "poster": "/posters/gta-vice-city.jpg"
+      },
+      {
+        "title": "GTA San Andreas",
+        "poster": "/posters/gta-san-andreas.jpg"
+      },
+      {
+        "title": "GTA IV",
+        "poster": "/posters/gta-iv.jpg"
+      },
+      {
+        "title": "GTA V",
+        "poster": "/posters/gta-v.jpg"
+      },
+      {
+        "title": "NFS Underground",
+        "poster": "/posters/nfs-underground.jpg"
+      },
+      {
+        "title": "NFS Underground 2",
+        "poster": "/posters/nfs-underground-2.jpg"
+      },
+      {
+        "title": "NFS Most Wanted (2006)",
+        "poster": "/posters/nfs-most-wanted-2006.jpg"
+      },
+      {
+        "title": "NFS Most Wanted (2012)",
+        "poster": "/posters/nfs-most-wanted-2012.jpg"
+      },
+      {
+        "title": "NFS The Run",
+        "poster": "/posters/nfs-the-run.jpg"
+      },
+      {
+        "title": "NFS Hot Pursuit",
+        "poster": "/posters/nfs-hot-pursuit.jpg"
+      },
+      {
+        "title": "NFS Heat",
+        "poster": "/posters/nfs-heat.jpg"
+      },
+      {
+        "title": "NFS Unbound",
+        "poster": "/posters/nfs-unbound.jpg"
+      }
+    ]
+  },
+
+  "gallery": {
+    "items": []
+  }
+}

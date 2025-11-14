@@ -1,0 +1,8 @@
+{
+  "tiles": [
+    { "title": "Portfolio", "description": "View my projects" },
+    { "title": "Experience", "description": "Professional background" },
+    { "title": "About", "description": "Who I am" },
+    { "title": "Contact", "description": "Reach out to me" }
+  ]
+}

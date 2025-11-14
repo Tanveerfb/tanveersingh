@@ -1,0 +1,12 @@
+{
+  "profiles": [
+    {
+      "title": "Engineer Profile",
+      "content": "Short engineering summary goes here."
+    },
+    {
+      "title": "Creator Profile",
+      "content": "Creative summary goes here."
+    }
+  ]
+}

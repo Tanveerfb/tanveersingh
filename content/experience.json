@@ -1,0 +1,25 @@
+{
+  "header": "Experience",
+  "entries": [
+    {
+      "title": "ICT Support Engineer",
+      "company": "Nobility Care Australia Pty Ltd",
+      "period": "Feb 2023 - Present",
+      "details": [
+        "IT support, SharePoint management, MS Forms, Apps administration",
+        "Company website and portal maintenance",
+        "Technical troubleshooting and infrastructure improvements"
+      ]
+    },
+    {
+      "title": "Content Creator",
+      "company": "Independent",
+      "period": "2020 - Present",
+      "details": [
+        "Twitch & YouTube creator focusing on gaming and tech",
+        "Thumbnail design, overlays, video editing",
+        "Community building and content planning"
+      ]
+    }
+  ]
+}

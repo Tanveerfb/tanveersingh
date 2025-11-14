@@ -1,0 +1,18 @@
+{
+  "header": "About Me",
+  "bio": "Short description about Tanveer Singh goes here.",
+  "skills": [
+    "Next.js",
+    "Tailwind",
+    "JavaScript",
+    "React",
+    "Firebase",
+    "IT Support",
+    "Content creation",
+    "UI/UX basics"
+  ],
+  "overview": {
+    "title": "Profile Overview",
+    "content": "A brief overview of who I am professionally and creatively."
+  }
+}

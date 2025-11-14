@@ -1,0 +1,10 @@
+{
+  "header": "Contact",
+  "description": "Reach out for collaborations, projects, or inquiries.",
+  "email": "your_email@example.com",
+  "links": [
+    { "label": "GitHub", "url": "https://github.com" },
+    { "label": "LinkedIn", "url": "https://linkedin.com" },
+    { "label": "Twitch", "url": "https://twitch.tv/dukesenior" }
+  ]
+}
