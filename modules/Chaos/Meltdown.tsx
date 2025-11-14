@@ -63,7 +63,11 @@ export function triggerMeltdown(): boolean {
   return startMeltdownRef();
 }
 
-function playSound(src: string, volume = 1, loop = false): HTMLAudioElement | null {
+function playSound(
+  src: string,
+  volume = 1,
+  loop = false
+): HTMLAudioElement | null {
   if (typeof Audio === "undefined") {
     return null;
   }
@@ -111,10 +115,7 @@ const recoveryLines = [
   "> Re-linking neural pathways...",
 ];
 
-const stableLines = [
-  "> SYSTEM STATUS: STABLE",
-  "> OPERATOR: DUKE",
-];
+const stableLines = ["> SYSTEM STATUS: STABLE", "> OPERATOR: DUKE"];
 
 const sequenceSchedule = [
   { phase: 0, delay: 0 },
@@ -302,7 +303,9 @@ export function Meltdown(): JSX.Element | null {
       return;
     }
 
-    (window as typeof window & { triggerMeltdown?: () => boolean }).triggerMeltdown = triggerMeltdown;
+    (
+      window as typeof window & { triggerMeltdown?: () => boolean }
+    ).triggerMeltdown = triggerMeltdown;
 
     return () => {
       const win = window as typeof window & { triggerMeltdown?: () => boolean };

@@ -101,7 +101,9 @@ export default function MatrixConsole(): JSX.Element {
         case "help":
           appendLine("Available commands:");
           COMMANDS.forEach((cmd) => appendLine(`  - ${cmd}`));
-          appendLine("  - hack (alias: break, selfdestruct, duke.exe overload)");
+          appendLine(
+            "  - hack (alias: break, selfdestruct, duke.exe overload)"
+          );
           break;
         case "stats":
           appendLine(`User: ${siteData.profile.name}`);
