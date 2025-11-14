@@ -17,11 +17,7 @@ export default function GalleryCard({
       data-status={status ?? undefined}
     >
       <div className="poster-inner">
-        <img
-          src={poster}
-          alt={title}
-          className="poster-img gallery-img"
-        />
+        <img src={poster} alt={title} className="poster-img gallery-img" />
         <span className="poster-title">{title}</span>
       </div>
     </div>
