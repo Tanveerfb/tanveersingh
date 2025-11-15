@@ -1,7 +1,7 @@
 "use client";
 
 import type { JSX } from "react";
-import { useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 
 const INTRO_STORAGE_KEY = "duke_intro_played";
 
@@ -19,16 +19,11 @@ export function triggerReboot(): void {
   window.location.reload();
 }
 
-const getHasPlayed = () => {
-  if (typeof window === "undefined") return false;
-  return window.localStorage.getItem(INTRO_STORAGE_KEY) === "true";
-};
-
 export default function IntroSequence(): JSX.Element | null {
   const [visibleLines, setVisibleLines] = useState<string[]>([]);
-  const [hasPlayed] = useState(getHasPlayed);
-  const [introDone, setIntroDone] = useState(hasPlayed);
-  const [isVisible, setIsVisible] = useState(!hasPlayed);
+  const [hasPlayed, setHasPlayed] = useState<boolean | null>(null);
+  const [introDone, setIntroDone] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -42,10 +37,29 @@ export default function IntroSequence(): JSX.Element | null {
   }, []);
 
   useEffect(() => {
-    if (hasPlayed) {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const played = window.localStorage.getItem(INTRO_STORAGE_KEY) === "true";
+
+    if (played) {
+      startTransition(() => {
+        setHasPlayed(true);
+        setIntroDone(true);
+        setIsVisible(false);
+        setVisibleLines([]);
+      });
       console.info("Intro skipped: duke_intro_played found in localStorage.");
       return;
     }
+
+    startTransition(() => {
+      setHasPlayed(false);
+      setIntroDone(false);
+      setIsVisible(true);
+      setVisibleLines([]);
+    });
 
     const timeouts: NodeJS.Timeout[] = [];
 
@@ -58,9 +72,7 @@ export default function IntroSequence(): JSX.Element | null {
 
     const finishTimeout = setTimeout(() => {
       setIsVisible(false);
-      if (typeof window !== "undefined") {
-        window.localStorage.setItem(INTRO_STORAGE_KEY, "true");
-      }
+      window.localStorage.setItem(INTRO_STORAGE_KEY, "true");
     }, introLines.length * 1500 + 750);
 
     const hideTimeout = setTimeout(() => {
@@ -72,9 +84,9 @@ export default function IntroSequence(): JSX.Element | null {
     return () => {
       timeouts.forEach((timeout) => clearTimeout(timeout));
     };
-  }, [hasPlayed]);
+  }, []);
 
-  if (introDone) {
+  if (hasPlayed === null || introDone) {
     return null;
   }
 

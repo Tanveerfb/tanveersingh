@@ -1,0 +1,159 @@
+.hero-container {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  padding-top: 12vh;
+  padding-bottom: 6vh;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  color: var(--text);
+}
+
+.hero-title {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.4rem;
+  border-radius: 8px;
+  background: linear-gradient(
+      120deg,
+      rgba(0, 30, 50, 0.35),
+      rgba(0, 60, 90, 0.2)
+    ),
+    rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 255, 255, 0.25);
+  box-shadow: 0 0 26px rgba(0, 255, 255, 0.25);
+  transition: box-shadow 0.35s ease;
+}
+
+.hero-title::after {
+  content: "";
+  position: absolute;
+  inset: -12px;
+  border: 1px solid rgba(0, 255, 255, 0.08);
+  filter: blur(6px);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.name {
+  font-size: clamp(2.8rem, 6vw, 4rem);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  text-shadow: 0 0 10px var(--accent), 0 0 22px var(--accent-strong, #00f5ff);
+  margin: 0;
+}
+
+.name span {
+  color: var(--accent-strong, #00f5ff);
+  text-shadow: 0 0 14px var(--accent-strong, #00f5ff);
+}
+
+.holo-flicker {
+  animation: holoPulse 6s infinite ease-in-out;
+}
+
+@keyframes holoPulse {
+  0%,
+  100% {
+    opacity: 1;
+    filter: none;
+  }
+  50% {
+    opacity: 0.85;
+    filter: contrast(1.2) brightness(1.1);
+  }
+}
+
+.hero-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  perspective: 1000px;
+}
+
+.role-chip {
+  display: inline-block;
+  background: rgba(0, 255, 255, 0.15);
+  border: 1px solid var(--accent-soft, rgba(0, 255, 255, 0.5));
+  border-radius: 4px;
+  padding: 6px 14px;
+  margin-top: 10px;
+  backdrop-filter: blur(4px);
+  animation: chipCycle 4s infinite;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  color: var(--text);
+  text-transform: uppercase;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+@keyframes chipCycle {
+  0% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-4px);
+  }
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+}
+
+.hero-id-panels {
+  display: flex;
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+  justify-content: center;
+  align-items: stretch;
+  margin-top: 4rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 1024px) {
+  .hero-container {
+    padding-top: 10vh;
+  }
+
+  .hero-id-panels {
+    margin-top: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-container {
+    padding-top: 8vh;
+    gap: 1.6rem;
+  }
+
+  .hero-title {
+    padding: 0.6rem 1rem;
+  }
+
+  .hero-id-panels {
+    gap: 1.6rem;
+  }
+}
+
+@media (max-width: 540px) {
+  .name {
+    font-size: clamp(2.2rem, 10vw, 3rem);
+  }
+
+  .hero-id-panels {
+    margin-top: 2.5rem;
+  }
+
+  .role-chip {
+    font-size: 0.75rem;
+    padding: 5px 12px;
+  }
+}

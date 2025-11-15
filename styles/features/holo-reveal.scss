@@ -1,0 +1,35 @@
+.holo-reveal {
+  position: relative;
+  width: 300px;
+  padding: 1.2rem;
+  border-radius: 8px;
+  background: rgba(0, 20, 30, 0.45);
+  border: 1px solid var(--accent-soft, rgba(0, 255, 255, 0.45));
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  transition: 0.3s ease;
+}
+
+.holo-reveal .reveal-layer {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 255, 255, 0.09);
+  transform: translateY(0);
+  transition: 0.35s ease;
+}
+
+.holo-reveal:hover .reveal-layer {
+  transform: translateY(-100%);
+}
+
+.holo-reveal .content {
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  transition: 0.4s ease;
+  padding-top: 0.5rem;
+}
+
+.holo-reveal:hover .content {
+  opacity: 1;
+}

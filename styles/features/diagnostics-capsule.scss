@@ -1,0 +1,168 @@
+.diag-capsule {
+  width: 100%;
+  max-width: 720px;
+  margin: 2.8rem auto 0 auto;
+  padding: 1.2rem;
+  background: rgba(0, 15, 20, 0.35);
+  border: 1px solid var(--accent-soft);
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+  --diag-anim-duration: 450ms;
+}
+
+.diag-capsule::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(0, 255, 255, 0.15),
+    transparent
+  );
+  animation: diagSweep calc(var(--diag-anim-duration) * 4) linear infinite;
+  pointer-events: none;
+  opacity: 0.2;
+}
+
+@keyframes diagSweep {
+  0% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+}
+
+.diag-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.diag-lines p {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  margin: 3px 0;
+  text-shadow: 0 0 6px var(--accent-soft);
+  animation: diagFlicker 3.2s infinite;
+}
+
+@keyframes diagFlicker {
+  0%,
+  85%,
+  100% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  95% {
+    opacity: 0.2;
+  }
+}
+
+.diag-reactor-toggle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 255, 255, 0.05);
+  cursor: pointer;
+  transition: 0.25s ease;
+  box-shadow: 0 0 8px var(--accent-soft);
+}
+
+.diag-reactor-toggle:hover {
+  box-shadow: 0 0 14px var(--accent);
+  transform: scale(1.1);
+}
+
+.reactor-core {
+  width: 22px;
+  height: 22px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent), 0 0 16px var(--accent-strong);
+  animation: corePulse 2.6s ease-in-out infinite;
+}
+
+@keyframes corePulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.16);
+    opacity: 1;
+  }
+}
+
+.diag-reactor-toggle.active {
+  box-shadow: 0 0 18px var(--accent-strong);
+}
+
+.diag-expanded {
+  margin-top: 1rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--accent-soft);
+  animation: diagExpand var(--diag-anim-duration) ease forwards;
+}
+
+@keyframes diagExpand {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+    filter: brightness(1.4);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: none;
+  }
+}
+
+.diag-expanded.collapsing {
+  animation: diagCollapse var(--diag-anim-duration) ease forwards;
+}
+
+@keyframes diagCollapse {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+    filter: brightness(1.4);
+  }
+}
+
+.diag-line {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  margin: 2px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: diagType var(--diag-anim-duration) steps(26, end);
+}
+
+@keyframes diagType {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}

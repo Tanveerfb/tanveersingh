@@ -1,37 +1,28 @@
-import Hero from "../modules/Hero/Hero";
-import IdentityCard from "../modules/IdentityCard/IdentityCard";
-import SectionTiles from "../modules/SectionTiles/SectionTiles";
-import StatusStrip from "../modules/StatusStrip/StatusStrip";
+import type { Metadata } from "next";
 import VideoBackground from "@/modules/Background/VideoBackground";
 import IntroSequence from "@/modules/Intro/IntroSequence";
-import tiles from "@/content/tiles.json";
+import HeroSection from "@/modules/Hero/HeroSection";
+import DiagnosticsCapsulePanel from "@/modules/Hero/DiagnosticsCapsulePanel";
+
+export const metadata: Metadata = {
+  title: "Home",
+  description:
+    "Explore Tanveer Singh's cyberpunk-inspired portfolio hub showcasing Microsoft 365 expertise, custom portals, and immersive UI engineering.",
+  openGraph: {
+    title: "Tanveer Singh | Portfolio Home",
+    description:
+      "Experience the DukeOS interface highlighting Tanveer Singh's ICT support skills, Microsoft 365 solutions, and creative tech experiments.",
+    url: "/",
+  },
+};
 
 export default function Home() {
   return (
     <>
       <IntroSequence />
       <VideoBackground />
-      <section id="hero-section">
-        <div className="container">
-          <Hero />
-        </div>
-      </section>
-      <section id="identity-card-section">
-        <div className="container identity-card-section">
-          <IdentityCard variant="engineer" />
-          <IdentityCard variant="creator" />
-        </div>
-      </section>
-      <section id="homepage-tiles-section">
-        <div className="container">
-          <SectionTiles tiles={tiles.tiles} />
-        </div>
-      </section>
-      <section id="status-strip-section">
-        <div className="container">
-          <StatusStrip />
-        </div>
-      </section>
+      <HeroSection />
+      <DiagnosticsCapsulePanel />
     </>
   );
 }

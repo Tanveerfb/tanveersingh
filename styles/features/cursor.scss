@@ -25,6 +25,10 @@
   filter: drop-shadow(0 0 12px rgba(255, 0, 51, 0.65));
 }
 
+.custom-cursor--focus:not(.custom-cursor--meltdown) {
+  transform: translate3d(-50%, -50%, 0) scale(1.4);
+}
+
 .cursor-core {
   position: relative;
   width: 100%;
@@ -49,12 +53,18 @@
   box-shadow: 0 0 14px var(--accent);
 }
 
+.custom-cursor--focus .cursor-core {
+  transform: scale(1.4);
+  box-shadow: 0 0 22px var(--accent), 0 0 32px rgba(0, 255, 255, 0.75);
+  background: rgba(0, 255, 210, 0.22);
+}
+
 .custom-cursor--meltdown.custom-cursor--lock .cursor-core {
   transform: scale(1.32);
   box-shadow: 0 0 22px rgba(255, 0, 51, 0.95);
 }
 
-.cursor-lock {
+.custom-cursor .cursor-lock {
   position: absolute;
   inset: -6px;
   border-radius: 50%;
@@ -74,6 +84,13 @@
 .custom-cursor--lock .cursor-lock {
   opacity: 1;
   transform: scale(1);
+}
+
+.custom-cursor--focus .cursor-lock {
+  opacity: 1;
+  transform: scale(1.2);
+  border-color: rgba(0, 255, 210, 0.85);
+  box-shadow: 0 0 22px rgba(0, 255, 210, 0.85);
 }
 
 .custom-cursor--meltdown.custom-cursor--lock .cursor-lock {
@@ -104,7 +121,7 @@
   }
 
   .cursor-core,
-  .cursor-lock {
+  .custom-cursor .cursor-lock {
     transition: none;
   }
 

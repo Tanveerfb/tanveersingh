@@ -1,5 +1,18 @@
+import type { Metadata } from "next";
 import siteData from "@/content/siteData.json";
 import SkillsSection from "@/modules/Skills/SkillsSection";
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Learn about Tanveer Singh's background as an ICT Support Engineer, including professional summary, strengths, languages, and Microsoft 365 focus.",
+  openGraph: {
+    title: "About Tanveer Singh",
+    description:
+      "Profile overview of Tanveer Singh covering role, experience with Microsoft 365, and the skills that power his end-to-end digital solutions.",
+    url: "/about",
+  },
+};
 
 export default function AboutPage() {
   const { profile, summary, strengths } = siteData;
