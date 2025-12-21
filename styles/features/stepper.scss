@@ -1,0 +1,137 @@
+.duke-stepper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1.25rem 1rem;
+}
+
+.duke-stepper-shell {
+  width: min(560px, 100%);
+  background: rgba(0, 20, 30, 0.35);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 0 26px rgba(0, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.duke-stepper-indicators {
+  display: flex;
+  align-items: center;
+  padding: 1.25rem 1.25rem 0.75rem;
+}
+
+.duke-stepper-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.duke-stepper-indicator-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 255, 255, 0.25);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.12);
+  font-weight: 700;
+}
+
+.duke-stepper-check {
+  width: 16px;
+  height: 16px;
+  color: #000;
+}
+
+.duke-stepper-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--bg);
+}
+
+.duke-stepper-step-number {
+  font-size: 0.9rem;
+}
+
+.duke-stepper-connector {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  margin: 0 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(0, 255, 255, 0.18);
+}
+
+.duke-stepper-connector-fill {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+}
+
+.duke-stepper-content {
+  padding: 0.25rem 1.25rem 0;
+}
+
+.duke-stepper-step {
+  padding: 0.75rem 0;
+}
+
+.duke-stepper-footer {
+  padding: 0 1.25rem 1.25rem;
+}
+
+.duke-stepper-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.duke-stepper-footer-row.has-back {
+  justify-content: space-between;
+}
+
+.duke-stepper-btn {
+  pointer-events: auto;
+  border-radius: 999px;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid transparent;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.duke-stepper-btn--ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border-color: rgba(0, 255, 255, 0.18);
+}
+
+.duke-stepper-btn--ghost:hover {
+  color: var(--text);
+  border-color: rgba(0, 255, 255, 0.35);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.12);
+}
+
+.duke-stepper-btn--primary {
+  background: var(--accent);
+  color: #000;
+  border-color: rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 14px var(--glow-soft);
+}
+
+.duke-stepper-btn--primary:hover {
+  box-shadow: 0 0 18px var(--accent);
+}
+
+.duke-stepper-btn--primary:active {
+  transform: translateY(1px);
+}

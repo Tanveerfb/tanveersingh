@@ -1,0 +1,314 @@
+{
+  "profile": {
+    "name": "Tanveer Singh",
+    "role": "ICT Support Engineer",
+    "location": "Greater Sydney Region / NSW",
+    "email": "tsingh0897@gmail.com",
+    "github": "https://github.com/tanveerfb",
+    "linkedin": "https://linkedin.com/in/tanveerfb",
+    "discord": "https://discordapp.com/users/1225993366060138526"
+  },
+
+  "summary": "ICT Support Engineer experienced with Microsoft 365 (SharePoint, Microsoft Forms, Power Automate), web development (Node.js, PHP, Next.js), and cloud tooling (Firebase, Vercel). Known for delivering internal portals, public websites, and maintaining smooth office operations with end-to-end ownership.",
+
+  "identityStats": {
+    "engineer": {
+      "title": "Primary Expertise",
+      "stats": [
+        "SharePoint & Microsoft 365",
+        "Node.js Backend",
+        "Next.js Frontend",
+        "Cloud Tools (Firebase, Vercel)",
+        "Internal Portal Development",
+        "Company Website Development",
+        "Bootstrap / React-Bootstrap",
+        "DaVinci Resolve 20",
+        "Adobe Premiere Pro",
+        "Canva"
+      ]
+    }
+  },
+
+  "skills": {
+    "web": ["HTML", "CSS", "JavaScript"],
+    "frameworks": [
+      "NextJS",
+      "ReactJS",
+      "Tailwind CSS",
+      "Bootstrap / React-Bootstrap"
+    ],
+    "backend": ["Java", "PHP", "Node.js"],
+    "databases": [
+      "SQL / MySQL",
+      "Firestore",
+      "Realtime Database",
+      "Neon DB",
+      "Vercel Blob"
+    ],
+    "cloud": ["Firebase", "Vercel", "Git"],
+    "versionControl": [],
+    "microsoft365": [
+      "Admin",
+      "SharePoint",
+      "Forms",
+      "Power Automate",
+      "Teams",
+      "Planner",
+      "ClipChamp",
+      "Stream",
+      "Sway",
+      "Onedrive"
+    ],
+    "tools": [
+      "VS Code",
+      "Jekyll",
+      "Adobe Dreamweaver",
+      "Eclipse IDE",
+      "JetBrains IntelliJ IDEA",
+      "XAMPP Control Panel",
+      "Windows Terminal",
+      "Microsoft Office",
+      "Dropbox"
+    ],
+    "Exploring": ["Python", "Machine Learning", "AI Training", "Bot Creation"],
+    "Content Creation": [
+      "Canva",
+      "Adobe Premiere Pro",
+      "Adobe Photoshop",
+      "Adobe Illustrator",
+      "DaVinci Resolve 20",
+      "ChatGPT",
+      "Gemini Pro"
+    ]
+  },
+
+  "experience": [
+    {
+      "role": "Freelance Full-Stack Web Developer",
+      "date": "June 2023 – Present",
+      "location": "Greater Sydney Region",
+      "responsibilities": [
+        "Designing various modular web apps",
+        "Business Landing Pages ",
+        "Content Management Systems / Blogs",
+        "Website Redesigns",
+        "New web app component design & implementation",
+        "Inventory System for Small Businesses",
+        "Discord and AI bot design & implementation",
+        "Small scale Social Media Web apps"
+      ]
+    },
+    {
+      "role": "ICT Support Engineer",
+      "date": "Feb 2023 – Present",
+      "location": "Greater Sydney Region",
+      "responsibilities": [
+        "Manage SharePoint sites, structure, and permissions",
+        "Build and maintain Microsoft Forms",
+        "Developer of internal company portal",
+        "Developer of public website",
+        "Manage site utilities and vendor coordination",
+        "Generalist IT responsibilities: endpoints, access, operations"
+      ]
+    },
+    {
+      "company": "Domino's",
+      "role": "Delivery Expert",
+      "date": "Feb 2021 – July 2024",
+      "location": "Cronulla, Bexley North",
+      "responsibilities": [
+        "Route planning and accurate deliveries",
+        "Maintain prep and cleaning standards",
+        "Manage consumable stock",
+        "Meet and exceed service metrics"
+      ]
+    },
+    {
+      "company": "El Jannah",
+      "role": "Team Member",
+      "date": "July 2020 – Jan 2021",
+      "location": "Smithfield",
+      "responsibilities": [
+        "Stock management",
+        "Cleaning & organizing",
+        "Time management"
+      ]
+    },
+    {
+      "company": "Deliveroo Pty Ltd",
+      "role": "Independent Delivery Driver",
+      "date": "Nov 2016 – May 2018",
+      "location": "Chatswood, North Sydney, Blacktown, Cronulla, Bexley",
+      "responsibilities": [
+        "Deliveries",
+        "Customer communication",
+        "Time management"
+      ]
+    },
+    {
+      "company": "Nando's",
+      "role": "Team Member",
+      "date": "July 2016 – Nov 2018",
+      "location": "Brighton Le-Sands / Cronulla",
+      "responsibilities": [
+        "Deliveries",
+        "Customer communication",
+        "Time management"
+      ]
+    }
+  ],
+
+  "projects": [
+    {
+      "title": "NCA Internal Portal",
+      "status": "Completed",
+      "description": "Sole Developer for internal company portal of the business 'Nobility Care Australia'",
+      "focus": [
+        "Database management",
+        "Backend redesign",
+        "Modularization of code",
+        "Logs",
+        "User Management",
+        "Restricted content access",
+        "Content Management System",
+        "Authentication"
+      ],
+      "tech": [
+        "NodeJS",
+        "VS Code",
+        "Firebase",
+        "Github",
+        "ReactJS",
+        "Bootstrap/ React-Bootstrap"
+      ]
+    },
+    {
+      "title": "Nobility Care Australia",
+      "status": "Completed",
+      "link": "https://nobilitycare.com.au/",
+      "description": "Sole Developer for the public company website of the business 'Nobility Care Australia'",
+      "focus": [
+        "Database management",
+        "Frontend Design",
+        "Heavy Backend redesign",
+        "Modularization of code",
+        "Content Management System",
+        "Website hosting",
+        "AI",
+        "Authentication"
+      ],
+      "tech": [
+        "NodeJS",
+        "VS Code",
+        "Firebase",
+        "Github",
+        "Vercel",
+        "NextJS",
+        "Tailwind",
+        "Bootstrap/ React-Bootstrap"
+      ]
+    },
+    {
+      "title": "The Lair of Evil Tools",
+      "status": "Ongoing",
+      "link": "https://lair-of-evil-tools.vercel.app/",
+      "description": "Playground web-app for personal use.",
+      "focus": [
+        "Database management",
+        "Frontend Design",
+        "Backend Design",
+        "Modularization of code",
+        "Tournament Organizer",
+        "User Management",
+        "Authentication"
+      ],
+      "tech": [
+        "NodeJS",
+        "VS Code",
+        "Firebase",
+        "Github",
+        "Vercel",
+        "NextJS",
+        "Tailwind",
+        "Bootstrap/ React-Bootstrap"
+      ]
+    },
+    {
+      "title": "MPSB",
+      "status": "Ongoing",
+      "description": "Multiple projects for the business MPSB",
+      "focus": [
+        "Database management",
+        "Frontend Design",
+        "Backend Design",
+        "Modularization of code",
+        "User Management",
+        "Authentication",
+        "Inventory System"
+      ],
+      "tech": [
+        "NodeJS",
+        "VS Code",
+        "Firebase",
+        "Github",
+        "Vercel",
+        "NextJS",
+        "Tailwind",
+        "Bootstrap/ React-Bootstrap"
+      ]
+    },
+    {
+      "title": "Private Java Projects (50+)",
+      "status": "Completed",
+      "description": "Development of university level Java Projects that involve handling of data and the understanding of the programming language",
+      "focus": [
+        "File I/O (read/write)",
+        "Data creation from parsed files",
+        "For-Loops",
+        "Modularization of code"
+      ],
+      "tech": ["Java", "VS Code", "IntelliJ IDEA", "Eclipse IDE"]
+    }
+  ],
+
+  "education": [
+    {
+      "title": "Professional Year (IT)",
+      "institution": "ATMC",
+      "date": "Jan 2021 – Present"
+    },
+    {
+      "title": "Bachelor of Information Technology",
+      "institution": "Kent Institute, Sydney",
+      "date": "Jan 2016 – Jan 2021"
+    }
+  ],
+
+  "strengths": {
+    "languages": ["English", "Punjabi", "Hindi/Urdu"]
+  },
+
+  "creator": {
+    "profiles": {
+      "youtube": "Dukesenior22",
+      "twitch": "DukeSenior",
+      "twitchStatus": "Affiliate",
+      "streamingExperienceYears": 3,
+      "youtubeExperienceYears": 1
+    },
+    "shows": [
+      {
+        "title": "DDP — Drinks with Duke & Phoenix",
+        "type": "Talkshow",
+        "status": "Past"
+      }
+    ],
+    "tournaments": [
+      {
+        "game": "Phasmophobia",
+        "count": 4,
+        "description": "Hosted four community tournaments for the game Phasmophobia."
+      }
+    ]
+  }
+}
