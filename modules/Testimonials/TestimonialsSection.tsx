@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
 import "@/styles/features/testimonials.scss";
 
 const testimonials = [
@@ -32,7 +31,6 @@ const testimonials = [
 ];
 
 export default function TestimonialsSection() {
-  const [activeIndex, setActiveIndex] = useState(0);
 
   return (
     <div className="testimonials-section">

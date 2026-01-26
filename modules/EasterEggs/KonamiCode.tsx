@@ -18,20 +18,16 @@ const KONAMI_CODE = [
 ];
 
 function useKonamiCode(callback: () => void) {
-  const [keys, setKeys] = useState<string[]>([]);
-
   useEffect(() => {
+    let keys: string[] = [];
+
     const handleKeyDown = (e: KeyboardEvent) => {
-      setKeys((prevKeys) => {
-        const newKeys = [...prevKeys, e.key].slice(-KONAMI_CODE.length);
-        
-        if (newKeys.join(",") === KONAMI_CODE.join(",")) {
-          callback();
-          return [];
-        }
-        
-        return newKeys;
-      });
+      keys = [...keys, e.key].slice(-KONAMI_CODE.length);
+      
+      if (keys.join(",") === KONAMI_CODE.join(",")) {
+        callback();
+        keys = [];
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
