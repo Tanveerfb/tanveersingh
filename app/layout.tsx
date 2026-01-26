@@ -9,6 +9,7 @@ import MatrixConsole from "@/modules/Console/MatrixConsole";
 import { Meltdown } from "@/modules/Chaos/Meltdown";
 import ScrollProgress from "@/modules/ScrollProgress/ScrollProgress";
 import ToastProvider from "@/components/ToastProvider";
+import KonamiCode from "@/modules/EasterEggs/KonamiCode";
 
 const siteTitle = "Tanveer Singh | ICT Support Engineer";
 const siteDescription =
@@ -62,6 +63,7 @@ export default function RootLayout({
           <CustomCursor />
           <MatrixConsole />
           <Meltdown />
+          <KonamiCode />
           <HologramNavbar />
           <ToastProvider />
           <main id="page-content" className="page-content">
