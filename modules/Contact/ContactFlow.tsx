@@ -42,95 +42,103 @@ export default function ContactFlow(): JSX.Element {
             </p>
 
             <div className="contact-options-grid">
-              <PixelCard
-                variant="yellow"
-                className="contact-option-card"
-                style={{ height: 96 }}
-                noFocus
-              >
-                <a
-                  className="contact-option-link"
-                  href={`mailto:${profile.email}`}
+              <div className="gradient-border">
+                <PixelCard
+                  variant="yellow"
+                  className="contact-option-card"
+                  style={{ height: 96 }}
+                  noFocus
                 >
-                  <span className="contact-option-icon" aria-hidden="true">
-                    <FaEnvelope />
-                  </span>
-                  <span className="contact-option-text">
-                    <span className="contact-option-title">Email</span>
-                    <span className="contact-option-subtitle">
-                      {profile.email}
+                  <a
+                    className="contact-option-link"
+                    href={`mailto:${profile.email}`}
+                  >
+                    <span className="contact-option-icon" aria-hidden="true">
+                      <FaEnvelope />
                     </span>
-                  </span>
-                </a>
-              </PixelCard>
-
-              <PixelCard
-                variant="blue"
-                className="contact-option-card"
-                style={{ height: 96 }}
-                noFocus
-              >
-                <a
-                  className="contact-option-link"
-                  href="https://calendly.com/tanveerfb/30min"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="contact-option-icon" aria-hidden="true">
-                    <FaCalendarDays />
-                  </span>
-                  <span className="contact-option-text">
-                    <span className="contact-option-title">Calendly</span>
-                    <span className="contact-option-subtitle">
-                      Book a 30-min slot
+                    <span className="contact-option-text">
+                      <span className="contact-option-title">Email</span>
+                      <span className="contact-option-subtitle">
+                        {profile.email}
+                      </span>
                     </span>
-                  </span>
-                </a>
-              </PixelCard>
+                  </a>
+                </PixelCard>
+              </div>
 
-              <PixelCard
-                variant="pink"
-                className="contact-option-card"
-                style={{ height: 96 }}
-                noFocus
-              >
-                <a
-                  className="contact-option-link"
-                  href={profile.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              <div className="gradient-border">
+                <PixelCard
+                  variant="blue"
+                  className="contact-option-card"
+                  style={{ height: 96 }}
+                  noFocus
                 >
-                  <span className="contact-option-icon" aria-hidden="true">
-                    <FaLinkedin />
-                  </span>
-                  <span className="contact-option-text">
-                    <span className="contact-option-title">LinkedIn</span>
-                    <span className="contact-option-subtitle">Connect</span>
-                  </span>
-                </a>
-              </PixelCard>
+                  <a
+                    className="contact-option-link"
+                    href="https://calendly.com/tanveerfb/30min"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span className="contact-option-icon" aria-hidden="true">
+                      <FaCalendarDays />
+                    </span>
+                    <span className="contact-option-text">
+                      <span className="contact-option-title">Calendly</span>
+                      <span className="contact-option-subtitle">
+                        Book a 30-min slot
+                      </span>
+                    </span>
+                  </a>
+                </PixelCard>
+              </div>
 
-              <PixelCard
-                variant="yellow"
-                className="contact-option-card"
-                style={{ height: 96 }}
-                noFocus
-              >
-                <a
-                  className="contact-option-link"
-                  href={profile.discord}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              <div className="gradient-border">
+                <PixelCard
+                  variant="pink"
+                  className="contact-option-card"
+                  style={{ height: 96 }}
+                  noFocus
                 >
-                  <span className="contact-option-icon" aria-hidden="true">
-                    <FaDiscord />
-                  </span>
-                  <span className="contact-option-text">
-                    <span className="contact-option-title">Discord</span>
-                    <span className="contact-option-subtitle">Message me</span>
-                  </span>
-                </a>
-              </PixelCard>
+                  <a
+                    className="contact-option-link"
+                    href={profile.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span className="contact-option-icon" aria-hidden="true">
+                      <FaLinkedin />
+                    </span>
+                    <span className="contact-option-text">
+                      <span className="contact-option-title">LinkedIn</span>
+                      <span className="contact-option-subtitle">Connect</span>
+                    </span>
+                  </a>
+                </PixelCard>
+              </div>
+
+              <div className="gradient-border">
+                <PixelCard
+                  variant="yellow"
+                  className="contact-option-card"
+                  style={{ height: 96 }}
+                  noFocus
+                >
+                  <a
+                    className="contact-option-link"
+                    href={profile.discord}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span className="contact-option-icon" aria-hidden="true">
+                      <FaDiscord />
+                    </span>
+                    <span className="contact-option-text">
+                      <span className="contact-option-title">Discord</span>
+                      <span className="contact-option-subtitle">Message me</span>
+                    </span>
+                  </a>
+                </PixelCard>
+              </div>
             </div>
           </div>
         </ElectricBorder>

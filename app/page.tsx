@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import IntroSequence from "@/modules/Intro/IntroSequence";
 import HeroSection from "@/modules/Hero/HeroSection";
 import DiagnosticsCapsulePanel from "@/modules/Hero/DiagnosticsCapsulePanel";
 
@@ -18,7 +17,6 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <IntroSequence />
       <HeroSection />
       <DiagnosticsCapsulePanel />
     </>
