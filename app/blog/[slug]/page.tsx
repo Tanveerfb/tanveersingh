@@ -95,10 +95,19 @@ export default async function BlogPost({ params }: BlogPostParams) {
       </AnimatedSection>
 
       <AnimatedSection delay={0.2}>
-        <div
-          className="blog-post-content"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
+        <div className="blog-post-content">
+          {post.content.split('\n').map((paragraph, index) => {
+            if (paragraph.trim().startsWith('<h2>')) {
+              const text = paragraph.replace(/<\/?h2>/g, '');
+              return <h2 key={index}>{text}</h2>;
+            }
+            if (paragraph.trim().startsWith('<p>')) {
+              const text = paragraph.replace(/<\/?p>/g, '');
+              return <p key={index}>{text}</p>;
+            }
+            return paragraph.trim() ? <p key={index}>{paragraph}</p> : null;
+          })}
+        </div>
       </AnimatedSection>
     </article>
   );

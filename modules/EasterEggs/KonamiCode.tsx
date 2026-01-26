@@ -13,8 +13,8 @@ const KONAMI_CODE = [
   "ArrowRight",
   "ArrowLeft",
   "ArrowRight",
-  "b",
-  "a",
+  "KeyB",
+  "KeyA",
 ];
 
 function useKonamiCode(callback: () => void) {
@@ -22,7 +22,7 @@ function useKonamiCode(callback: () => void) {
     let keys: string[] = [];
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      keys = [...keys, e.key].slice(-KONAMI_CODE.length);
+      keys = [...keys, e.code].slice(-KONAMI_CODE.length);
       
       if (keys.join(",") === KONAMI_CODE.join(",")) {
         callback();
