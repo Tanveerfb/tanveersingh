@@ -9,7 +9,16 @@ import {
   triggerMeltdown,
 } from "@/modules/Chaos/Meltdown";
 
-const COMMANDS = ["help", "stats", "theme", "clear"] as const;
+const COMMANDS = [
+  "help",
+  "stats",
+  "theme",
+  "clear",
+  "skills",
+  "projects",
+  "easter-egg",
+  "download-resume",
+] as const;
 type Command = (typeof COMMANDS)[number];
 
 const MELTDOWN_COMMANDS = new Set([
@@ -52,6 +61,8 @@ export default function MatrixConsole(): JSX.Element {
   const [open, setOpen] = useState(false);
   const [history, setHistory] = useState<ConsoleLine[]>([]);
   const [input, setInput] = useState("");
+  const [commandHistory, setCommandHistory] = useState<string[]>([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const appendLine = useCallback((content: string) => {
@@ -116,6 +127,34 @@ export default function MatrixConsole(): JSX.Element {
         case "clear":
           setHistory([]);
           break;
+        case "skills":
+          appendLine("=== Technical Skills ===");
+          appendLine(`Web: ${siteData.skills.web.join(", ")}`);
+          appendLine(
+            `Frameworks: ${siteData.skills.frameworks.join(", ")}`
+          );
+          appendLine(`Backend: ${siteData.skills.backend.join(", ")}`);
+          appendLine(`Databases: ${siteData.skills.databases.join(", ")}`);
+          appendLine(`Cloud: ${siteData.skills.cloud.join(", ")}`);
+          appendLine(
+            `Microsoft 365: ${siteData.skills.microsoft365.slice(0, 5).join(", ")}...`
+          );
+          break;
+        case "projects":
+          appendLine("=== Featured Projects ===");
+          siteData.projects.slice(0, 3).forEach((project) => {
+            appendLine(`[${project.status}] ${project.title}`);
+            appendLine(`  Tech: ${project.tech.slice(0, 4).join(", ")}`);
+          });
+          break;
+        case "easter-egg":
+          appendLine("Try the Konami Code: ↑↑↓↓←→←→BA");
+          appendLine("Hint: Use your arrow keys on the page!");
+          break;
+        case "download-resume":
+          appendLine("Resume download feature available on the site!");
+          appendLine("Look for the 'Download Resume' button.");
+          break;
         default:
           break;
       }
@@ -152,8 +191,12 @@ export default function MatrixConsole(): JSX.Element {
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
-    handleCommand(input);
-    setInput("");
+    if (input.trim()) {
+      setCommandHistory((prev) => [...prev, input]);
+      setHistoryIndex(-1);
+      handleCommand(input);
+      setInput("");
+    }
   };
 
   useEffect(() => {
@@ -212,6 +255,31 @@ export default function MatrixConsole(): JSX.Element {
             className="console-input"
             value={input}
             onChange={(event) => setInput(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === "ArrowUp") {
+                event.preventDefault();
+                if (commandHistory.length > 0) {
+                  const newIndex =
+                    historyIndex === -1
+                      ? commandHistory.length - 1
+                      : Math.max(0, historyIndex - 1);
+                  setHistoryIndex(newIndex);
+                  setInput(commandHistory[newIndex]);
+                }
+              } else if (event.key === "ArrowDown") {
+                event.preventDefault();
+                if (historyIndex >= 0) {
+                  const newIndex = historyIndex + 1;
+                  if (newIndex >= commandHistory.length) {
+                    setHistoryIndex(-1);
+                    setInput("");
+                  } else {
+                    setHistoryIndex(newIndex);
+                    setInput(commandHistory[newIndex]);
+                  }
+                }
+              }
+            }}
             placeholder="Enter command..."
             autoComplete="off"
           />

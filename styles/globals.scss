@@ -2,6 +2,7 @@
 @use "./variables";
 @use "./components";
 @use "./themes/cyberpunk";
+@use "./themes/dukesenior";
 @use "./mixins";
 @use "./features/cursor";
 @use "./features/console";
@@ -15,6 +16,18 @@
 @use "./features/diagnostics-capsule";
 @use "./features/stepper";
 @use "./features/components-showcase";
+@use "./features/content-sections";
+@use "./features/scroll-progress";
+@use "./features/blog";
+@use "./features/blog-post";
+@use "./features/services";
+@use "./features/particle-field";
+@use "./features/skills-radar";
+@use "./features/timeline";
+@use "./features/testimonials";
+@use "./components/skeleton";
+@use "./components/loading-spinner";
+@use "./components/resume-download";
 /* Neutral global styling (structure & basic readability only) */
 
 body {

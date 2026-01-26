@@ -1,0 +1,95 @@
+/* Skeleton loading states */
+
+@keyframes shimmer {
+  0% {
+    background-position: -500px 0;
+  }
+  100% {
+    background-position: 500px 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--panel) 0%,
+    rgba(0, 234, 255, 0.1) 50%,
+    var(--panel) 100%
+  );
+  background-size: 500px 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.skeleton-text {
+  @extend .skeleton;
+  height: 1em;
+  width: 100%;
+  margin-bottom: 0.5rem;
+
+  &.short {
+    width: 60%;
+  }
+
+  &.medium {
+    width: 80%;
+  }
+
+  &.long {
+    width: 100%;
+  }
+}
+
+.skeleton-card {
+  @extend .skeleton;
+  height: 200px;
+  width: 100%;
+  border-radius: 12px;
+  padding: 1.5rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 234, 255, 0.1) 50%,
+      transparent 100%
+    );
+    background-size: 500px 100%;
+    animation: shimmer 1.5s infinite linear;
+  }
+}
+
+.skeleton-avatar {
+  @extend .skeleton;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.skeleton-button {
+  @extend .skeleton;
+  height: 40px;
+  width: 120px;
+  border-radius: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton,
+  .skeleton-text,
+  .skeleton-card,
+  .skeleton-avatar,
+  .skeleton-button {
+    animation: none;
+  }
+}
