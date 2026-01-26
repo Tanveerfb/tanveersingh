@@ -1,12 +1,12 @@
 {
   "brand": "Tanveer Singh",
   "themeToggleLabel": "Cycle Theme",
-  "rebootLabel": "Reboot Intro",
   "menu": [
     { "label": "Home", "href": "/" },
     { "label": "About", "href": "/about" },
     { "label": "Experience", "href": "/experience" },
     { "label": "Portfolio", "href": "/portfolio" },
+    { "label": "Components", "href": "/components" },
     { "label": "Contact", "href": "/contact" }
   ]
 }

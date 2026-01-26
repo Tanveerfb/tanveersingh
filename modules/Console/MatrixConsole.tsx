@@ -3,14 +3,13 @@
 import type { JSX } from "react";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import siteData from "@/content/siteData.json";
-import { triggerReboot } from "@/modules/Intro/IntroSequence";
 import {
   getMeltdownState,
   subscribeMeltdownState,
   triggerMeltdown,
 } from "@/modules/Chaos/Meltdown";
 
-const COMMANDS = ["help", "stats", "theme", "clear", "reboot"] as const;
+const COMMANDS = ["help", "stats", "theme", "clear"] as const;
 type Command = (typeof COMMANDS)[number];
 
 const MELTDOWN_COMMANDS = new Set([
@@ -116,10 +115,6 @@ export default function MatrixConsole(): JSX.Element {
           break;
         case "clear":
           setHistory([]);
-          break;
-        case "reboot":
-          appendLine("Rebooting intro sequence...");
-          triggerReboot();
           break;
         default:
           break;
