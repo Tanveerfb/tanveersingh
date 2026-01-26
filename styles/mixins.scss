@@ -1,1 +1,51 @@
-/* Shared mixins will be added later */
+/* Shared mixins */
+
+// Glow effect for cyberpunk elements
+@mixin glow-effect($color, $intensity: 0.5) {
+  box-shadow: 
+    0 0 10px rgba($color, $intensity * 0.3),
+    0 0 20px rgba($color, $intensity * 0.2),
+    0 0 30px rgba($color, $intensity * 0.1);
+}
+
+// Cyberpunk gradient border
+@mixin cyberpunk-border($width: 2px) {
+  border-radius: 14px;
+  padding: $width;
+  background: linear-gradient(
+    90deg,
+    var(--accent),
+    var(--accent-alt),
+    var(--accent)
+  );
+  background-size: 200% 200%;
+  animation: gradientShift 9s ease infinite;
+
+  > * {
+    border-radius: calc(14px - #{$width});
+  }
+}
+
+// Glassmorphism effect
+@mixin glass-effect($blur: 10px, $opacity: 0.1) {
+  backdrop-filter: blur($blur);
+  background: rgba(255, 255, 255, $opacity);
+  border: 1px solid rgba(255, 255, 255, $opacity * 2);
+}
+
+// Responsive fluid typography
+@mixin responsive-text($min: 14px, $max: 18px, $vw: 4vw) {
+  font-size: clamp($min, $vw, $max);
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
