@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import { Radar } from "react-chartjs-2";
 import siteData from "@/content/siteData.json";
+import { getCSSVar } from "@/lib/utils";
 import "@/styles/features/skills-radar.scss";
 
 ChartJS.register(
@@ -23,14 +24,6 @@ ChartJS.register(
   Tooltip,
   Legend,
 );
-
-function getCSSVar(name: string, fallback: string): string {
-  if (typeof window === "undefined") return fallback;
-  return (
-    getComputedStyle(document.documentElement).getPropertyValue(name).trim() ||
-    fallback
-  );
-}
 
 export default function SkillsRadar() {
   const chartRef = useRef(null);
@@ -56,6 +49,7 @@ export default function SkillsRadar() {
   const text = getCSSVar("--text", "#e8e8e8");
   const border = getCSSVar("--border", "#2a2a2d");
   const panel = getCSSVar("--panel", "#1a1a1c");
+  const glowStrong = getCSSVar("--glow-strong", "rgba(0, 234, 255, 0.45)");
 
   const data = {
     labels: Object.keys(skillCategories),
@@ -63,7 +57,7 @@ export default function SkillsRadar() {
       {
         label: "Skill Level",
         data: normalizedData,
-        backgroundColor: `${accentAlt}33`,
+        backgroundColor: glowStrong,
         borderColor: accentAlt,
         borderWidth: 2,
         pointBackgroundColor: accent,

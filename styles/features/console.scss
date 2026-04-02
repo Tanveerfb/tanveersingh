@@ -60,7 +60,7 @@
 }
 
 .prompt {
-  color: var(--success, rgba(0, 255, 112, 0.75));
+  color: var(--success, #00ff70);
   opacity: 0.75;
 }
 
@@ -68,7 +68,7 @@
   flex: 1;
   background: rgba(0, 0, 0, 0.6);
   border: 1px solid rgba(0, 255, 112, 0.4);
-  color: var(--success, #7bffb8);
+  color: var(--success, #00ff70);
   font-family: inherit;
   padding: 0.35rem 0.6rem;
   border-radius: 4px;
@@ -77,7 +77,7 @@
 }
 
 .console-input::placeholder {
-  color: var(--success, rgba(123, 255, 184, 0.4));
+  color: var(--success, #00ff70);
   opacity: 0.4;
 }
 

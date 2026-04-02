@@ -43,6 +43,9 @@
   --error: #c0392b;
   --warning: #e67e22;
   --focus-ring: rgba(0, 180, 200, 0.6);
+  --glow-strong: rgba(0, 180, 200, 0.45);
+  --glow-soft: rgba(200, 150, 0, 0.3);
+  --error-glow: rgba(192, 57, 43, 0.4);
 }
 
 [data-theme="starrail"] {
@@ -52,4 +55,7 @@
   --error: #ff4444;
   --warning: #ffcc44;
   --focus-ring: rgba(0, 234, 255, 0.6);
+  --glow-strong: rgba(0, 234, 255, 0.45);
+  --glow-soft: rgba(255, 230, 0, 0.3);
+  --error-glow: rgba(255, 68, 68, 0.4);
 }

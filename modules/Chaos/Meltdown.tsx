@@ -143,6 +143,17 @@ export function Meltdown(): JSX.Element | null {
   const pointerBackupRef = useRef<string>("");
   const cooldownRef = useRef(false);
   const meltdownActiveRef = useRef(false);
+  const reducedMotionRef = useRef(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    reducedMotionRef.current = mq.matches;
+    const handler = (e: MediaQueryListEvent) => {
+      reducedMotionRef.current = e.matches;
+    };
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   const chaosDisplay = useMemo(() => chaosLines, []);
 
@@ -212,7 +223,7 @@ export function Meltdown(): JSX.Element | null {
     }
 
     // Respect prefers-reduced-motion: skip the visual sequence
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (reducedMotionRef.current) {
       emitConsoleLines(stableLines);
       setCooldown(true);
       cooldownRef.current = true;

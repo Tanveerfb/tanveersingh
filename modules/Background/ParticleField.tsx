@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "@/styles/features/particle-field.scss";
+import { getCSSVar } from "@/lib/utils";
 
 interface Particle {
   x: number;
@@ -16,15 +17,21 @@ export default function ParticleField() {
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef({ x: 0, y: 0 });
   const animationFrameRef = useRef<number | null>(null);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  useEffect(() => {
+    if (reducedMotion) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
-
-    // Respect prefers-reduced-motion: skip particle animation entirely
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return;
-    }
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -53,8 +60,11 @@ export default function ParticleField() {
 
     window.addEventListener("mousemove", handleMouseMove);
 
+    const bgColor = getCSSVar("--bg", "#0d0d0e");
+    const particleColor = getCSSVar("--accent-alt", "#00eaff");
+
     const animate = () => {
-      ctx.fillStyle = "rgba(13, 13, 14, 0.1)";
+      ctx.fillStyle = `color-mix(in srgb, ${bgColor} 90%, transparent)`;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       particlesRef.current.forEach((particle) => {
@@ -84,7 +94,7 @@ export default function ParticleField() {
         if (particle.y > canvas.height) particle.y = 0;
 
         // Draw particle
-        ctx.fillStyle = "rgba(0, 234, 255, 0.6)";
+        ctx.fillStyle = particleColor;
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fill();
@@ -102,7 +112,7 @@ export default function ParticleField() {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, []);
+  }, [reducedMotion]);
 
   return <canvas ref={canvasRef} className="particle-field" />;
 }
