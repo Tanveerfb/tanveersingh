@@ -9,9 +9,13 @@
   --accent: #ffe600;
   --accent-alt: #00eaff;
   --success: #00ff70;
+  --error: #ff3b3b;
+  --warning: #ffd166;
   --border: #2a2a2d;
   --glow-strong: rgba(0, 234, 255, 0.45);
   --glow-soft: rgba(255, 230, 0, 0.3);
+  --error-glow: rgba(255, 59, 59, 0.4);
+  --focus-ring: rgba(0, 234, 255, 0.6);
 }
 
 [data-theme="cyberpunk"] {
@@ -23,19 +27,29 @@
   --accent: #ffe600;
   --accent-alt: #00eaff;
   --success: #00ff70;
+  --error: #ff3b3b;
+  --warning: #ffd166;
   --border: #2a2a2d;
   --glow-strong: rgba(0, 234, 255, 0.45);
   --glow-soft: rgba(255, 230, 0, 0.3);
+  --error-glow: rgba(255, 59, 59, 0.4);
+  --focus-ring: rgba(0, 234, 255, 0.6);
 }
 
 [data-theme="genshin"] {
   --bg: #faf7f2;
   --text: #3d3d3d;
   --border: #d9c7a5;
+  --error: #c0392b;
+  --warning: #e67e22;
+  --focus-ring: rgba(0, 180, 200, 0.6);
 }
 
 [data-theme="starrail"] {
   --bg: #0f0f15;
   --text: #e8e8e8;
   --border: #2d2d3a;
+  --error: #ff4444;
+  --warning: #ffcc44;
+  --focus-ring: rgba(0, 234, 255, 0.6);
 }

@@ -211,6 +211,21 @@ export function Meltdown(): JSX.Element | null {
       return;
     }
 
+    // Respect prefers-reduced-motion: skip the visual sequence
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      emitConsoleLines(stableLines);
+      setCooldown(true);
+      cooldownRef.current = true;
+      updateMeltdownState({ cooldown: true });
+      const cooldownTimer = setTimeout(() => {
+        setCooldown(false);
+        cooldownRef.current = false;
+        updateMeltdownState({ cooldown: false });
+      }, COOLDOWN_TIMEOUT);
+      timersRef.current.push(cooldownTimer);
+      return;
+    }
+
     clearTimers();
 
     pointerBackupRef.current = document.body.style.pointerEvents;

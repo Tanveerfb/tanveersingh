@@ -58,6 +58,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <a href="#page-content" className="skip-link">
+          Skip to main content
+        </a>
         <ThemeProvider>
           <AuthProvider>
             <ScrollProgress />

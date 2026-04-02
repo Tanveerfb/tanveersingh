@@ -21,6 +21,11 @@ export default function ParticleField() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // Respect prefers-reduced-motion: skip particle animation entirely
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 

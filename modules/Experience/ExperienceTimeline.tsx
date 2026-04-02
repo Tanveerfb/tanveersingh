@@ -29,7 +29,7 @@ export default function ExperienceTimeline({
             <ExperienceCard {...entry} />
             {entry.role === "ICT Support Engineer" ? (
               <section>
-                <h1>Other Experience</h1>
+                <h2>Other Experience</h2>
               </section>
             ) : null}
           </Fragment>

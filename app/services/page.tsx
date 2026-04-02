@@ -3,6 +3,7 @@ import { generateSEO } from "@/components/SEO";
 import AnimatedSection from "@/components/AnimatedSection";
 import { FaCheck } from "react-icons/fa";
 import "@/styles/features/services.scss";
+import siteData from "@/content/siteData.json";
 
 export const metadata: Metadata = generateSEO({
   title: "Services",
@@ -10,50 +11,6 @@ export const metadata: Metadata = generateSEO({
     "Landing pages, business websites, and e-commerce builds — clean, fast, and built to convert.",
   url: "/services",
 });
-
-const serviceCards = [
-  {
-    name: "Landing Pages",
-    description:
-      "A focused, high-converting single page for your product, campaign, or idea. Fast to deploy and built to get people to act.",
-    features: [
-      "Single-page build",
-      "Mobile-first responsive layout",
-      "Clear call-to-action sections",
-      "Contact or lead capture form",
-      "Basic on-page SEO",
-    ],
-    popular: false,
-  },
-  {
-    name: "Business Websites",
-    description:
-      "A proper web presence for your business — multi-page, polished, and easy to maintain. From services pages to staff directories.",
-    features: [
-      "Multi-page structure (up to 6 pages)",
-      "Custom design with your branding",
-      "CMS or editable content blocks",
-      "Google Analytics integration",
-      "Contact form and maps",
-      "Performance optimised",
-    ],
-    popular: true,
-  },
-  {
-    name: "E-Commerce Websites",
-    description:
-      "Online stores built to sell — product listings, checkout, payments, and everything in between.",
-    features: [
-      "Product catalogue and listings",
-      "Shopping cart and checkout",
-      "Payment gateway integration",
-      "Order and inventory management",
-      "Mobile-optimised shopping experience",
-      "SEO-ready product pages",
-    ],
-    popular: false,
-  },
-];
 
 export default function ServicesPage() {
   return (
@@ -69,7 +26,7 @@ export default function ServicesPage() {
       </AnimatedSection>
 
       <div className="services-grid">
-        {serviceCards.map((card, index) => (
+        {siteData.services.map((card, index) => (
           <AnimatedSection key={card.name} delay={index * 0.15}>
             <div className={`service-card ${card.popular ? "popular" : ""}`}>
               {card.popular && (
