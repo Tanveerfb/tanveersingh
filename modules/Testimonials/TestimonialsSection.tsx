@@ -2,17 +2,7 @@
 
 import { motion } from "framer-motion";
 import "@/styles/features/testimonials.scss";
-
-const testimonials = [
-  {
-    name: "Mohammed Mustafa",
-    role: "S-Vyasa SAS’28｜Entrepreneur ｜Mentor｜Content Creator",
-    company: "Campus Mantri @GeeksforGeeks",
-    quote:
-      "I had the pleasure of working with Tanveer on several projects, and his ability to tackle complex challenges is truly impressive. He is a detail-oriented professional who consistently delivers high-quality work, even under tight deadlines. Beyond his technical skills, Tanveer is a great communicator and a reliable teammate. I highly recommend him to any organization looking for a dedicated and skilled professional.",
-    avatar: "",
-  },
-];
+import siteData from "@/content/siteData.json";
 
 export default function TestimonialsSection() {
   return (
@@ -23,7 +13,7 @@ export default function TestimonialsSection() {
       </p>
 
       <div className="testimonials-grid">
-        {testimonials.map((testimonial, index) => (
+        {siteData.testimonials.map((testimonial, index) => (
           <motion.div
             key={index}
             className="testimonial-card"
@@ -34,7 +24,7 @@ export default function TestimonialsSection() {
           >
             <div className="testimonial-quote">{testimonial.quote}</div>
             <div className="testimonial-author">
-              <div className="author-avatar">
+              <div className="author-avatar" aria-hidden="true">
                 {testimonial.avatar || testimonial.name.charAt(0)}
               </div>
               <div className="author-info">

@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import { Radar } from "react-chartjs-2";
 import siteData from "@/content/siteData.json";
+import { getCSSVar } from "@/lib/utils";
 import "@/styles/features/skills-radar.scss";
 
 ChartJS.register(
@@ -42,19 +43,27 @@ export default function SkillsRadar() {
     (score) => (score / maxScore) * 100,
   );
 
+  const accentAlt = getCSSVar("--accent-alt", "#00eaff");
+  const accent = getCSSVar("--accent", "#ffe600");
+  const textMuted = getCSSVar("--text-muted", "#9aa0a6");
+  const text = getCSSVar("--text", "#e8e8e8");
+  const border = getCSSVar("--border", "#2a2a2d");
+  const panel = getCSSVar("--panel", "#1a1a1c");
+  const glowStrong = getCSSVar("--glow-strong", "rgba(0, 234, 255, 0.45)");
+
   const data = {
     labels: Object.keys(skillCategories),
     datasets: [
       {
         label: "Skill Level",
         data: normalizedData,
-        backgroundColor: "rgba(0, 234, 255, 0.2)",
-        borderColor: "rgba(0, 234, 255, 1)",
+        backgroundColor: glowStrong,
+        borderColor: accentAlt,
         borderWidth: 2,
-        pointBackgroundColor: "rgba(255, 230, 0, 1)",
-        pointBorderColor: "#fff",
-        pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "rgba(0, 234, 255, 1)",
+        pointBackgroundColor: accent,
+        pointBorderColor: text,
+        pointHoverBackgroundColor: text,
+        pointHoverBorderColor: accentAlt,
       },
     ],
   };
@@ -68,14 +77,14 @@ export default function SkillsRadar() {
         max: 100,
         ticks: {
           stepSize: 20,
-          color: "#9aa0a6",
+          color: textMuted,
           backdropColor: "transparent",
         },
         grid: {
-          color: "#2a2a2d",
+          color: border,
         },
         pointLabels: {
-          color: "#e8e8e8",
+          color: text,
           font: {
             size: 14,
             weight: 500,
@@ -88,11 +97,11 @@ export default function SkillsRadar() {
         display: false,
       },
       tooltip: {
-        backgroundColor: "#1a1a1c",
-        borderColor: "#2a2a2d",
+        backgroundColor: panel,
+        borderColor: border,
         borderWidth: 1,
-        titleColor: "#ffe600",
-        bodyColor: "#e8e8e8",
+        titleColor: accent,
+        bodyColor: text,
         padding: 12,
         displayColors: false,
       },
@@ -102,7 +111,11 @@ export default function SkillsRadar() {
   return (
     <div className="skills-radar-container">
       <h2 className="skills-radar-title">Skills Overview</h2>
-      <div className="skills-radar-chart">
+      <div
+        className="skills-radar-chart"
+        role="img"
+        aria-label="Radar chart showing skill levels across Web Dev, Backend, Cloud, Microsoft 365, and Content Creation"
+      >
         <Radar ref={chartRef} data={data} options={options} />
       </div>
     </div>
