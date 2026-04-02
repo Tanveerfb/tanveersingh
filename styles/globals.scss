@@ -4,9 +4,9 @@
 @use "./themes/cyberpunk";
 @use "./themes/dukesenior";
 @use "./mixins";
-@use "./features/cursor";
 @use "./features/console";
 @use "./features/meltdown";
+@use "./features/announcement-bar";
 @use "./features/navbar";
 @use "./features/hero";
 @use "./features/system-log-strip";
@@ -25,6 +25,8 @@
 @use "./features/skills-radar";
 @use "./features/timeline";
 @use "./features/testimonials";
+@use "./features/enquiry-form";
+@use "./features/admin";
 @use "./components/skeleton";
 @use "./components/loading-spinner";
 @use "./components/resume-download";
@@ -38,7 +40,9 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.5;
-  transition: background 0.3s ease, color 0.3s ease;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
 }
 
 hr {

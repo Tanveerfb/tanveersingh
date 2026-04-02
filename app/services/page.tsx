@@ -5,53 +5,51 @@ import { FaCheck } from "react-icons/fa";
 import "@/styles/features/services.scss";
 
 export const metadata: Metadata = generateSEO({
-  title: "Services & Pricing",
-  description: "Professional web development, Microsoft 365 solutions, and ICT support services tailored to your needs.",
+  title: "Services",
+  description:
+    "Landing pages, business websites, and e-commerce builds — clean, fast, and built to convert.",
   url: "/services",
 });
 
-const serviceTiers = [
+const serviceCards = [
   {
-    name: "Basic",
-    price: "Contact",
-    description: "Perfect for small projects and consultations",
+    name: "Landing Pages",
+    description:
+      "A focused, high-converting single page for your product, campaign, or idea. Fast to deploy and built to get people to act.",
     features: [
-      "Single page website",
-      "Responsive design",
-      "Basic SEO optimization",
-      "Contact form integration",
-      "1 month support",
+      "Single-page build",
+      "Mobile-first responsive layout",
+      "Clear call-to-action sections",
+      "Contact or lead capture form",
+      "Basic on-page SEO",
     ],
     popular: false,
   },
   {
-    name: "Professional",
-    price: "Contact",
-    description: "Ideal for growing businesses",
+    name: "Business Websites",
+    description:
+      "A proper web presence for your business — multi-page, polished, and easy to maintain. From services pages to staff directories.",
     features: [
-      "Multi-page website",
-      "Custom design",
-      "Advanced SEO",
-      "CMS integration",
-      "Database setup",
-      "3 months support",
-      "Performance optimization",
+      "Multi-page structure (up to 6 pages)",
+      "Custom design with your branding",
+      "CMS or editable content blocks",
+      "Google Analytics integration",
+      "Contact form and maps",
+      "Performance optimised",
     ],
     popular: true,
   },
   {
-    name: "Enterprise",
-    price: "Contact",
-    description: "Complete digital solutions",
+    name: "E-Commerce Websites",
+    description:
+      "Online stores built to sell — product listings, checkout, payments, and everything in between.",
     features: [
-      "Complex web applications",
-      "Microsoft 365 integration",
-      "SharePoint customization",
-      "Power Automate workflows",
-      "Internal portals",
-      "6 months support",
-      "Ongoing maintenance",
-      "Priority support",
+      "Product catalogue and listings",
+      "Shopping cart and checkout",
+      "Payment gateway integration",
+      "Order and inventory management",
+      "Mobile-optimised shopping experience",
+      "SEO-ready product pages",
     ],
     popular: false,
   },
@@ -62,29 +60,27 @@ export default function ServicesPage() {
     <div className="services-page">
       <AnimatedSection>
         <header className="services-header">
-          <h1 className="section-heading">Services & Pricing</h1>
+          <h1 className="section-heading">Services</h1>
           <p className="services-intro">
-            Professional development services tailored to your needs
+            Pick a starting point — every project is scoped and quoted to your
+            actual needs.
           </p>
         </header>
       </AnimatedSection>
 
       <div className="services-grid">
-        {serviceTiers.map((tier, index) => (
-          <AnimatedSection key={tier.name} delay={index * 0.15}>
-            <div
-              className={`service-card ${tier.popular ? "popular" : ""}`}
-            >
-              {tier.popular && (
+        {serviceCards.map((card, index) => (
+          <AnimatedSection key={card.name} delay={index * 0.15}>
+            <div className={`service-card ${card.popular ? "popular" : ""}`}>
+              {card.popular && (
                 <div className="popular-badge">Most Popular</div>
               )}
               <div className="service-card-header">
-                <h2 className="service-name">{tier.name}</h2>
-                <div className="service-price">{tier.price}</div>
-                <p className="service-description">{tier.description}</p>
+                <h2 className="service-name">{card.name}</h2>
+                <p className="service-description">{card.description}</p>
               </div>
               <ul className="service-features">
-                {tier.features.map((feature) => (
+                {card.features.map((feature) => (
                   <li key={feature} className="service-feature">
                     <FaCheck className="feature-icon" />
                     <span>{feature}</span>
@@ -92,7 +88,7 @@ export default function ServicesPage() {
                 ))}
               </ul>
               <a href="/contact" className="service-cta">
-                Get Started
+                Get in Touch
               </a>
             </div>
           </AnimatedSection>
@@ -102,8 +98,8 @@ export default function ServicesPage() {
       <AnimatedSection delay={0.5}>
         <div className="services-note">
           <p>
-            All projects are custom-quoted based on specific requirements.
-            Contact me to discuss your needs and get a personalized quote.
+            All projects are quoted based on scope. Get in touch and I&apos;ll
+            put together something that actually fits your budget.
           </p>
         </div>
       </AnimatedSection>

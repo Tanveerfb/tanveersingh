@@ -21,7 +21,7 @@ ChartJS.register(
   LineElement,
   Filler,
   Tooltip,
-  Legend
+  Legend,
 );
 
 export default function SkillsRadar() {
@@ -31,7 +31,7 @@ export default function SkillsRadar() {
   const skillCategories = {
     "Web Dev": siteData.skills.web.length + siteData.skills.frameworks.length,
     Backend: siteData.skills.backend.length + siteData.skills.databases.length,
-    Cloud: siteData.skills.cloud.length,
+    Cloud: 8,
     "Microsoft 365": siteData.skills.microsoft365.length,
     "Content Creation": siteData.skills["Content Creation"].length,
   };
@@ -39,7 +39,7 @@ export default function SkillsRadar() {
   // Normalize scores to 0-100 scale
   const maxScore = Math.max(...Object.values(skillCategories));
   const normalizedData = Object.values(skillCategories).map(
-    (score) => (score / maxScore) * 100
+    (score) => (score / maxScore) * 100,
   );
 
   const data = {

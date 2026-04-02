@@ -1,0 +1,136 @@
+.enquiry-form,
+.enquiry-success {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.enquiry-form-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+  color: var(--accent-alt);
+}
+
+.enquiry-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+}
+
+.enquiry-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.enquiry-optional {
+  font-weight: 400;
+  opacity: 0.6;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.enquiry-input {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.6rem 0.8rem;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  outline: none;
+
+  &::placeholder {
+    color: var(--text-muted);
+    opacity: 0.5;
+  }
+
+  &:focus {
+    border-color: var(--accent-alt);
+    box-shadow: 0 0 0 2px rgba(0, 234, 255, 0.12);
+  }
+
+  &.enquiry-input--error {
+    border-color: #ff4d4f;
+  }
+}
+
+.enquiry-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.enquiry-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @media (max-width: 520px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.enquiry-contact-note {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: -0.5rem 0 -0.5rem;
+}
+
+.enquiry-error {
+  font-size: 0.75rem;
+  color: #ff4d4f;
+}
+
+.enquiry-error--submit {
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.enquiry-btn {
+  align-self: flex-start;
+  padding: 0.6rem 1.4rem;
+  background: var(--accent-alt);
+  color: var(--bg);
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    opacity 0.2s,
+    box-shadow 0.2s;
+
+  &:hover:not(:disabled) {
+    opacity: 0.88;
+    box-shadow: 0 0 14px rgba(0, 234, 255, 0.3);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.enquiry-success {
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.enquiry-success-msg {
+  font-family: var(--font-mono, monospace);
+  color: var(--success);
+  font-size: 0.95rem;
+}

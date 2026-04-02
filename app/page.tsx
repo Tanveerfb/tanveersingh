@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
 import HeroSection from "@/modules/Hero/HeroSection";
-import DiagnosticsCapsulePanel from "@/modules/Hero/DiagnosticsCapsulePanel";
 import AnimatedSection from "@/components/AnimatedSection";
-import SkillsRadar from "@/modules/Skills/SkillsRadar";
-import Timeline from "@/modules/Experience/Timeline";
 import TestimonialsSection from "@/modules/Testimonials/TestimonialsSection";
-import ResumeDownload from "@/components/ResumeDownload";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -23,23 +19,8 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <DiagnosticsCapsulePanel />
-      
+
       <AnimatedSection delay={0.2}>
-        <div style={{ textAlign: "center", margin: "2rem 0" }}>
-          <ResumeDownload />
-        </div>
-      </AnimatedSection>
-
-      <AnimatedSection delay={0.3}>
-        <SkillsRadar />
-      </AnimatedSection>
-
-      <AnimatedSection delay={0.4}>
-        <Timeline />
-      </AnimatedSection>
-
-      <AnimatedSection delay={0.5}>
         <TestimonialsSection />
       </AnimatedSection>
     </>

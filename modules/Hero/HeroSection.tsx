@@ -2,7 +2,6 @@
 
 import type { JSX } from "react";
 import { useEffect, useMemo, useRef } from "react";
-import ProjectCard from "@/components/ProjectCard";
 
 const ROLE_CHIPS = [
   "Full Stack Web Developer",
@@ -77,7 +76,7 @@ export default function HeroSection(): JSX.Element {
           {role}
         </div>
       )),
-    []
+    [],
   );
 
   return (
@@ -90,27 +89,6 @@ export default function HeroSection(): JSX.Element {
 
       <div ref={rolesRef} className="hero-roles">
         {roleChips}
-      </div>
-      <div className="hero-id-panels">
-        <ProjectCard
-          className="hero-identity-card"
-          title="Open for commissions"
-          description="Need a website, portal, automation, or a modern UI refresh? Let's build something clean and fast."
-          focus={[]}
-          tech={[]}
-          focusLabel="Work"
-          link="/contact"
-          linkLabel="Contact"
-        />
-
-        <ProjectCard
-          className="hero-identity-card"
-          title="Console"
-          description="Press ~ to toggle the console. Try out some fun commands"
-          focus={["help", "stats", "theme", "clear", "reboot", "hack"]}
-          tech={[]}
-          focusLabel="Commands"
-        />
       </div>
     </div>
   );

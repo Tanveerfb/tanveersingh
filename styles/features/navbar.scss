@@ -1,6 +1,6 @@
 .holo-navbar {
   position: fixed;
-  top: 0;
+  top: var(--alert-h, 0px);
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -17,7 +17,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: height 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease,
+  transition:
+    height 0.3s ease,
+    backdrop-filter 0.3s ease,
+    box-shadow 0.3s ease,
     border-color 0.3s ease;
 }
 
@@ -95,7 +98,10 @@
   letter-spacing: 1px;
   text-transform: uppercase;
   text-shadow: 0 0 6px var(--accent-soft, rgba(0, 255, 255, 0.4));
-  transition: color 0.2s ease, text-shadow 0.2s ease, transform 0.18s ease;
+  transition:
+    color 0.2s ease,
+    text-shadow 0.2s ease,
+    transform 0.18s ease;
   padding-inline: 0.25rem;
 }
 
@@ -109,7 +115,10 @@
   background: transparent;
   opacity: 0;
   transform: scaleX(0.8);
-  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    background 0.2s ease;
 }
 
 .nav-item:hover {
@@ -128,14 +137,28 @@
 
 .nav-item.active {
   color: var(--accent);
-  text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
+  text-shadow:
+    0 0 10px var(--accent),
+    0 0 20px var(--accent);
 }
 
 .nav-item.active::after {
   background: var(--accent);
   opacity: 1;
   transform: scaleX(1);
-  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
+  box-shadow:
+    0 0 10px var(--accent),
+    0 0 20px var(--accent);
+}
+
+.nav-item--admin {
+  opacity: 0.55;
+  font-size: 0.75em;
+
+  &:hover,
+  &.active {
+    opacity: 1;
+  }
 }
 
 #page-content,
@@ -264,7 +287,10 @@
     height: 2px;
     background: var(--text);
     border-radius: 99px;
-    transition: transform 0.22s ease, top 0.22s ease, opacity 0.2s ease;
+    transition:
+      transform 0.22s ease,
+      top 0.22s ease,
+      opacity 0.2s ease;
     box-shadow: 0 0 8px rgba(0, 255, 255, 0.25);
   }
 

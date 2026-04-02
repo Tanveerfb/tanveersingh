@@ -74,6 +74,8 @@ export default function PowerCoreFooter(): JSX.Element {
 
       <div className="footer-status">
         <p>&gt; POWER_CORE_STATUS: {meltdownMode ? "UNSTABLE" : "STABLE"}</p>
+        <p>&gt; SYSTEM_INTEGRITY: {meltdownMode ? "COMPROMISED" : "STABLE"}</p>
+        <p>&gt; MODULES: 8 / 8 LOADED</p>
         <p>&gt; NETWORK: ONLINE</p>
         <p>
           &gt; LAST_SYNC: <span ref={lastSyncRef}>0.0s</span> ago

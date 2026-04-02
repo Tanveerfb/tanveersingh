@@ -5,33 +5,16 @@ import "@/styles/features/testimonials.scss";
 
 const testimonials = [
   {
-    name: "Sarah Johnson",
-    role: "Operations Manager",
-    company: "Tech Solutions Inc",
+    name: "Mohammed Mustafa",
+    role: "S-Vyasa SAS’28｜Entrepreneur ｜Mentor｜Content Creator",
+    company: "Campus Mantri @GeeksforGeeks",
     quote:
-      "Tanveer's expertise in Microsoft 365 and SharePoint transformed our workflow. His custom portal solution has significantly improved our team's productivity.",
-    avatar: "",
-  },
-  {
-    name: "Michael Chen",
-    role: "CTO",
-    company: "Innovation Labs",
-    quote:
-      "Outstanding web development skills! Tanveer delivered a modern, responsive website that exceeded our expectations. His attention to detail is remarkable.",
-    avatar: "",
-  },
-  {
-    name: "Emma Williams",
-    role: "Project Lead",
-    company: "Digital Agency",
-    quote:
-      "Working with Tanveer was a pleasure. He's professional, communicative, and delivers high-quality work on time. Highly recommended!",
+      "I had the pleasure of working with Tanveer on several projects, and his ability to tackle complex challenges is truly impressive. He is a detail-oriented professional who consistently delivers high-quality work, even under tight deadlines. Beyond his technical skills, Tanveer is a great communicator and a reliable teammate. I highly recommend him to any organization looking for a dedicated and skilled professional.",
     avatar: "",
   },
 ];
 
 export default function TestimonialsSection() {
-
   return (
     <div className="testimonials-section">
       <h2 className="section-heading">Client Testimonials</h2>

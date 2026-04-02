@@ -5,6 +5,7 @@ import siteData from "@/content/siteData.json";
 import DecryptedText from "@/components/DecryptedText";
 import ElectricBorder from "@/components/ElectricBorder";
 import PixelCard from "@/components/PixelCard";
+import EnquiryForm from "@/modules/Contact/EnquiryForm";
 import {
   FaCalendarDays,
   FaDiscord,
@@ -29,6 +30,8 @@ export default function ContactFlow(): JSX.Element {
       </h1>
 
       <div className="contact-layout">
+        <EnquiryForm />
+
         <ElectricBorder
           color="var(--success)"
           thickness={5}
@@ -134,7 +137,9 @@ export default function ContactFlow(): JSX.Element {
                     </span>
                     <span className="contact-option-text">
                       <span className="contact-option-title">Discord</span>
-                      <span className="contact-option-subtitle">Message me</span>
+                      <span className="contact-option-subtitle">
+                        Message me
+                      </span>
                     </span>
                   </a>
                 </PixelCard>

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import HologramNavbar from "@/modules/Navbar/HologramNavbar";
+import AnnouncementBar from "@/modules/Navbar/AnnouncementBar";
 import PowerCoreFooter from "@/modules/Footer/PowerCoreFooter";
 import VideoBackground from "@/modules/Background/VideoBackground";
 import "../styles/globals.scss";
 import ThemeProvider from "@/theme/ThemeProvider";
-import CustomCursor from "@/modules/Cursor/CustomCursor";
+import { AuthProvider } from "@/context/AuthContext";
 import MatrixConsole from "@/modules/Console/MatrixConsole";
 import { Meltdown } from "@/modules/Chaos/Meltdown";
 import ScrollProgress from "@/modules/ScrollProgress/ScrollProgress";
@@ -58,18 +59,20 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ThemeProvider>
-          <ScrollProgress />
-          <VideoBackground />
-          <CustomCursor />
-          <MatrixConsole />
-          <Meltdown />
-          <KonamiCode />
-          <HologramNavbar />
-          <ToastProvider />
-          <main id="page-content" className="page-content">
-            <div className="container">{children}</div>
-          </main>
-          <PowerCoreFooter />
+          <AuthProvider>
+            <ScrollProgress />
+            <VideoBackground />
+            <MatrixConsole />
+            <Meltdown />
+            <KonamiCode />
+            <AnnouncementBar />
+            <HologramNavbar />
+            <ToastProvider />
+            <main id="page-content" className="page-content">
+              <div className="container">{children}</div>
+            </main>
+            <PowerCoreFooter />
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
