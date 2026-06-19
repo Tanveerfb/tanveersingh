@@ -120,7 +120,7 @@
   }
 }
 
-.circuit-svg {
+.circuit-board-inner {
   animation: panelGlitch 12s linear infinite;
 }
 
@@ -131,7 +131,7 @@
   .node--pulse-1,
   .node--pulse-2,
   .node--pulse-3,
-  .circuit-svg {
+  .circuit-board-inner {
     animation: none;
     stroke-dasharray: none;
     opacity: 1;
