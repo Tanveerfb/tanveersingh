@@ -198,6 +198,41 @@
   .page-content {
     padding-top: 60px;
   }
+
+  .nav-mobile-panel {
+    position: absolute;
+    top: 52px;
+    left: 0;
+    right: 0;
+    max-height: calc(100dvh - 52px);
+    overflow-y: auto;
+    padding: 0.4rem;
+    background: rgba(11, 12, 20, 0.97);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    z-index: 199;
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      min-height: 48px;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+
+      &:hover {
+        background: rgba(0, 229, 255, 0.05);
+        color: var(--text);
+      }
+
+      &.active {
+        background: var(--accent-alt);
+        color: var(--bg);
+        box-shadow: 0 0 10px rgba(255, 45, 170, 0.35);
+      }
+    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
