@@ -1,12 +1,24 @@
+/* ── Hero ── */
+
 .hero {
-  min-height: calc(100svh - 86px);
-  display: flex;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
   align-items: center;
   padding: 4rem 0 5rem;
 }
 
-.hero-content {
-  max-width: 680px;
+.hero-identity {
+  max-width: 580px;
+}
+
+.hero-accent-rule {
+  width: 48px;
+  height: 2px;
+  background: var(--accent-alt);
+  box-shadow: 0 0 8px rgba(255, 45, 170, 0.6);
+  margin-bottom: 1.4rem;
 }
 
 .hero-eyebrow {
@@ -25,13 +37,16 @@
 
 .hero-name {
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-size: clamp(4rem, 10vw, 7rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.06;
   color: var(--text);
   margin: 0 0 1.4rem;
   text-wrap: balance;
+  text-shadow:
+    0 0 40px rgba(0, 229, 255, 0.3),
+    0 0 100px rgba(0, 229, 255, 0.1);
 }
 
 .hero-tagline {
@@ -49,6 +64,20 @@
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
+}
+
+.hero-circuit-panel {
+  height: 480px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  box-shadow:
+    0 0 20px rgba(0, 229, 255, 0.15),
+    inset 0 0 40px rgba(0, 229, 255, 0.03);
+  background: var(--panel);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ── CTA Buttons ── */
@@ -74,7 +103,7 @@
   &:hover {
     background: var(--accent);
     color: var(--bg);
-    box-shadow: 0 0 22px rgba(0, 229, 255, 0.28);
+    box-shadow: 0 0 22px rgba(0, 229, 255, 0.35);
   }
 }
 
@@ -103,16 +132,29 @@
 }
 
 /* ── Responsive ── */
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-circuit-panel {
+    display: none;
+  }
+
+  .hero-identity {
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   .hero {
     padding: 3rem 0 4rem;
-    min-height: calc(100svh - 74px);
   }
 }
 
 @media (max-width: 480px) {
   .hero-name {
-    font-size: clamp(2.6rem, 13vw, 3.5rem);
+    font-size: clamp(2.6rem, 13vw, 4rem);
   }
 
   .hero-actions {
@@ -131,5 +173,9 @@
   .btn-primary,
   .btn-ghost {
     transition: none;
+  }
+
+  .hero-name {
+    text-shadow: none;
   }
 }

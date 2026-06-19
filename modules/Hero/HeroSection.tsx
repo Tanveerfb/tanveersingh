@@ -3,7 +3,6 @@
 import type { JSX } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import profile from "@/content/profile.json";
 
 const container = {
   hidden: {},
@@ -27,18 +26,18 @@ const rise = {
 };
 
 export default function HeroSection(): JSX.Element {
-  const location = profile.location.split("/")[0].trim();
-
   return (
     <section className="hero" aria-label="Introduction">
       <motion.div
-        className="hero-content"
+        className="hero-identity"
         variants={container}
         initial="hidden"
         animate="show"
       >
+        <div className="hero-accent-rule" aria-hidden="true" />
+
         <motion.p className="hero-eyebrow" variants={rise}>
-          {profile.role}&ensp;&mdash;&ensp;{location}
+          tsingh&ensp;&middot;&ensp;Sydney, AU
         </motion.p>
 
         <motion.h1 className="hero-name" variants={rise}>
@@ -58,6 +57,10 @@ export default function HeroSection(): JSX.Element {
           </Link>
         </motion.div>
       </motion.div>
+
+      <div className="hero-circuit-panel" aria-hidden="true">
+        {/* CircuitBoard added in Task 2 */}
+      </div>
     </section>
   );
 }
