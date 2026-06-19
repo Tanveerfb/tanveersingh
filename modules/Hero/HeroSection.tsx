@@ -3,6 +3,7 @@
 import type { JSX } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import CircuitBoard from "@/modules/Hero/CircuitBoard";
 
 const container = {
   hidden: {},
@@ -59,7 +60,7 @@ export default function HeroSection(): JSX.Element {
       </motion.div>
 
       <div className="hero-circuit-panel" aria-hidden="true">
-        {/* CircuitBoard added in Task 2 */}
+        <CircuitBoard />
       </div>
     </section>
   );

@@ -1,0 +1,139 @@
+/* ── Circuit Board ── */
+
+.circuit-svg {
+  width: 90%;
+  height: 90%;
+}
+
+.trace {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  &--primary {
+    stroke: var(--accent);
+    stroke-width: 1.5;
+    filter: drop-shadow(0 0 4px rgba(0, 229, 255, 0.6));
+  }
+
+  &--secondary {
+    stroke: var(--border);
+    stroke-width: 1;
+    opacity: 0.5;
+  }
+
+  &--animated {
+    /* Moving data-packet: short dash travels full path */
+    /* Trace A total length ≈ 490 SVG units (130+80+140+60+80) */
+    stroke-dasharray: 14 476;
+    stroke-dashoffset: 0;
+    stroke: var(--accent);
+    stroke-width: 2.5;
+    filter: drop-shadow(0 0 6px rgba(0, 229, 255, 1));
+    animation: dataPacket 5s linear infinite 1s;
+  }
+
+  &--flicker {
+    animation: traceFlicker 9s linear infinite 2s;
+  }
+}
+
+.node {
+  fill: var(--accent-alt);
+  filter: drop-shadow(0 0 6px rgba(255, 45, 170, 0.8));
+}
+
+/* ── Keyframes ── */
+
+@keyframes dataPacket {
+  /* dash travels 490 SVG units then resets */
+  0% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  95% {
+    stroke-dashoffset: -490;
+    opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: -490;
+    opacity: 0;
+  }
+}
+
+@keyframes nodePulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.node--pulse-1 {
+  animation: nodePulse 3s ease-in-out infinite;
+}
+
+.node--pulse-2 {
+  animation: nodePulse 3s ease-in-out infinite 1.8s;
+}
+
+.node--pulse-3 {
+  animation: nodePulse 3s ease-in-out infinite 3.4s;
+}
+
+@keyframes traceFlicker {
+  0%,
+  13%,
+  15%,
+  100% {
+    opacity: 1;
+  }
+  14% {
+    opacity: 0.15;
+  }
+}
+
+@keyframes panelGlitch {
+  /* 12s cycle: glitch at ~96%, otherwise still */
+  0%,
+  95.4%,
+  99%,
+  100% {
+    transform: none;
+  }
+  95.5% {
+    transform: translateX(3px) translateY(-1px);
+  }
+  96.5% {
+    transform: translateX(-3px) translateY(1px);
+  }
+  97.5% {
+    transform: translateX(2px);
+  }
+  98% {
+    transform: none;
+  }
+}
+
+.circuit-svg {
+  animation: panelGlitch 12s linear infinite;
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .trace--animated,
+  .trace--flicker,
+  .node--pulse-1,
+  .node--pulse-2,
+  .node--pulse-3,
+  .circuit-svg {
+    animation: none;
+    stroke-dasharray: none;
+    opacity: 1;
+  }
+}
