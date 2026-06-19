@@ -1,0 +1,141 @@
+.intro-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+  padding-top: 10vh;
+}
+
+.intro-depth-code {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 255, 255, 0.12) 0px,
+    transparent 2px
+  );
+  filter: blur(3px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.intro-depth-particles {
+  position: absolute;
+  inset: 0;
+  opacity: 0.15;
+  background-image: url("/noise.png");
+  /* subtle noise */
+  mix-blend-mode: screen;
+  animation: noisePulse 6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes noisePulse {
+  0%,
+  100% {
+    opacity: 0.05;
+  }
+  50% {
+    opacity: 0.15;
+  }
+}
+
+.intro-depth-scanline {
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 255, 255, 0.14),
+    transparent
+  );
+  animation: introScan 5.4s linear infinite;
+  pointer-events: none;
+  z-index: 3;
+}
+
+@keyframes introScan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.intro-lines {
+  position: relative;
+  z-index: 10;
+  padding: 1rem;
+  font-family: var(--font-mono);
+  color: var(--accent);
+  text-shadow: 0 0 8px var(--accent-soft);
+}
+
+.intro-line {
+  font-size: 0.92rem;
+  margin: 8px 0;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.intro-line.active {
+  opacity: 1;
+}
+
+/* Chromatic aberration */
+.intro-line.aberrate {
+  animation: rgbSplit 0.28s ease;
+}
+
+@keyframes rgbSplit {
+  0% {
+    filter: drop-shadow(2px 0 #f00) drop-shadow(-2px 0 #0ff);
+  }
+  100% {
+    filter: none;
+  }
+}
+
+/* Blinking cursor */
+.cursor {
+  animation: blink 0.5s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* Screen shake */
+.shake {
+  animation: introShake 0.22s ease;
+}
+
+@keyframes introShake {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-3px, 1px);
+  }
+  50% {
+    transform: translate(2px, -2px);
+  }
+  75% {
+    transform: translate(-2px, 3px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.boot-complete {
+  margin-top: 1.5rem;
+  font-family: var(--font-mono);
+  color: var(--accent);
+}

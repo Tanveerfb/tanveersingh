@@ -1,0 +1,107 @@
+.page-shell {
+  width: 100%;
+  max-width: 1080px;
+  margin: 3.2rem auto;
+  padding: 1.6rem;
+  position: relative;
+  border: 1px solid var(--accent-soft);
+  border-radius: 10px;
+
+  background: rgba(0, 20, 28, 0.28);
+  backdrop-filter: blur(12px);
+  /* shared DukeOS animation utilities */
+  @extend .duke-scan;
+  @extend .duke-fade-up;
+  overflow: hidden;
+}
+
+/* faint grid */
+.page-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+      rgba(0, 255, 255, 0.06) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+/* vertical scanline */
+.scanline {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 255, 255, 0.12),
+    transparent
+  );
+  mix-blend-mode: screen;
+  animation: scanMove 6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes scanMove {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* corner accents */
+.page-shell::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 18px;
+  height: 18px;
+  border-top: 2px solid var(--accent);
+  border-left: 2px solid var(--accent);
+  opacity: 0.4;
+}
+
+/* second corner */
+.page-shell .page-shell-inner::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 18px;
+  height: 18px;
+  border-bottom: 2px solid var(--accent);
+  border-right: 2px solid var(--accent);
+  opacity: 0.4;
+}
+
+.page-shell-inner {
+  position: relative;
+  z-index: 3;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* staggered animations for children using shared utility */
+.page-shell-inner {
+  @extend .duke-stagger;
+}
+
+.page-shell-footer {
+  margin-top: 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-soft);
+  opacity: 0.7;
+  text-align: right;
+  text-shadow: 0 0 6px var(--accent-soft);
+  position: relative;
+  z-index: 4;
+}

@@ -7,8 +7,10 @@
   background: rgba(0, 32, 0, 0.94);
   color: var(--success, #00ff70);
   transform: translateY(-100%);
-  transition: transform 0.35s ease, opacity 0.35s ease;
-  z-index: 99;
+  transition:
+    transform 0.35s ease,
+    opacity 0.35s ease;
+  z-index: 9998;
   opacity: 0;
   pointer-events: none;
   box-shadow: 0 12px 30px rgba(0, 255, 112, 0.15);

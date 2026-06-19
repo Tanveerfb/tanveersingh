@@ -1,0 +1,51 @@
+"use client";
+
+import type { JSX } from "react";
+import VerticalDataStrip from "@/modules/Layout/VerticalDataStrip";
+import PageShell from "@/modules/Layout/PageShell";
+import PortfolioGrid from "@/modules/Portfolio/PortfolioGrid";
+import siteData from "@/content/siteData.json";
+
+export default function PortfolioPageUsage(): JSX.Element {
+  const projects = siteData.projects.map((project) => {
+    const tags = [
+      project.status,
+      ...(project.focus ?? []),
+      ...(project.tech ?? []),
+    ].filter(Boolean) as string[];
+
+    const description =
+      project.description ??
+      (project.focus ? project.focus.join(", ") : "") ??
+      "";
+
+    const projectWithOptionalMedia = project as {
+      link?: string;
+      image?: string;
+    };
+
+    return {
+      title: project.title,
+      description,
+      tags,
+      link: projectWithOptionalMedia.link,
+      image: projectWithOptionalMedia.image,
+    };
+  });
+
+  return (
+    <>
+      <VerticalDataStrip
+        logs={[
+          "> indexing builds...",
+          "> compiling showcase...",
+          "> portfolio matrix stable...",
+        ]}
+      />
+
+      <PageShell>
+        <PortfolioGrid header="Portfolio" projects={projects} />
+      </PageShell>
+    </>
+  );
+}

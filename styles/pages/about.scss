@@ -1,0 +1,33 @@
+/* ABOUT PAGE */
+
+.about-section p {
+  color: var(--accent);
+  line-height: 1.5;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  padding-top: 1rem;
+}
+
+.skill-card {
+  background: rgba(0, 20, 28, 0.32);
+  padding: 0.75rem;
+  border: 1px solid var(--accent-soft);
+  border-radius: 6px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  text-shadow: 0 0 6px var(--accent-soft);
+  transition: 0.2s ease;
+}
+
+.skill-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px var(--accent);
+}

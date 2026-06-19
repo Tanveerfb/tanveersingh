@@ -1,36 +1,41 @@
-import type { Metadata } from "next";
-import PortfolioGrid from "@/modules/Portfolio/PortfolioGrid";
-import siteData from "@/content/siteData.json";
-
-export const metadata: Metadata = {
-  title: "Portfolio",
-  description:
-    "View Tanveer Singh's portfolio including Microsoft 365 portals, company landing pages, and bespoke IT automation projects.",
-  openGraph: {
-    title: "Tanveer Singh | Portfolio",
-    description:
-      "Collection of Tanveer Singh's featured projects spanning SharePoint solutions, internal portals, and Java deliverables.",
-    url: "/portfolio",
-  },
-};
+import PageShell from "@/modules/Layout/PageShell";
+import VerticalDataStrip from "@/modules/Layout/VerticalDataStrip";
+import ProjectCard from "@/modules/ui/ProjectCard";
 
 export default function PortfolioPage() {
-  const projects = siteData.projects.map((project) => {
-    const description =
-      project.description ?? (project.focus ? project.focus.join(", ") : "");
+  return (
+    <>
+      <VerticalDataStrip
+        logs={[
+          "> loading assets...",
+          "> scanning projects...",
+          "> grid stable",
+        ]}
+      />
 
-    const projectWithOptionalLink = project as { link?: string; note?: string };
+      <PageShell>
+        <h1 className="duke-fade-up duke-hover">Project Grid Viewer</h1>
 
-    return {
-      title: project.title,
-      description,
-      note: projectWithOptionalLink.note,
-      status: project.status,
-      focus: project.focus ?? [],
-      tech: project.tech ?? [],
-      link: projectWithOptionalLink.link,
-    };
-  });
+        <section className="project-grid duke-stagger">
+          <ProjectCard
+            title="Personal Portfolio"
+            description="Built with NextJS + Tailwind + DukeOS modules"
+            tags={["Next.js", "Tailwind", "Design"]}
+          />
 
-  return <PortfolioGrid header="Portfolio" projects={projects} />;
+          <ProjectCard
+            title="Landing Page"
+            description="Placeholder project summary..."
+            tags={["Marketing", "UI", "Copywriting"]}
+          />
+
+          <ProjectCard
+            title="Freelance Work"
+            description="Details placeholder..."
+            tags={["Client", "Delivery"]}
+          />
+        </section>
+      </PageShell>
+    </>
+  );
 }
