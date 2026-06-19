@@ -237,6 +237,15 @@
 
 @media (prefers-reduced-motion: reduce) {
   .nav-item,
+  .nav-brand,
+  .nav-toggle {
+    transition: none;
+  }
+
+  .nav-brand {
+    text-shadow: none;
+  }
+
   .nav-toggle-bars .bar {
     transition: none;
   }
