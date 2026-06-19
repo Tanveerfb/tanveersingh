@@ -17,9 +17,6 @@ export default function TestimonialsSection() {
           <motion.div
             key={index}
             className="testimonial-card"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.2 }}
             whileHover={{ y: -8 }}
           >
             <div className="testimonial-quote">{testimonial.quote}</div>

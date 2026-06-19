@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import HeroSection from "@/modules/Hero/HeroSection";
 import AnimatedSection from "@/components/AnimatedSection";
 import TestimonialsSection from "@/modules/Testimonials/TestimonialsSection";
+import WhatIBuild from "@/modules/Home/WhatIBuild";
+import ContactCTA from "@/modules/Home/ContactCTA";
 import Link from "next/link";
 import projects from "@/content/projects.json";
 
@@ -23,6 +25,8 @@ export default function Home() {
   return (
     <>
       <HeroSection />
+
+      <WhatIBuild />
 
       <section className="featured-work">
         <header className="fw-header">
@@ -74,6 +78,8 @@ export default function Home() {
       <AnimatedSection delay={0.2}>
         <TestimonialsSection />
       </AnimatedSection>
+
+      <ContactCTA />
     </>
   );
 }
