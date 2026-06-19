@@ -80,7 +80,7 @@
   }
 
   &.active {
-    color: var(--bg);
+    color: var(--text);
     background: var(--accent-alt);
     box-shadow: 0 0 10px rgba(255, 45, 170, 0.4);
   }
@@ -228,7 +228,7 @@
 
       &.active {
         background: var(--accent-alt);
-        color: var(--bg);
+        color: var(--text);
         box-shadow: 0 0 10px rgba(255, 45, 170, 0.35);
       }
     }
