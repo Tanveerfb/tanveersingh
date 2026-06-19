@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import "@/styles/features/testimonials.scss";
-import siteData from "@/content/siteData.json";
+import testimonials from "@/content/testimonials.json";
 
 export default function TestimonialsSection() {
   return (
@@ -13,7 +13,7 @@ export default function TestimonialsSection() {
       </p>
 
       <div className="testimonials-grid">
-        {siteData.testimonials.map((testimonial, index) => (
+        {testimonials.map((testimonial, index) => (
           <motion.div
             key={index}
             className="testimonial-card"

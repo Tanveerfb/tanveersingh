@@ -1,0 +1,78 @@
+[
+  {
+    "title": "NCA Internal Portal",
+    "status": "Completed",
+    "description": "Sole Developer for internal company portal of the business 'Nobility Care Australia'",
+    "focus": [
+      "Database management",
+      "Backend redesign",
+      "Modularization of code",
+      "Logs",
+      "User Management",
+      "Restricted content access",
+      "Content Management System",
+      "Authentication"
+    ],
+    "tech": ["NodeJS", "VS Code", "Firebase", "Github", "ReactJS", "Bootstrap / React-Bootstrap"]
+  },
+  {
+    "title": "Nobility Care Australia",
+    "status": "Completed",
+    "link": "https://nobilitycare.com.au/",
+    "description": "Sole Developer for the public company website of the business 'Nobility Care Australia'",
+    "focus": [
+      "Database management",
+      "Frontend Design",
+      "Heavy Backend redesign",
+      "Modularization of code",
+      "Content Management System",
+      "Website hosting",
+      "AI",
+      "Authentication"
+    ],
+    "tech": ["NodeJS", "VS Code", "Firebase", "Github", "Vercel", "NextJS", "Tailwind", "Bootstrap / React-Bootstrap"]
+  },
+  {
+    "title": "The Lair of Evil Tools",
+    "status": "Ongoing",
+    "link": "https://lair-of-evil-tools.vercel.app/",
+    "description": "Playground web-app for personal use.",
+    "focus": [
+      "Database management",
+      "Frontend Design",
+      "Backend Design",
+      "Modularization of code",
+      "Tournament Organizer",
+      "User Management",
+      "Authentication"
+    ],
+    "tech": ["NodeJS", "VS Code", "Firebase", "Github", "Vercel", "NextJS", "Tailwind", "Bootstrap / React-Bootstrap"]
+  },
+  {
+    "title": "MPSB",
+    "status": "Ongoing",
+    "description": "Multiple projects for the business MPSB",
+    "focus": [
+      "Database management",
+      "Frontend Design",
+      "Backend Design",
+      "Modularization of code",
+      "User Management",
+      "Authentication",
+      "Inventory System"
+    ],
+    "tech": ["NodeJS", "VS Code", "Firebase", "Github", "Vercel", "NextJS", "Tailwind", "Bootstrap / React-Bootstrap"]
+  },
+  {
+    "title": "Private Java Projects (50+)",
+    "status": "Completed",
+    "description": "Development of university level Java Projects that involve handling of data and the understanding of the programming language",
+    "focus": [
+      "File I/O (read/write)",
+      "Data creation from parsed files",
+      "For-Loops",
+      "Modularization of code"
+    ],
+    "tech": ["Java", "VS Code", "IntelliJ IDEA", "Eclipse IDE"]
+  }
+]

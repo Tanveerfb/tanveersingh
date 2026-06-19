@@ -4,24 +4,35 @@ import type { JSX } from "react";
 
 interface TimelineItemProps {
   role: string;
-  company: string;
-  year: string;
-  details: string;
+  company?: string;
+  date: string;
+  location?: string;
+  responsibilities: string[];
 }
 
 export default function TimelineItem({
   role,
   company,
-  year,
-  details,
+  date,
+  location,
+  responsibilities,
 }: TimelineItemProps): JSX.Element {
   return (
-    <div className="timeline-item duke-stagger">
-      <h3>{role}</h3>
-      <p>{company}</p>
-      <p>{year}</p>
-
-      <p className="timeline-details">{details}</p>
+    <div className="experience-card">
+      <p className="exp-period">{date}</p>
+      <h3 className="exp-title">{role}</h3>
+      {company && <p className="exp-company">{company}</p>}
+      {location && !company && (
+        <p className="exp-company">{location}</p>
+      )}
+      {location && company && (
+        <p className="exp-location">{location}</p>
+      )}
+      <ul className="exp-details">
+        {responsibilities.map((item, i) => (
+          <li key={i}>{item}</li>
+        ))}
+      </ul>
     </div>
   );
 }

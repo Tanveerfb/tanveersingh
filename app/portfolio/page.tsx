@@ -1,6 +1,14 @@
+import type { Metadata } from "next";
 import PageShell from "@/modules/Layout/PageShell";
 import VerticalDataStrip from "@/modules/Layout/VerticalDataStrip";
 import ProjectCard from "@/modules/ui/ProjectCard";
+import projects from "@/content/projects.json";
+
+export const metadata: Metadata = {
+  title: "Portfolio",
+  description:
+    "Projects built by Tanveer Singh — internal portals, public websites, freelance work, and more.",
+};
 
 export default function PortfolioPage() {
   return (
@@ -8,32 +16,27 @@ export default function PortfolioPage() {
       <VerticalDataStrip
         logs={[
           "> loading assets...",
-          "> scanning projects...",
+          `> ${projects.length} projects indexed`,
+          "> scanning build history...",
           "> grid stable",
         ]}
       />
 
       <PageShell>
-        <h1 className="duke-fade-up duke-hover">Project Grid Viewer</h1>
+        <h1 className="duke-fade-up">Project Grid Viewer</h1>
 
-        <section className="project-grid duke-stagger">
-          <ProjectCard
-            title="Personal Portfolio"
-            description="Built with NextJS + Tailwind + DukeOS modules"
-            tags={["Next.js", "Tailwind", "Design"]}
-          />
-
-          <ProjectCard
-            title="Landing Page"
-            description="Placeholder project summary..."
-            tags={["Marketing", "UI", "Copywriting"]}
-          />
-
-          <ProjectCard
-            title="Freelance Work"
-            description="Details placeholder..."
-            tags={["Client", "Delivery"]}
-          />
+        <section className="portfolio-grid duke-stagger">
+          {projects.map((project, i) => (
+            <ProjectCard
+              key={i}
+              title={project.title}
+              status={project.status}
+              description={project.description}
+              focus={project.focus}
+              tech={project.tech}
+              link={"link" in project ? project.link : undefined}
+            />
+          ))}
         </section>
       </PageShell>
     </>

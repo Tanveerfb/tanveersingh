@@ -1,33 +1,70 @@
 "use client";
 
-import type { JSX, ReactElement } from "react";
+import type { JSX } from "react";
 
 interface ProjectCardProps {
   title: string;
+  status: string;
   description: string;
-  tags?: string[];
+  focus: string[];
+  tech: string[];
+  link?: string;
 }
 
 export default function ProjectCard({
   title,
+  status,
   description,
-  tags = [],
+  focus,
+  tech,
+  link,
 }: ProjectCardProps): JSX.Element {
-  return (
-    <div className="project-card duke-stagger duke-hover">
-      <h3>{title}</h3>
-      <p>{description}</p>
+  const statusClass =
+    status.toLowerCase() === "completed"
+      ? "pill-status--completed"
+      : status.toLowerCase() === "ongoing"
+        ? "pill-status--ongoing"
+        : "pill-status--paused";
 
-      {tags.length > 0 && (
-        <div className="project-tags">
-          {tags.map(
-            (tag, index): ReactElement => (
-              <span key={index} className="tag">
-                {tag}
+  return (
+    <div className="project-card fx-hover-trail">
+      <div className="project-header">
+        <h3 className="project-title">{title}</h3>
+        <span className={`pill pill-status ${statusClass}`}>{status}</span>
+      </div>
+
+      <p className="project-description">{description}</p>
+
+      <div className="project-tabs">
+        {focus.length > 0 && (
+          <div className="tab-group">
+            {focus.map((f, i) => (
+              <span key={i} className="pill pill-focus">
+                {f}
               </span>
-            )
-          )}
-        </div>
+            ))}
+          </div>
+        )}
+        {tech.length > 0 && (
+          <div className="tab-group">
+            {tech.map((t, i) => (
+              <span key={i} className="pill pill-tech">
+                {t}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {link && (
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="project-link"
+        >
+          View Project →
+        </a>
       )}
     </div>
   );

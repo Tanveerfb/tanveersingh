@@ -5,15 +5,11 @@
 @import "./mixins.scss";
 @import "./features/intro.scss";
 @import "./features/intro-sequence.scss";
-@import "./features/cursor.scss";
-@import "./features/console.scss";
-@import "./features/meltdown.scss";
 @import "./features/navbar.scss";
 @import "./features/hero.scss";
 @import "./features/hologram-cards.scss";
 @import "./features/holo-reveal.scss";
 @import "./features/footer-powercore.scss";
-@import "./features/diagnostics-capsule.scss";
 @import "./features/page-shell.scss";
 @import "./features/vertical-data-strip.scss";
 @import "./features/dukeos-animations.scss";
@@ -22,19 +18,38 @@
 @import "./pages/portfolio.scss";
 @import "./pages/gallery.scss";
 @import "./pages/contact.scss";
+@import "./pages/home.scss";
 /* Neutral global styling (structure & basic readability only) */
 
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: "Inter", system-ui, sans-serif;
-  letter-spacing: 0.2px;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.3px;
   margin: 0;
   padding: 0;
-  line-height: 1.5;
-  transition:
-    background 0.3s ease,
-    color 0.3s ease;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: 0.04em;
+  text-wrap: balance;
+}
+
+code,
+pre,
+kbd,
+samp,
+.font-mono {
+  font-family: var(--font-mono), monospace;
 }
 
 hr {

@@ -1,0 +1,75 @@
+[
+  {
+    "role": "Freelance Full-Stack Web Developer",
+    "date": "June 2023 – Present",
+    "location": "Greater Sydney Region",
+    "responsibilities": [
+      "Designing various modular web apps",
+      "Business Landing Pages",
+      "Content Management Systems / Blogs",
+      "Website Redesigns",
+      "New web app component design & implementation",
+      "Inventory System for Small Businesses",
+      "Discord and AI bot design & implementation",
+      "Small scale Social Media Web apps"
+    ]
+  },
+  {
+    "role": "ICT Support Engineer",
+    "date": "Feb 2023 – Present",
+    "location": "Greater Sydney Region",
+    "responsibilities": [
+      "Manage SharePoint sites, structure, and permissions",
+      "Build and maintain Microsoft Forms",
+      "Developer of internal company portal",
+      "Developer of public website",
+      "Manage site utilities and vendor coordination",
+      "Generalist IT responsibilities: endpoints, access, operations"
+    ]
+  },
+  {
+    "company": "Domino's",
+    "role": "Delivery Expert",
+    "date": "Feb 2021 – July 2024",
+    "location": "Cronulla, Bexley North",
+    "responsibilities": [
+      "Route planning and accurate deliveries",
+      "Maintain prep and cleaning standards",
+      "Manage consumable stock",
+      "Meet and exceed service metrics"
+    ]
+  },
+  {
+    "company": "El Jannah",
+    "role": "Team Member",
+    "date": "July 2020 – Jan 2021",
+    "location": "Smithfield",
+    "responsibilities": [
+      "Stock management",
+      "Cleaning & organizing",
+      "Time management"
+    ]
+  },
+  {
+    "company": "Deliveroo Pty Ltd",
+    "role": "Independent Delivery Driver",
+    "date": "Nov 2016 – May 2018",
+    "location": "Chatswood, North Sydney, Blacktown, Cronulla, Bexley",
+    "responsibilities": [
+      "Deliveries",
+      "Customer communication",
+      "Time management"
+    ]
+  },
+  {
+    "company": "Nando's",
+    "role": "Team Member",
+    "date": "July 2016 – Nov 2018",
+    "location": "Brighton Le-Sands / Cronulla",
+    "responsibilities": [
+      "Deliveries",
+      "Customer communication",
+      "Time management"
+    ]
+  }
+]

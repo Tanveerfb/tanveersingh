@@ -1,20 +1,37 @@
 import type { Metadata } from "next";
+import { Orbitron, Rajdhani, Share_Tech_Mono } from "next/font/google";
 import HologramNavbar from "@/modules/Navbar/HologramNavbar";
-import AnnouncementBar from "@/modules/Navbar/AnnouncementBar";
 import PowerCoreFooter from "@/modules/Footer/PowerCoreFooter";
 import VideoBackground from "@/modules/Background/VideoBackground";
 import "../styles/globals.scss";
 import ThemeProvider from "@/theme/ThemeProvider";
 import { AuthProvider } from "@/context/AuthContext";
-import MatrixConsole from "@/modules/Console/MatrixConsole";
-import { Meltdown } from "@/modules/Chaos/Meltdown";
 import ScrollProgress from "@/modules/ScrollProgress/ScrollProgress";
 import ToastProvider from "@/components/ToastProvider";
-import KonamiCode from "@/modules/EasterEggs/KonamiCode";
 
-const siteTitle = "Tanveer Singh | ICT Support Engineer";
+const orbitron = Orbitron({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const rajdhani = Rajdhani({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+const shareTechMono = Share_Tech_Mono({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-mono",
+  display: "swap",
+});
+
+const siteTitle = "Tanveer Singh | Developer & Programmer";
 const siteDescription =
-  "Portfolio of Tanveer Singh, an ICT Support Engineer in Sydney specializing in Microsoft 365, SharePoint, Next.js, and end-to-end digital solutions.";
+  "Portfolio of Tanveer Singh, a Developer & Programmer in Sydney — Next.js, Firebase, AI integration, Microsoft 365, and end-to-end web solutions.";
 
 export const metadata: Metadata = {
   title: {
@@ -24,14 +41,16 @@ export const metadata: Metadata = {
   description: siteDescription,
   keywords: [
     "Tanveer Singh",
-    "ICT Support Engineer",
+    "Developer",
+    "Programmer",
+    "Full-Stack Developer",
+    "Next.js",
+    "Firebase",
+    "AI Integration",
     "Microsoft 365",
     "SharePoint developer",
-    "Next.js portfolio",
-    "Sydney IT support",
-    "Power Automate",
+    "Sydney developer",
     "Node.js",
-    "Tech content creator",
   ],
   authors: [{ name: "Tanveer Singh" }],
   creator: "Tanveer Singh",
@@ -55,8 +74,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const fontClasses = [
+    orbitron.variable,
+    rajdhani.variable,
+    shareTechMono.variable,
+  ].join(" ");
+
   return (
-    <html lang="en">
+    <html lang="en" className={fontClasses}>
       <body>
         <a href="#page-content" className="skip-link">
           Skip to main content
@@ -65,10 +90,6 @@ export default function RootLayout({
           <AuthProvider>
             <ScrollProgress />
             <VideoBackground />
-            <MatrixConsole />
-            <Meltdown />
-            <KonamiCode />
-            <AnnouncementBar />
             <HologramNavbar />
             <ToastProvider />
             <main id="page-content" className="page-content">

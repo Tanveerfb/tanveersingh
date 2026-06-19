@@ -1,0 +1,18 @@
+{
+  "web": ["HTML", "CSS", "JavaScript", "Learning Management Systems (LMS)"],
+  "frameworks": ["NextJS", "ReactJS", "Tailwind CSS", "Bootstrap / React-Bootstrap", "Shadcn/ui"],
+  "backend": ["Java", "PHP", "Node.js"],
+  "databases": ["SQL / MySQL", "Firestore", "Realtime Database", "Neon DB", "Vercel Blob"],
+  "cloud": ["Firebase (Auth · Firestore · Storage · AI Logic)", "Vercel", "Git"],
+  "microsoft365": ["Admin", "SharePoint", "Forms", "Power Automate", "Teams", "Planner", "ClipChamp", "Stream", "Sway", "Onedrive"],
+  "tools": ["VS Code", "Jekyll", "Adobe Dreamweaver", "Eclipse IDE", "JetBrains IntelliJ IDEA", "XAMPP Control Panel", "Windows Terminal", "Microsoft Office", "Dropbox"],
+  "ai": [
+    "AI Integration in Web Apps (Cloud & Local LLM)",
+    "Nomic Embed Text v3 — text-to-vector embeddings for semantic search & RAG pipelines",
+    "LM Studio — local LLM desktop app with MCP server, hardware-accelerated, zero cloud cost",
+    "Ollama — CLI local LLM runtime (llama3, mistral, nomic-embed-text, and more)",
+    "Firebase AI Logic — Vertex AI & Gemini integration with Firebase paid tier",
+    "RAG Pipelines — retrieval-augmented generation for knowledge-grounded AI apps"
+  ],
+  "exploring": ["Python", "Machine Learning", "AI Training", "Bot Creation"]
+}

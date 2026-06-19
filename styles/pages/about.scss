@@ -1,33 +1,51 @@
-/* ABOUT PAGE */
+/* About page — profile identity block */
 
-.about-section p {
-  color: var(--accent);
+.profile-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin: 1.75rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.85rem;
   line-height: 1.5;
-  font-size: 0.95rem;
-  opacity: 0.9;
 }
 
-.skill-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 1rem;
-  padding-top: 1rem;
+.profile-field {
+  display: flex;
+  gap: 1.5rem;
+  align-items: baseline;
 }
 
-.skill-card {
-  background: rgba(0, 20, 28, 0.32);
-  padding: 0.75rem;
-  border: 1px solid var(--accent-soft);
-  border-radius: 6px;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
+.profile-label {
   color: var(--accent);
-  text-shadow: 0 0 6px var(--accent-soft);
-  transition: 0.2s ease;
+  min-width: 10ch;
+  flex-shrink: 0;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
 }
 
-.skill-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 12px var(--accent);
+.profile-value {
+  color: var(--text-muted);
+}
+
+.profile-link {
+  color: var(--accent-alt);
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--accent);
+  }
+}
+
+.profile-summary {
+  max-width: 68ch;
+  line-height: 1.75;
+  color: var(--text-muted);
+  margin-top: 1.5rem;
+  font-size: 1.05rem;
+  text-wrap: pretty;
 }

@@ -5,23 +5,17 @@
   width: 48px;
   height: 100vh;
   padding: 0.6rem 0.4rem;
-
   display: flex;
   justify-content: center;
-
-  background: rgba(0, 20, 28, 0.12);
-  backdrop-filter: blur(6px);
-
-  border-left: 1px solid var(--accent-soft);
-  opacity: 0.4;
-
+  background: rgba(11, 12, 20, 0.55);
+  border-left: 1px solid var(--border);
+  opacity: 0.35;
   z-index: 1;
-
-  transition: opacity 0.3s ease;
+  transition: opacity 0.25s ease;
 }
 
 .vertical-strip:hover {
-  opacity: 0.8;
+  opacity: 0.65;
 }
 
 .vertical-strip-inner {
@@ -35,48 +29,13 @@
 
 .strip-line {
   font-size: 0.65rem;
-  color: var(--accent-soft);
+  color: var(--text-muted);
   white-space: nowrap;
-  opacity: 0.7;
-  text-shadow: 0 0 5px var(--accent-soft);
-
-  animation: stripFlicker 4.5s infinite ease-in-out;
+  opacity: 0.55;
 }
 
-@keyframes stripFlicker {
-  0%,
-  85%,
-  100% {
-    opacity: 0.7;
-  }
-  90% {
-    opacity: 0.35;
-  }
-  95% {
-    opacity: 0.2;
-  }
-}
-
-.vertical-strip::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgba(0, 255, 255, 0.18),
-    transparent
-  );
-  animation: stripScan 8s linear infinite;
-  pointer-events: none;
-  opacity: 0.2;
-}
-
-@keyframes stripScan {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(100%);
+@media (max-width: 768px) {
+  .vertical-strip {
+    display: none;
   }
 }

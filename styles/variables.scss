@@ -1,39 +1,39 @@
 /* Theme variables */
 
 :root {
-  --bg: #0d0d0e;
-  --bg-alt: #131314;
-  --panel: #1a1a1c;
-  --text: #e8e8e8;
-  --text-muted: #9aa0a6;
-  --accent: #ffe600;
-  --accent-alt: #00eaff;
-  --success: #00ff70;
-  --error: #ff3b3b;
-  --warning: #ffd166;
-  --border: #2a2a2d;
-  --glow-strong: rgba(0, 234, 255, 0.45);
-  --glow-soft: rgba(255, 230, 0, 0.3);
-  --error-glow: rgba(255, 59, 59, 0.4);
-  --focus-ring: rgba(0, 234, 255, 0.6);
+  --bg: #0b0c14;
+  --bg-alt: #10121e;
+  --panel: #161928;
+  --text: #e8eaf0;
+  --text-muted: #8892a4;
+  --accent: #00e5ff;
+  --accent-alt: #ff2daa;
+  --success: #00ff88;
+  --error: #ff3355;
+  --warning: #ffcc00;
+  --border: #1e2235;
+  --glow-strong: rgba(0, 229, 255, 0.4);
+  --glow-soft: rgba(255, 45, 170, 0.25);
+  --error-glow: rgba(255, 51, 85, 0.4);
+  --focus-ring: rgba(0, 229, 255, 0.6);
 }
 
 [data-theme="cyberpunk"] {
-  --bg: #0d0d0e;
-  --bg-alt: #131314;
-  --panel: #1a1a1c;
-  --text: #e8e8e8;
-  --text-muted: #9aa0a6;
-  --accent: #ffe600;
-  --accent-alt: #00eaff;
-  --success: #00ff70;
-  --error: #ff3b3b;
-  --warning: #ffd166;
-  --border: #2a2a2d;
-  --glow-strong: rgba(0, 234, 255, 0.45);
-  --glow-soft: rgba(255, 230, 0, 0.3);
-  --error-glow: rgba(255, 59, 59, 0.4);
-  --focus-ring: rgba(0, 234, 255, 0.6);
+  --bg: #0b0c14;
+  --bg-alt: #10121e;
+  --panel: #161928;
+  --text: #e8eaf0;
+  --text-muted: #8892a4;
+  --accent: #00e5ff;
+  --accent-alt: #ff2daa;
+  --success: #00ff88;
+  --error: #ff3355;
+  --warning: #ffcc00;
+  --border: #1e2235;
+  --glow-strong: rgba(0, 229, 255, 0.4);
+  --glow-soft: rgba(255, 45, 170, 0.25);
+  --error-glow: rgba(255, 51, 85, 0.4);
+  --focus-ring: rgba(0, 229, 255, 0.6);
 }
 
 [data-theme="genshin"] {
@@ -54,8 +54,8 @@
   --border: #2d2d3a;
   --error: #ff4444;
   --warning: #ffcc44;
-  --focus-ring: rgba(0, 234, 255, 0.6);
-  --glow-strong: rgba(0, 234, 255, 0.45);
-  --glow-soft: rgba(255, 230, 0, 0.3);
+  --focus-ring: rgba(0, 229, 255, 0.6);
+  --glow-strong: rgba(0, 229, 255, 0.45);
+  --glow-soft: rgba(255, 45, 170, 0.3);
   --error-glow: rgba(255, 68, 68, 0.4);
 }
