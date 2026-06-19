@@ -1,0 +1,80 @@
+/* ── What I Build ── */
+
+.what-i-build {
+  padding: 4rem 0;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+.wib-label {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.13em;
+  color: var(--text-muted);
+  margin: 0 0 2.5rem;
+}
+
+.wib-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.wib-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0 1.5rem;
+
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:not(:first-child) {
+    border-left: 1px solid var(--border);
+  }
+}
+
+.wib-prefix {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72rem;
+  color: var(--accent-alt);
+  letter-spacing: 0.05em;
+}
+
+.wib-name {
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+
+.wib-desc {
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .wib-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+
+  .wib-tile {
+    padding: 0;
+
+    &:not(:first-child) {
+      border-left: none;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .wib-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+}
