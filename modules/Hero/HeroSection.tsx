@@ -2,7 +2,7 @@
 
 import type { JSX } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import CircuitBoard from "@/modules/Hero/CircuitBoard";
 
 const container = {
@@ -27,13 +27,15 @@ const rise = {
 };
 
 export default function HeroSection(): JSX.Element {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section className="hero" aria-label="Introduction">
       <motion.div
         className="hero-identity"
         variants={container}
-        initial="hidden"
-        animate="show"
+        initial={prefersReducedMotion ? false : "hidden"}
+        animate={prefersReducedMotion ? false : "show"}
       >
         <div className="hero-accent-rule" aria-hidden="true" />
 
