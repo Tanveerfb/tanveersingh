@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Orbitron, Rajdhani, Share_Tech_Mono } from "next/font/google";
 import HologramNavbar from "@/modules/Navbar/HologramNavbar";
-import PowerCoreFooter from "@/modules/Footer/PowerCoreFooter";
+import SiteFooter from "@/modules/Footer/SiteFooter";
 import VideoBackground from "@/modules/Background/VideoBackground";
 import "../styles/globals.scss";
 import ThemeProvider from "@/theme/ThemeProvider";
@@ -95,7 +95,7 @@ export default function RootLayout({
             <main id="page-content" className="page-content">
               <div className="container">{children}</div>
             </main>
-            <PowerCoreFooter />
+            <SiteFooter />
           </AuthProvider>
         </ThemeProvider>
       </body>

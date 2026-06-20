@@ -1,0 +1,135 @@
+/* ── Site Footer ── */
+
+.site-footer {
+  width: 100%;
+  margin-top: 5rem;
+  border-top: 1px solid var(--border);
+  /* Near-opaque tint: a hint of the city video shows through, but link/copy text
+     stays legible (translucent solid background — no backdrop-filter). */
+  background: rgba(13, 15, 24, 0.86);
+  color: var(--text);
+}
+
+.footer-inner {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.75rem 1.5rem 1.5rem;
+}
+
+/* ── Columns ── */
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 2.5rem;
+}
+
+.footer-col {
+  position: relative;
+}
+
+.footer-brand-name {
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 0 0 0.5rem;
+}
+
+.footer-brand-role {
+  font-size: 0.82rem;
+  color: var(--accent);
+  margin: 0 0 0.25rem;
+}
+
+.footer-brand-loc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0 0 0.9rem;
+}
+
+.footer-brand-tag {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 34ch;
+  margin: 0;
+}
+
+.footer-col-head {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 1rem;
+}
+
+.footer-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--text-muted);
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: color 0.18s ease, transform 0.18s ease;
+
+  &:hover {
+    color: var(--accent);
+    transform: translateX(3px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+}
+
+/* ── Bottom bar ── */
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.footer-copy,
+.footer-built {
+  margin: 0;
+}
+
+.footer-top {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.18s ease;
+
+  &:hover {
+    color: var(--accent);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+}
