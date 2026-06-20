@@ -119,6 +119,24 @@
   margin: 0;
 }
 
+.footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-built {
+  line-height: 1.5;
+}
+
+.footer-built-icon {
+  margin: 0 0.16rem 0 0.3rem;
+  font-size: 0.95rem;
+  vertical-align: -0.18em;
+  color: var(--accent);
+}
+
 .footer-top {
   color: var(--text-muted);
   text-decoration: none;

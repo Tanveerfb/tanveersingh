@@ -1,6 +1,7 @@
 import type { JSX } from "react";
 import Link from "next/link";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa6";
+import { SiNextdotjs, SiClaude } from "react-icons/si";
 import profile from "@/content/profile.json";
 
 interface FooterLink {
@@ -97,12 +98,26 @@ export default function SiteFooter(): JSX.Element {
           <p className="footer-copy">
             © {year} {profile.name}
           </p>
-          <p className="footer-built">
-            Built with Next.js, assisted by Claude Opus
-          </p>
-          <a className="footer-top" href="#page-content">
-            ↑ Back to top
-          </a>
+          <div className="footer-actions">
+            <p className="footer-built">
+              Built with{" "}
+              <SiNextdotjs
+                className="footer-built-icon"
+                aria-hidden
+                focusable={false}
+              />{" "}
+              Next.js, assisted by{" "}
+              <SiClaude
+                className="footer-built-icon"
+                aria-hidden
+                focusable={false}
+              />{" "}
+              Claude Opus
+            </p>
+            <a className="footer-top" href="#page-content">
+              ↑ Back to top
+            </a>
+          </div>
         </div>
       </div>
     </footer>
