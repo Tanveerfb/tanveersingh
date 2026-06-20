@@ -10,7 +10,7 @@ Built with Next.js 16 App Router, SCSS, Tailwind v4, Firebase, and framer-motion
 
 | Route | Description |
 |---|---|
-| `/` | Home — hero, featured projects, testimonials |
+| `/` | Home — hero, what I build, featured projects, contact |
 | `/about` | Skills, education, profile summary |
 | `/experience` | Work history timeline |
 | `/portfolio` | Full project grid |
@@ -42,7 +42,6 @@ All page copy is JSON-driven — edit the files below, not the components.
 | `content/experience.json` | Work history (use real job titles) |
 | `content/projects.json` | Portfolio projects — status, stack, links |
 | `content/education.json` | Education entries |
-| `content/testimonials.json` | Homepage testimonials |
 | `content/hero.json` | Hero CTA button labels |
 | `content/about.json` | About page supplementary content |
 | `data/gallery.json` | Game poster metadata (auto-generated — do not edit manually) |

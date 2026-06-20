@@ -20,6 +20,16 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Contact", href: "/contact" },
 ];
 
+const BRAND = "TANVEER SINGH";
+
+function TabLabel({ label }: { label: string }): JSX.Element {
+  return (
+    <span className="nav-item-text" data-text={label}>
+      {label}
+    </span>
+  );
+}
+
 export default function HologramNavbar(): JSX.Element {
   const pathname = usePathname();
   const { user } = useAuth();
@@ -57,11 +67,20 @@ export default function HologramNavbar(): JSX.Element {
     return ["nav-item", isActive(item) ? "active" : ""].filter(Boolean).join(" ");
   }
 
+  const adminActive = activeHref.startsWith("/admin");
+
   return (
     <nav className="holo-navbar" aria-label="Primary">
       <div className="nav-inner">
-        <Link href="/" className="nav-brand" aria-label="Tanveer Singh — Home">
-          TANVEER SINGH
+        <Link
+          href="/"
+          className="nav-brand"
+          aria-label="Tanveer Singh — Home"
+          data-text={BRAND}
+        >
+          <span className="nav-brand-text" data-text={BRAND}>
+            {BRAND}
+          </span>
         </Link>
 
         <div className="nav-links" role="list">
@@ -71,27 +90,25 @@ export default function HologramNavbar(): JSX.Element {
               href={item.href}
               className={navClass(item)}
               aria-current={isActive(item) ? "page" : undefined}
+              data-text={item.label}
               prefetch
               role="listitem"
             >
-              {item.label}
+              <TabLabel label={item.label} />
             </Link>
           ))}
           {user && (
             <Link
               href="/admin"
-              className={[
-                "nav-item",
-                "nav-item--admin",
-                activeHref.startsWith("/admin") ? "active" : "",
-              ]
+              className={["nav-item", "nav-item--admin", adminActive ? "active" : ""]
                 .filter(Boolean)
                 .join(" ")}
-              aria-current={activeHref.startsWith("/admin") ? "page" : undefined}
+              aria-current={adminActive ? "page" : undefined}
+              data-text="Admin"
               prefetch
               role="listitem"
             >
-              Admin
+              <TabLabel label="Admin" />
             </Link>
           )}
         </div>
@@ -132,30 +149,26 @@ export default function HologramNavbar(): JSX.Element {
                 className={navClass(item)}
                 aria-current={isActive(item) ? "page" : undefined}
                 onClick={() => setMobileOpen(false)}
+                data-text={item.label}
                 prefetch
                 role="menuitem"
               >
-                {item.label}
+                <TabLabel label={item.label} />
               </Link>
             ))}
             {user && (
               <Link
                 href="/admin"
-                className={[
-                  "nav-item",
-                  "nav-item--admin",
-                  activeHref.startsWith("/admin") ? "active" : "",
-                ]
+                className={["nav-item", "nav-item--admin", adminActive ? "active" : ""]
                   .filter(Boolean)
                   .join(" ")}
-                aria-current={
-                  activeHref.startsWith("/admin") ? "page" : undefined
-                }
+                aria-current={adminActive ? "page" : undefined}
                 onClick={() => setMobileOpen(false)}
+                data-text="Admin"
                 prefetch
                 role="menuitem"
               >
-                Admin
+                <TabLabel label="Admin" />
               </Link>
             )}
           </motion.div>

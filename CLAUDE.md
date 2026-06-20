@@ -68,7 +68,6 @@ All page copy is JSON-driven from `content/`. Edit the JSON to change content �
 | `content/experience.json` | Work history (real job titles — do not rename to "Developer & Programmer") |
 | `content/projects.json` | Portfolio projects with status, tech stack, links |
 | `content/education.json` | Education entries |
-| `content/testimonials.json` | Testimonial entries for homepage |
 | `content/hero.json` | Hero section CTA labels |
 | `content/about.json` | About page supplementary content |
 | `data/gallery.json` | Game poster metadata — refreshed by fetchPosters.js |
