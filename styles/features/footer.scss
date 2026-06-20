@@ -133,3 +133,87 @@
     outline-offset: 3px;
   }
 }
+
+/* ── Circuit bus rail ── */
+
+.footer-rail {
+  position: absolute;
+  top: 0;
+  left: 1.5rem;
+  right: 1.5rem;
+  height: 2px;
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--accent) 14%,
+    var(--accent) 86%,
+    transparent 100%
+  );
+  opacity: 0.65;
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+}
+
+.footer-packet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  transform: translateX(-30px);
+  background: linear-gradient(90deg, transparent, var(--accent));
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.9);
+  animation: footerPacket 7s linear infinite;
+}
+
+/* Single packet glides the rail. Rail has overflow:hidden so the fixed end
+   translate (1250px > max rail width ≈ 1140px) is clipped at both ends. */
+@keyframes footerPacket {
+  0% {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  4% {
+    opacity: 1;
+  }
+  96% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(1250px);
+    opacity: 0;
+  }
+}
+
+/* ── Node pads + vertical connectors ── */
+
+.footer-node {
+  position: absolute;
+  top: -1.4rem;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-alt);
+  box-shadow: 0 0 8px rgba(255, 45, 170, 0.85);
+}
+
+.footer-node::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 1.4rem;
+  background: linear-gradient(var(--accent), transparent);
+  opacity: 0.55;
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .footer-packet {
+    animation: none;
+    display: none;
+  }
+}
