@@ -1,6 +1,7 @@
 "use client";
 
-import type { JSX } from "react";
+import type { JSX, PointerEvent } from "react";
+import { useRef } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import CircuitBoard from "@/modules/Hero/CircuitBoard";
@@ -28,6 +29,29 @@ const rise = {
 
 export default function HeroSection(): JSX.Element {
   const prefersReducedMotion = useReducedMotion();
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  function handlePointerMove(e: PointerEvent<HTMLDivElement>): void {
+    if (prefersReducedMotion) return;
+    const el = panelRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    el.style.setProperty("--ry", `${(x * 7).toFixed(2)}deg`);
+    el.style.setProperty("--rx", `${(-y * 7).toFixed(2)}deg`);
+    el.style.setProperty("--tx", `${(x * 6).toFixed(2)}px`);
+    el.style.setProperty("--ty", `${(y * 6).toFixed(2)}px`);
+  }
+
+  function handlePointerLeave(): void {
+    const el = panelRef.current;
+    if (!el) return;
+    el.style.setProperty("--ry", "0deg");
+    el.style.setProperty("--rx", "0deg");
+    el.style.setProperty("--tx", "0px");
+    el.style.setProperty("--ty", "0px");
+  }
 
   return (
     <section className="hero" aria-label="Introduction">
@@ -61,7 +85,13 @@ export default function HeroSection(): JSX.Element {
         </motion.div>
       </motion.div>
 
-      <div className="hero-circuit-panel" aria-hidden="true">
+      <div
+        ref={panelRef}
+        className="hero-circuit-panel"
+        aria-hidden="true"
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
+      >
         <CircuitBoard />
       </div>
     </section>

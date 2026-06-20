@@ -1,105 +1,135 @@
 /* ── Circuit Board ── */
 
 .circuit-svg {
-  width: 90%;
-  height: 90%;
+  width: 92%;
+  height: 92%;
+  animation: panelGlitch 11s linear infinite;
 }
+
+/* ── Traces ── */
 
 .trace {
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
 
-  &--primary {
-    stroke: var(--accent);
-    stroke-width: 1.5;
-    filter: drop-shadow(0 0 4px rgba(0, 229, 255, 0.6));
-  }
-
   &--secondary {
     stroke: var(--border);
     stroke-width: 1;
-    opacity: 0.5;
+    opacity: 0.55;
   }
 
-  &--animated {
-    /* Moving data-packet: short dash travels full path */
-    /* Trace A total length ≈ 490 SVG units (130+80+140+60+80) */
-    stroke-dasharray: 14 476;
-    stroke-dashoffset: 0;
+  &--primary {
+    stroke: var(--accent);
+    stroke-width: 1.25;
+    opacity: 0.35;
+  }
+
+  &--packet {
     stroke: var(--accent);
     stroke-width: 2.5;
-    filter: drop-shadow(0 0 6px rgba(0, 229, 255, 1));
-    animation: dataPacket 5s linear infinite 1s;
-  }
-
-  &--flicker {
-    animation: traceFlicker 9s linear infinite 2s;
+    stroke-dasharray: 6 94;
+    stroke-dashoffset: 0;
+    filter: drop-shadow(0 0 5px rgba(0, 229, 255, 0.95));
+    animation-name: packetFlow;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
   }
 }
 
+/* ── HUD corner brackets ── */
+
+.circuit-corners path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  opacity: 0.45;
+}
+
+/* ── Nodes ── */
+
 .node {
   fill: var(--accent-alt);
-  filter: drop-shadow(0 0 6px rgba(255, 45, 170, 0.8));
+  filter: drop-shadow(0 0 6px rgba(255, 45, 170, 0.85));
+}
+
+.node--static {
+  opacity: 0.7;
+}
+
+.node--endpoint {
+  animation: nodePulse 3.4s ease-in-out infinite;
+}
+
+/* ── Chip ── */
+
+.chip-pins line {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  opacity: 0.55;
+}
+
+.chip-body {
+  fill: rgba(0, 229, 255, 0.04);
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.25));
+}
+
+.chip-die {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1;
+  opacity: 0.4;
+}
+
+.chip-core {
+  fill: var(--accent-alt);
+  transform-origin: 200px 236px;
+  filter: drop-shadow(0 0 8px rgba(255, 45, 170, 0.95));
+  animation: coreBreathe 2.6s ease-in-out infinite;
+}
+
+.chip-label {
+  fill: var(--accent);
+  font-family: var(--font-mono), monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  pointer-events: none;
 }
 
 /* ── Keyframes ── */
 
-@keyframes dataPacket {
-  /* dash travels 490 SVG units then resets */
-  0% {
-    stroke-dashoffset: 0;
-    opacity: 1;
-  }
-  85% {
-    opacity: 1;
-  }
-  95% {
-    stroke-dashoffset: -490;
-    opacity: 0;
-  }
-  100% {
-    stroke-dashoffset: -490;
-    opacity: 0;
+@keyframes packetFlow {
+  to {
+    stroke-dashoffset: -100;
   }
 }
 
 @keyframes nodePulse {
   0%,
   100% {
-    opacity: 0.35;
+    opacity: 0.4;
   }
   50% {
     opacity: 1;
   }
 }
 
-.node--pulse-1 {
-  animation: nodePulse 3s ease-in-out infinite;
-}
-
-.node--pulse-2 {
-  animation: nodePulse 3s ease-in-out infinite 1.8s;
-}
-
-.node--pulse-3 {
-  animation: nodePulse 3s ease-in-out infinite 3.4s;
-}
-
-@keyframes traceFlicker {
+@keyframes coreBreathe {
   0%,
-  13%,
-  15%,
   100% {
-    opacity: 1;
+    transform: scale(0.82);
+    opacity: 0.7;
   }
-  14% {
-    opacity: 0.15;
+  50% {
+    transform: scale(1.12);
+    opacity: 1;
   }
 }
 
 @keyframes panelGlitch {
-  /* 12s cycle: glitch at ~96%, otherwise still */
   0%,
   95.4%,
   99%,
@@ -120,20 +150,21 @@
   }
 }
 
-.circuit-svg {
-  animation: panelGlitch 12s linear infinite;
-}
-
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
-  .trace--animated,
-  .trace--flicker,
-  .node--pulse-1,
-  .node--pulse-2,
-  .node--pulse-3,
-  .circuit-svg {
+  .circuit-svg,
+  .trace--packet,
+  .node--endpoint,
+  .chip-core {
     animation: none;
+  }
+
+  .trace--packet {
     stroke-dasharray: unset;
-    opacity: 1;
+    opacity: 0.6;
+  }
+
+  .chip-core {
+    transform: scale(1);
   }
 }
