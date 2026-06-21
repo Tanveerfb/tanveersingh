@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import PageShell from "@/modules/Layout/PageShell";
 import VerticalDataStrip from "@/modules/Layout/VerticalDataStrip";
 import ProjectCard from "@/modules/ui/ProjectCard";
+import { PortfolioStructuredData } from "@/components/StructuredData";
 import projects from "@/content/projects.json";
 
 export const metadata: Metadata = {
@@ -13,6 +14,8 @@ export const metadata: Metadata = {
 export default function PortfolioPage() {
   return (
     <>
+      <PortfolioStructuredData projects={projects} />
+
       <VerticalDataStrip
         logs={[
           "> loading assets...",

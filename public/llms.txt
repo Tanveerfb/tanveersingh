@@ -1,0 +1,43 @@
+# Tanveer Singh — Developer & Programmer
+
+> Portfolio of Tanveer Singh, a Full-Stack Developer and Programmer based in the
+> Greater Sydney Region, NSW, Australia. Specializes in Next.js/React web apps,
+> Firebase, AI integration (local & cloud LLMs, RAG pipelines), and Microsoft 365
+> administration — delivering internal portals, public websites, and end-to-end
+> digital solutions with full ownership from database to deployment.
+
+## About
+
+- Name: Tanveer Singh
+- Role: Developer & Programmer (Full-Stack)
+- Location: Greater Sydney Region, NSW, Australia
+- Languages: English, Punjabi, Hindi/Urdu
+- GitHub: https://github.com/tanveerfb
+- LinkedIn: https://linkedin.com/in/tanveerfb
+
+## Expertise
+
+- Web: HTML, CSS, JavaScript, TypeScript
+- Frameworks: Next.js, React, Tailwind CSS, Bootstrap, shadcn/ui
+- Backend: Node.js, PHP, Java
+- Databases: SQL/MySQL, Firestore, Realtime Database, Neon DB, Vercel Blob
+- Cloud: Firebase (Auth, Firestore, Storage, AI Logic), Vercel, Git
+- AI: Cloud & local LLM integration, RAG pipelines, vector embeddings
+  (Nomic Embed), LM Studio, Ollama, Firebase AI Logic (Vertex AI / Gemini)
+- Microsoft 365: Administration, SharePoint, Forms, Power Automate, Teams
+
+## Pages
+
+- [Home](https://tanveer.truqorun.com/): Overview, what I build, featured projects
+- [About](https://tanveer.truqorun.com/about): Skills, education, profile summary
+- [Experience](https://tanveer.truqorun.com/experience): Work history timeline
+- [Portfolio](https://tanveer.truqorun.com/portfolio): Full project grid
+- [Contact](https://tanveer.truqorun.com/contact): Contact channels and enquiry form
+
+## Selected Work
+
+- Nobility Care Australia — sole developer of the public company website and a
+  separate internal company portal (Node.js, Next.js, Firebase, Vercel).
+- The Lair of Evil Tools — personal playground web app including a tournament
+  organizer (Next.js, Firebase, Vercel).
+- MPSB — multiple business projects including an inventory system.

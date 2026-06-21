@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL, SITE_NAME, PERSON_NAME } from "@/lib/siteConfig";
 
 interface SEOProps {
   title: string;
@@ -7,40 +8,36 @@ interface SEOProps {
   url?: string;
 }
 
+/**
+ * Builds per-page Metadata. When `image` is omitted the page inherits the
+ * dynamic OG card from app/opengraph-image.tsx (no static asset required).
+ */
 export function generateSEO({
   title,
   description,
   image,
   url,
 }: SEOProps): Metadata {
-  const siteName = "Tanveer Singh Portfolio";
-  const fullTitle = `${title} | Tanveer Singh`;
-  const defaultImage = "/og-image.png";
-  const siteUrl = "https://tanveersingh.dev";
+  const fullTitle = `${title} | ${PERSON_NAME}`;
+  const canonical = url ?? "/";
 
   return {
     title: fullTitle,
     description,
+    alternates: { canonical },
     openGraph: {
       title: fullTitle,
       description,
-      url: url ? `${siteUrl}${url}` : siteUrl,
+      url: `${SITE_URL}${canonical === "/" ? "" : canonical}`,
       type: "website",
-      siteName,
-      images: [
-        {
-          url: image || defaultImage,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
+      siteName: SITE_NAME,
+      ...(image ? { images: [{ url: image, width: 1200, height: 630, alt: title }] } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images: [image || defaultImage],
+      ...(image ? { images: [image] } : {}),
     },
   };
 }

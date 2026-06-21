@@ -8,6 +8,14 @@ import ThemeProvider from "@/theme/ThemeProvider";
 import { AuthProvider } from "@/context/AuthContext";
 import ScrollProgress from "@/modules/ScrollProgress/ScrollProgress";
 import ToastProvider from "@/components/ToastProvider";
+import { SiteStructuredData } from "@/components/StructuredData";
+import {
+  SITE_URL,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_DESCRIPTION,
+  PERSON_NAME,
+} from "@/lib/siteConfig";
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -29,16 +37,14 @@ const shareTechMono = Share_Tech_Mono({
   display: "swap",
 });
 
-const siteTitle = "Tanveer Singh | Developer & Programmer";
-const siteDescription =
-  "Portfolio of Tanveer Singh, a Developer & Programmer in Sydney — Next.js, Firebase, AI integration, Microsoft 365, and end-to-end web solutions.";
-
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: siteTitle,
-    template: "%s | Tanveer Singh",
+    default: SITE_TITLE,
+    template: `%s | ${PERSON_NAME}`,
   },
-  description: siteDescription,
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
   keywords: [
     "Tanveer Singh",
     "Developer",
@@ -52,20 +58,35 @@ export const metadata: Metadata = {
     "Sydney developer",
     "Node.js",
   ],
-  authors: [{ name: "Tanveer Singh" }],
-  creator: "Tanveer Singh",
+  authors: [{ name: PERSON_NAME, url: SITE_URL }],
+  creator: PERSON_NAME,
+  publisher: PERSON_NAME,
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
-    title: siteTitle,
-    description: siteDescription,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     url: "/",
     type: "website",
     locale: "en_AU",
-    siteName: "Tanveer Singh Portfolio",
+    siteName: SITE_NAME,
   },
   twitter: {
-    card: "summary",
-    title: siteTitle,
-    description: siteDescription,
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
   },
 };
 
@@ -83,6 +104,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={fontClasses}>
       <body>
+        <SiteStructuredData />
         <a href="#page-content" className="skip-link">
           Skip to main content
         </a>
