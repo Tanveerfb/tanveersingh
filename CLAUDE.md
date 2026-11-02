@@ -85,6 +85,10 @@ No `test` script yet (Vitest is an open checklist item). Do not invent one.
 
 **Do not use `npm run lint` to validate builds — use `npm run build`.**
 
+**Project skills:** `mockup-check` (`.claude/skills/mockup-check/`) — run it on every mockup
+before the owner sees it. The other folders in `.claude/skills/` are fleet copies; never edit
+them here.
+
 ## Technology
 
 Verified against `package.json` and `node_modules`, **2026-11-02**.
