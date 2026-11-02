@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Component Round 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Barlow:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@900&family=Share+Tech+Mono&display=swap">
+<style>
+/* Layout: a catalogue — one band per core component, its options side by side, each option
+   showing every state. Values mirror @theme in src/app/globals.css exactly. */
+:root {
+  color-scheme: dark;
+  --night: #0c1233; --navy: #17215e; --line: #2b3a8f;
+  --ink: #0a0a14; --paper: #fff8e8; --text: #f4f1ff; --muted: #b9c0e2;
+  --blue: #1f3fae; --orange: #f47a1f; --ember: #c2410c;
+  --gold: #ffcf1f; --gold-hi: #fff4b8;
+  --ki: #4f8cff; --ki-soft: #8fb0ff; --ki-pale: #bfe0ff;
+  --lens: #39e27e; --lens-dark: #0d2a1a; --lens-text: #d9ffe8; --alarm: #c62828;
+  --f-display: "Bangers", "Impact", "Arial Black", sans-serif;
+  --f-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+  --f-jp: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --f-mono: "Share Tech Mono", ui-monospace, "Cascadia Mono", monospace;
+  --shadow-sm: 3px 3px 0 var(--ink); --shadow: 5px 5px 0 var(--ink); --shadow-lg: 8px 8px 0 var(--ink);
+  --ease-snap: cubic-bezier(.2, .9, .1, 1);
+  --press: 120ms; --pop: 500ms; --slide: 600ms;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--night); color: var(--text); font: 400 16px/1.5 var(--f-body); overflow-x: hidden; }
+.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 1240px; margin: 0 auto; }
+button, input, textarea, select { font: inherit; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+/* catalogue chrome */
+.top { padding-block: 40px 24px; border-bottom: 4px solid var(--ink); }
+.top h1 { font: 400 clamp(44px, 7vw, 80px)/.95 var(--f-display); letter-spacing: .03em; margin: 0; color: var(--gold); -webkit-text-stroke: 4px var(--ink); paint-order: stroke fill; text-shadow: 5px 5px 0 var(--ink); }
+.top p { color: var(--muted); max-width: 70ch; margin: 12px 0 0; }
+.band { padding-block: 48px; border-bottom: 2px dashed var(--line); }
+.band > .wrap > h2 { font: 400 clamp(32px, 4.4vw, 48px)/1 var(--f-display); letter-spacing: .03em; margin: 0 0 6px; color: var(--paper); -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; text-shadow: 4px 4px 0 var(--ink); }
+.band > .wrap > p.why { color: var(--muted); margin: 0 0 24px; max-width: 75ch; }
+.opts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.opts.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.opts.stack { grid-template-columns: minmax(0, 1fr); }
+.opts.stack .opt { grid-template-columns: minmax(0, 1fr) 390px; column-gap: 20px; }
+.opts.stack .opt > h3, .opts.stack .opt > p { grid-column: 1 / -1; }
+@media (max-width: 900px) { .opts.stack .opt { grid-template-columns: minmax(0, 1fr); } }
+.opt { background: color-mix(in srgb, var(--navy) 55%, var(--night)); border: 2px solid var(--line); padding: 18px; min-width: 0; display: grid; gap: 14px; align-content: start; }
+.opt > h3 { margin: 0; font: 400 26px/1 var(--f-display); letter-spacing: .04em; color: var(--gold); }
+.opt > h3 small { font: 600 13px/1 var(--f-body); letter-spacing: 0; color: var(--muted); margin-left: 6px; }
+.opt > p { margin: 0; color: var(--muted); font-size: 14px; }
+.row { display: flex; flex-wrap: wrap; gap: 14px 16px; align-items: center; }
+.st { display: grid; gap: 6px; justify-items: start; min-width: 0; }
+.st > .cA, .st > .cB, .st > .cC { justify-self: stretch; }
+.cA > .gA, .cB > .gA { justify-self: start; }
+.st > em { font: 400 11px/1 var(--f-mono); font-style: normal; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.paper-bg { background: var(--paper); padding: 16px; color: var(--ink); }
+.paper-bg .st > em { color: #3c3a50; }
+
+/* ================= BUTTONS ================= */
+/* A — cel slab */
+.bA { font: 400 22px/1 var(--f-display); letter-spacing: .05em; padding: 12px 20px 10px; color: var(--ink); background: var(--gold); border: 3px solid var(--ink); box-shadow: var(--shadow); cursor: pointer; display: inline-flex; gap: 8px; align-items: center; transition: transform var(--press) var(--ease-snap), box-shadow var(--press); }
+.bA:hover, .bA.h { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--ink); }
+.bA:active, .bA.p { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--ink); }
+.bA.f { outline: 3px solid var(--gold); outline-offset: 4px; }
+.bA.blue { background: var(--blue); color: #fff; }
+.bA.ghost { background: transparent; color: var(--paper); box-shadow: none; border-color: var(--line); }
+.bA.ghost:hover, .bA.ghost.h { border-color: var(--gold); color: var(--gold); transform: none; }
+.bA[disabled] { background: var(--navy); color: var(--muted); box-shadow: none; border-style: dashed; cursor: not-allowed; transform: none; }
+.bA.sm { font-size: 17px; padding: 8px 14px 7px; } .bA.lg { font-size: 28px; padding: 16px 28px 13px; }
+.spin { width: 16px; height: 16px; border: 3px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spin 700ms linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+/* B — ki charge */
+.bB { position: relative; overflow: hidden; font: 700 16px/1 var(--f-body); letter-spacing: .06em; text-transform: uppercase; padding: 14px 22px; color: #fff; background: var(--blue); border: 3px solid var(--ink); border-radius: 999px; box-shadow: var(--shadow-sm); cursor: pointer; isolation: isolate; display: inline-flex; gap: 8px; align-items: center; }
+.bB::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, var(--ki), var(--ki-pale)); transform: scaleX(0); transform-origin: left; transition: transform 400ms var(--ease-snap); }
+.bB:hover::before, .bB.h::before { transform: scaleX(1); }
+.bB:hover, .bB.h { color: var(--ink); }
+.bB:active, .bB.p { box-shadow: 0 0 0 4px var(--ki-pale), var(--shadow-sm); }
+.bB.p::before { transform: scaleX(1); background: #fff; }
+.bB.p, .bB:active { color: var(--ink); }
+.bB.gold { background: var(--ember); }
+.bB.gold::before { background: linear-gradient(90deg, var(--orange), var(--gold)); }
+.bB.load::before { transform: scaleX(.6); animation: charge 900ms ease-in-out infinite alternate; }
+.bB.load { color: var(--ink); }
+@keyframes charge { from { transform: scaleX(.15); } to { transform: scaleX(.95); } }
+.bB[disabled] { background: var(--navy); color: var(--muted); border-style: dashed; box-shadow: none; cursor: not-allowed; }
+.bB[disabled]::before { display: none; }
+.bB.f { outline: 3px solid var(--gold); outline-offset: 4px; }
+/* C — impact burst */
+.bC { position: relative; font: 400 24px/1 var(--f-display); letter-spacing: .05em; padding: 18px 30px 15px; color: var(--ink); background: var(--gold); border: 0; cursor: pointer; filter: drop-shadow(4px 4px 0 var(--ink));
+  clip-path: polygon(0 18%, 7% 0, 18% 12%, 30% 0, 42% 10%, 55% 0, 66% 12%, 78% 0, 90% 10%, 100% 0, 96% 30%, 100% 50%, 95% 70%, 100% 100%, 86% 90%, 72% 100%, 60% 88%, 46% 100%, 34% 90%, 22% 100%, 10% 88%, 0 100%, 4% 70%, 0 50%, 5% 32%);
+  transition: transform var(--press) var(--ease-snap); }
+.bC-wrap { display: inline-block; filter: drop-shadow(3px 0 0 var(--ink)) drop-shadow(-3px 0 0 var(--ink)) drop-shadow(0 3px 0 var(--ink)) drop-shadow(0 -3px 0 var(--ink)) drop-shadow(5px 5px 0 var(--ink)); position: relative; }
+.bC-wrap .bC { filter: none; }
+.bC:hover, .bC.h { transform: rotate(-2deg) scale(1.05); }
+.bC:active, .bC.p { transform: scale(.94); background: var(--gold-hi); }
+.bC-wrap .sfx { position: absolute; top: -18px; right: -14px; font: 900 18px/1 var(--f-jp); color: var(--orange); -webkit-text-stroke: 2px var(--ink); paint-order: stroke fill; opacity: 0; transform: scale(.4) rotate(12deg); transition: opacity 120ms, transform 200ms var(--ease-snap); pointer-events: none; }
+.bC-wrap:active .sfx, .bC-wrap.p .sfx { opacity: 1; transform: scale(1) rotate(12deg); }
+.bC.blue { background: var(--blue); color: #fff; }
+.bC[disabled] { background: var(--line); color: var(--muted); cursor: not-allowed; transform: none; }
+.bC-wrap.f { outline: 3px solid var(--gold); outline-offset: 6px; }
+
+/* ================= NAVIGATION ================= */
+.frame { border: 2px solid var(--line); background: var(--night); overflow: hidden; }
+.frame.phone { width: min(100%, 390px); }
+.frame .body { height: 90px; background: repeating-linear-gradient(0deg, transparent 0 14px, color-mix(in srgb, var(--line) 50%, transparent) 14px 15px); }
+/* A — ink bar */
+.nA { display: flex; align-items: center; gap: 10px; background: var(--ink); border-bottom: 3px solid var(--orange); padding: 0 12px; height: 56px; overflow: hidden; }
+.nA .mk { font: 400 22px/1 var(--f-display); color: var(--gold); letter-spacing: .04em; white-space: nowrap; }
+.nA .ln { display: flex; gap: 2px; margin-left: auto; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+.nA a { font: 400 17px/1 var(--f-display); letter-spacing: .05em; color: var(--paper); text-decoration: none; padding: 8px 10px; border: 2px solid transparent; white-space: nowrap; }
+.nA a:hover, .nA a.on { background: var(--gold); color: var(--ink); border-color: var(--ink); }
+/* B — scouter HUD */
+.nB { position: relative; display: flex; align-items: center; gap: 12px; height: 56px; padding: 0 14px; background: linear-gradient(90deg, color-mix(in srgb, var(--lens) 35%, var(--lens-dark)), var(--lens-dark) 70%); border-bottom: 3px solid var(--ink); font-family: var(--f-mono); overflow: hidden; }
+.nB .mk { color: var(--lens-text); letter-spacing: .12em; font-size: 14px; white-space: nowrap; }
+.nB .ln { display: flex; gap: 4px; margin-left: auto; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+.nB a { position: relative; color: var(--lens-text); text-decoration: none; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; padding: 8px 12px; white-space: nowrap; }
+.nB a.on::before, .nB a:hover::before { content: ""; position: absolute; inset: 2px; border: 2px solid var(--lens-text); clip-path: polygon(0 0, 30% 0, 30% 3px, 3px 3px, 3px 30%, 0 30%, 0 100%, 30% 100%, 30% calc(100% - 3px), 3px calc(100% - 3px), 3px 70%, 0 70%, 0 0, 100% 0, 100% 30%, calc(100% - 3px) 30%, calc(100% - 3px) 3px, 70% 3px, 70% 0, 100% 0, 100% 100%, 70% 100%, 70% calc(100% - 3px), calc(100% - 3px) calc(100% - 3px), calc(100% - 3px) 70%, 100% 70%, 100% 100%); }
+.nB a.on { color: #fff; }
+.nB a.on::after { content: "▲"; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); font-size: 9px; color: var(--alarm); }
+/* C — capsule dock */
+.nC-host { position: relative; height: 150px; background: repeating-linear-gradient(0deg, transparent 0 14px, color-mix(in srgb, var(--line) 50%, transparent) 14px 15px); }
+.nC { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); display: flex; gap: 4px; padding: 6px; background: var(--paper); border: 3px solid var(--ink); border-radius: 999px; box-shadow: var(--shadow); max-width: calc(100% - 20px); overflow-x: auto; scrollbar-width: none; }
+.nC a { font: 400 17px/1 var(--f-display); letter-spacing: .04em; color: var(--ink); text-decoration: none; padding: 9px 13px; border-radius: 999px; white-space: nowrap; border: 2px solid transparent; }
+.nC a.on { background: var(--orange); border-color: var(--ink); }
+.nC a:hover { border-color: var(--ink); }
+.nC .mk { background: var(--ink); color: var(--gold); }
+
+/* ================= FIELDS ================= */
+.fld { display: grid; gap: 6px; width: 100%; }
+.fld label { font-weight: 600; font-size: 15px; }
+.err-msg { display: flex; gap: 6px; align-items: center; font-size: 14px; font-weight: 600; }
+.err-msg::before { content: "!"; display: inline-grid; place-items: center; width: 18px; height: 18px; font: 800 12px/1 var(--f-body); color: #fff; background: var(--alarm); border: 2px solid var(--ink); }
+/* A — panel field */
+.iA { width: 100%; color: var(--text); background: var(--navy); border: 2px solid var(--line); padding: 11px 13px; border-radius: 0; }
+.iA:focus, .iA.f { outline: none; border-color: var(--gold); box-shadow: 4px 4px 0 var(--gold); }
+.iA.e { border-color: var(--alarm); box-shadow: 4px 4px 0 var(--alarm); }
+.iA[disabled] { border-style: dashed; color: var(--muted); background: transparent; }
+.fldA .err-msg { color: #ffb4b4; }
+/* B — speech balloon */
+.fldB label { justify-self: start; background: var(--paper); color: var(--ink); border: 2px solid var(--ink); padding: 3px 8px; font: 400 15px/1.2 var(--f-display); letter-spacing: .05em; }
+.iB { width: 100%; color: var(--ink); background: #fff; border: 3px solid var(--ink); border-radius: 22px; padding: 12px 16px; box-shadow: var(--shadow-sm); }
+.bal { position: relative; }
+.bal::after { content: ""; position: absolute; left: 26px; bottom: -13px; width: 18px; height: 16px; background: #fff; border-right: 3px solid var(--ink); border-bottom: 3px solid var(--ink); transform: skewX(-30deg) rotate(10deg); pointer-events: none; }
+.iB:focus, .iB.f { outline: none; box-shadow: 0 0 0 4px var(--gold), var(--shadow-sm); }
+.iB.e { border-color: var(--alarm); }
+.bal.e::after { border-color: var(--alarm); }
+.iB[disabled] { background: var(--muted); color: #3c3a50; }
+.fldB .err-msg { color: var(--paper); margin-top: 10px; }
+/* C — scouter field */
+.iC { width: 100%; font-family: var(--f-mono); color: var(--lens-text); background: color-mix(in srgb, var(--lens) 18%, var(--lens-dark)); border: 2px solid var(--ink); border-radius: 0; padding: 11px 13px; }
+.lensbox { position: relative; }
+.lensbox::before, .lensbox::after { content: ""; position: absolute; width: 14px; height: 14px; border: 3px solid var(--lens); opacity: 0; transition: opacity 150ms, transform 200ms var(--ease-snap); pointer-events: none; }
+.lensbox::before { left: -7px; top: -7px; border-right: 0; border-bottom: 0; transform: translate(-6px, -6px); }
+.lensbox::after { right: -7px; bottom: -7px; border-left: 0; border-top: 0; transform: translate(6px, 6px); }
+.lensbox:focus-within::before, .lensbox:focus-within::after, .lensbox.f::before, .lensbox.f::after { opacity: 1; transform: none; }
+.iC:focus { outline: none; }
+.lensbox.e .iC { border-color: var(--alarm); }
+.lensbox.e::before, .lensbox.e::after { opacity: 1; transform: none; border-color: var(--alarm); }
+.iC[disabled] { opacity: .55; }
+.fldC label { font: 400 12px/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--lens); }
+.fldC .err-msg { color: #ffb4b4; font-family: var(--f-mono); font-weight: 400; }
+
+/* ================= CARDS ================= */
+.cA { position: relative; background: var(--navy); border: 3px solid var(--ink); box-shadow: var(--shadow); padding: 18px; display: grid; gap: 8px; transition: transform var(--press) var(--ease-snap), box-shadow var(--press); }
+.cA:hover, .cA.h { transform: translate(-3px, -3px); box-shadow: var(--shadow-lg); }
+.cA.max { background: linear-gradient(180deg, #3a2a10, var(--navy) 75%); margin-top: 20px; }
+.cA.max::before { content: ""; position: absolute; left: -3px; right: -3px; top: -22px; height: 26px; background: var(--gold);
+  clip-path: polygon(0 100%, 5% 30%, 10% 80%, 16% 0, 22% 70%, 28% 20%, 35% 85%, 42% 10%, 49% 75%, 56% 25%, 63% 90%, 70% 5%, 77% 70%, 84% 25%, 91% 85%, 96% 30%, 100% 100%); }
+.ct { font: 400 26px/1 var(--f-display); letter-spacing: .03em; margin: 0; color: var(--paper); }
+.cm { font-size: 13px; color: var(--muted); margin: 0; }
+.cp { margin: 0; font-size: 15px; }
+.cB { position: relative; background: #fff; color: var(--ink); border: 4px solid var(--ink); padding: 18px 26px 18px 18px; display: grid; gap: 8px; clip-path: polygon(0 0, 100% 0, 94% 100%, 0 100%); overflow: hidden; }
+.cB .ct { color: var(--ink); }
+.cB .cm { color: #3c3a50; }
+.cB::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; background: repeating-linear-gradient(90deg, transparent 0 14px, rgba(10,10,20,.4) 14px 16px); transition: opacity 200ms; }
+.cB:hover::after, .cB.h::after { opacity: .35; }
+.cC { position: relative; background: var(--night); border: 2px solid var(--ink); padding: 18px; display: grid; gap: 8px; box-shadow: var(--shadow-sm); overflow: hidden; isolation: isolate; }
+.cC::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: var(--lvl, 30%); z-index: -1; background: linear-gradient(0deg, color-mix(in srgb, var(--c, var(--ki)) 45%, transparent), transparent); transition: height 400ms var(--ease-snap); }
+.cC:hover::before, .cC.h::before { height: calc(var(--lvl, 30%) + 25%); }
+.cC .meter { display: flex; gap: 3px; }
+.cC .meter i { width: 18px; height: 6px; background: var(--line); border: 1px solid var(--ink); }
+.cC .meter i.on { background: var(--c, var(--ki)); }
+.skel { display: grid; gap: 10px; }
+.skel i { display: block; height: 14px; background: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--muted) 40%, transparent) 1px, transparent 1.6px) 0 0 / 6px 6px, var(--line); animation: tone 1.4s linear infinite; }
+.skel i.t { height: 24px; width: 60%; } .skel i.s { width: 40%; }
+@keyframes tone { to { background-position: 30px 0, 0 0; } }
+
+/* ================= BADGES ================= */
+.gA { display: inline-block; font: 800 12px/1 var(--f-body); letter-spacing: .14em; text-transform: uppercase; padding: 6px 9px; border: 2px solid var(--ink); background: var(--gold); color: var(--ink); }
+.gA.ki { background: var(--ki-soft); } .gA.mu { background: var(--muted); } .gA.or { background: var(--orange); } .gA.em { background: var(--ember); color: #fff; } .gA.al { background: var(--alarm); color: #fff; }
+.gB { display: inline-block; font: 400 15px/1 var(--f-display); letter-spacing: .08em; padding: 6px 10px 4px; border: 3px double var(--alarm); color: var(--alarm); background: var(--paper); transform: rotate(-4deg); text-transform: uppercase; }
+.gB.ok { border-color: var(--blue); color: var(--blue); transform: rotate(3deg); }
+.gC { display: inline-flex; gap: 6px; align-items: baseline; font: 400 16px/1 var(--f-display); letter-spacing: .05em; padding: 6px 12px 5px; background: var(--ink); color: var(--paper); clip-path: polygon(6% 0, 100% 0, 94% 100%, 0 100%); }
+.gC b { font: 900 13px/1 var(--f-jp); color: var(--gold); }
+
+/* ================= TOASTS ================= */
+.tA { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center; background: var(--paper); color: var(--ink); border: 3px solid var(--ink); box-shadow: var(--shadow); padding: 12px 14px; max-width: 360px; }
+.tA .burst { width: 54px; height: 54px; display: grid; place-items: center; background: var(--gold); clip-path: polygon(50% 0, 61% 30%, 95% 18%, 72% 45%, 100% 62%, 66% 66%, 72% 100%, 50% 76%, 28% 100%, 34% 66%, 0 62%, 28% 45%, 5% 18%, 39% 30%); font: 900 15px/1 var(--f-jp); }
+.tA.err .burst { background: var(--alarm); color: #fff; }
+.tA b { font: 400 20px/1 var(--f-display); letter-spacing: .04em; display: block; }
+.tA span { font-size: 14px; }
+.tB { display: grid; gap: 4px; font-family: var(--f-mono); color: var(--lens-text); background: color-mix(in srgb, var(--lens) 30%, var(--lens-dark)); border: 3px solid var(--ink); border-left: 10px solid var(--lens); box-shadow: var(--shadow-sm); padding: 10px 14px; max-width: 360px; font-size: 14px; }
+.tB.err { border-left-color: var(--alarm); }
+.tB b { font-weight: 400; letter-spacing: .1em; color: #fff; }
+.tC { position: relative; background: #fffbe0; color: var(--ink); border: 2px solid var(--ink); padding: 12px 16px; max-width: 340px; font-size: 15px; box-shadow: var(--shadow-sm); }
+.tC::before { content: attr(data-k); position: absolute; top: -12px; left: 10px; background: var(--ink); color: var(--paper); font: 400 13px/1 var(--f-display); letter-spacing: .08em; padding: 4px 8px 3px; }
+.tC.err::before { background: var(--alarm); }
+.toast-demo { display: flex; flex-wrap: wrap; gap: 18px; padding-top: 12px; }
+
+/* ================= DIALOGS ================= */
+.dlg-stage { position: relative; height: 340px; background: color-mix(in srgb, var(--ink) 75%, transparent); overflow: hidden; display: grid; place-items: center; border: 2px solid var(--line); }
+.dA { position: relative; width: min(88%, 340px); background: #fff; color: var(--ink); border: 4px solid var(--ink); box-shadow: var(--shadow-lg); padding: 18px; }
+.dA::before { content: ""; position: absolute; inset: -60px; z-index: -1; background: repeating-conic-gradient(var(--paper) 0deg 2deg, transparent 2deg 10deg); }
+.dB { width: min(88%, 340px); background: var(--navy); border: 3px solid var(--ink); box-shadow: var(--shadow-lg); padding: 18px; position: relative; }
+.dB::before { content: ""; position: absolute; left: -40%; right: -40%; top: 0; bottom: 0; z-index: -1; background: repeating-linear-gradient(90deg, transparent 0 20px, color-mix(in srgb, var(--paper) 40%, transparent) 20px 22px); }
+.dlg-h { font: 400 26px/1 var(--f-display); letter-spacing: .03em; margin: 0 0 8px; }
+.dlg-p { margin: 0 0 14px; font-size: 15px; }
+.dlg-x { position: absolute; top: 8px; right: 8px; width: 34px; height: 34px; border: 2px solid currentColor; background: transparent; color: inherit; cursor: pointer; font: 700 18px/1 var(--f-body); }
+.sheet { position: absolute; left: 0; right: 0; bottom: 0; background: var(--paper); color: var(--ink); border-top: 4px solid var(--ink); padding: 16px; }
+.sheet::before { content: ""; display: block; width: 50px; height: 5px; background: var(--ink); margin: 0 auto 10px; }
+
+/* ================= TABS ================= */
+.tabA { display: flex; gap: 0; border-bottom: 3px solid var(--ink); overflow-x: auto; scrollbar-width: none; }
+.tabA button { font: 400 19px/1 var(--f-display); letter-spacing: .05em; color: var(--muted); background: transparent; border: 3px solid transparent; border-bottom: 0; padding: 10px 14px 8px; cursor: pointer; white-space: nowrap; }
+.tabA button[aria-selected="true"] { color: var(--ink); background: var(--gold); border-color: var(--ink); }
+.tabA button:hover { color: var(--paper); }
+.tabB { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding-bottom: 6px; }
+.tabB button { display: grid; gap: 3px; justify-items: start; background: #fff; color: var(--ink); border: 3px solid var(--ink); padding: 8px 12px; cursor: pointer; box-shadow: var(--shadow-sm); white-space: nowrap; }
+.tabB button b { font: 900 13px/1 var(--f-jp); color: var(--ember); }
+.tabB button span { font: 400 18px/1 var(--f-display); letter-spacing: .04em; }
+.tabB button[aria-selected="true"] { background: var(--ink); color: var(--paper); transform: translateY(-3px); box-shadow: 3px 6px 0 var(--orange); }
+.tabB button[aria-selected="true"] b { color: var(--gold); }
+.tabC { display: flex; align-items: flex-end; gap: 6px; }
+.tabC button { flex: 1; min-width: 0; display: grid; gap: 6px; justify-items: center; background: transparent; border: 0; cursor: pointer; color: var(--muted); font: 400 16px/1 var(--f-display); letter-spacing: .04em; padding: 0; }
+.tabC button i { display: block; width: 100%; height: var(--h); background: var(--line); border: 2px solid var(--ink); }
+.tabC button[aria-selected="true"] { color: var(--gold); }
+.tabC button[aria-selected="true"] i { background: linear-gradient(0deg, var(--orange), var(--gold)); box-shadow: 0 -6px 14px color-mix(in srgb, var(--gold) 50%, transparent); }
+.tabpanel { margin-top: 12px; font-size: 15px; color: var(--muted); }
+
+/* ================= EMPTY / LOADING ================= */
+.empty { display: grid; gap: 10px; justify-items: center; text-align: center; padding: 22px; border: 3px dashed var(--line); }
+.empty .sfx { font: 900 34px/1 var(--f-jp); color: var(--navy); -webkit-text-stroke: 2px var(--muted); }
+.empty b { font: 400 24px/1 var(--f-display); letter-spacing: .04em; color: var(--paper); }
+.empty p { margin: 0; color: var(--muted); font-size: 15px; max-width: 32ch; }
+.empty.lens { border: 3px solid var(--ink); background: color-mix(in srgb, var(--lens) 22%, var(--lens-dark)); font-family: var(--f-mono); color: var(--lens-text); }
+.empty.lens b { font-family: var(--f-mono); font-size: 16px; letter-spacing: .1em; color: #fff; }
+.empty.lens p { color: var(--lens-text); }
+.empty.page { background: var(--paper); border: 4px solid var(--ink); }
+.empty.page b { color: var(--ink); }
+.empty.page p { color: #3c3a50; }
+.empty.page .sfx { color: #fff; -webkit-text-stroke: 2px var(--ink); }
+.load-ki { width: 100%; height: 14px; border: 3px solid var(--ink); background: var(--navy); position: relative; overflow: hidden; }
+.load-ki i { position: absolute; inset: 0; background: linear-gradient(90deg, var(--ki), var(--ki-pale), var(--ki)); transform-origin: left; animation: kiload 1.6s var(--ease-snap) infinite; }
+@keyframes kiload { 0% { transform: scaleX(0); } 70% { transform: scaleX(1); } 100% { transform: scaleX(1); opacity: 0; } }
+
+.foot { padding-block: 30px 44px; color: var(--muted); font-size: 13px; }
+
+@media (max-width: 900px) {
+  .opts, .opts.two { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="top gutter"><div class="wrap">
+  <h1>Component round 1 · core kit</h1>
+  <p>Two or three options per component, every state shown. Hover, press and tab through the live ones too. Pick one option per component, or mix ("A, but with C's press"). Colours and fonts are the locked tokens.</p>
+</div></header>
+
+<!-- BUTTONS -->
+<section class="band gutter"><div class="wrap">
+  <h2>Buttons</h2>
+  <p class="why">Primary, secondary and ghost; small, medium and large; leading icon, loading, disabled and full width.</p>
+  <div class="opts">
+    <div class="opt">
+      <h3>A · Cel slab <small>locked mockup</small></h3>
+      <p>Flat fill, ink outline, hard shadow. Lifts on hover, sinks flat on press.</p>
+      <div class="row">
+        <div class="st"><em>Rest</em><button class="bA" type="button">See my work</button></div>
+        <div class="st"><em>Hover</em><button class="bA h" type="button">See my work</button></div>
+        <div class="st"><em>Press</em><button class="bA p" type="button">See my work</button></div>
+        <div class="st"><em>Focus</em><button class="bA f" type="button">See my work</button></div>
+        <div class="st"><em>Loading</em><button class="bA" type="button" aria-busy="true"><span class="spin" aria-hidden="true"></span>Sending</button></div>
+        <div class="st"><em>Disabled</em><button class="bA" type="button" disabled>See my work</button></div>
+        <div class="st"><em>Secondary</em><button class="bA blue" type="button">Get in touch</button></div>
+        <div class="st"><em>Ghost</em><button class="bA ghost" type="button">Power up again</button></div>
+        <div class="st"><em>Sizes</em><div class="row"><button class="bA sm" type="button">Small</button><button class="bA" type="button">Medium</button><button class="bA lg" type="button">Large</button></div></div>
+        <div class="st" style="width:100%"><em>Full width · icon</em><button class="bA" type="button" style="width:100%;justify-content:center">➜ See my work</button></div>
+      </div>
+    </div>
+    <div class="opt">
+      <h3>B · Ki charge</h3>
+      <p>A rounded capsule. Hover charges a ki bar across it; press flashes white. Loading pulses the charge.</p>
+      <div class="row">
+        <div class="st"><em>Rest</em><button class="bB" type="button">Get in touch</button></div>
+        <div class="st"><em>Hover</em><button class="bB h" type="button">Get in touch</button></div>
+        <div class="st"><em>Press</em><button class="bB p" type="button">Get in touch</button></div>
+        <div class="st"><em>Focus</em><button class="bB f" type="button">Get in touch</button></div>
+        <div class="st"><em>Loading</em><button class="bB load" type="button" aria-busy="true">Charging</button></div>
+        <div class="st"><em>Disabled</em><button class="bB" type="button" disabled>Get in touch</button></div>
+        <div class="st"><em>Primary (gold charge)</em><button class="bB gold" type="button">See my work</button></div>
+        <div class="st"><em>Primary hover</em><button class="bB gold h" type="button">See my work</button></div>
+      </div>
+    </div>
+    <div class="opt">
+      <h3>C · Impact burst</h3>
+      <p>A jagged impact-frame shape. Hover tilts it; press squashes it and pops a tiny ドン.</p>
+      <div class="row">
+        <div class="st"><em>Rest</em><span class="bC-wrap"><button class="bC" type="button">See my work</button><span class="sfx" aria-hidden="true">ドン</span></span></div>
+        <div class="st"><em>Hover</em><span class="bC-wrap"><button class="bC h" type="button">See my work</button><span class="sfx" aria-hidden="true">ドン</span></span></div>
+        <div class="st"><em>Press</em><span class="bC-wrap p"><button class="bC p" type="button">See my work</button><span class="sfx" aria-hidden="true">ドン</span></span></div>
+        <div class="st"><em>Focus</em><span class="bC-wrap f"><button class="bC" type="button">See my work</button><span class="sfx" aria-hidden="true">ドン</span></span></div>
+        <div class="st"><em>Disabled</em><span class="bC-wrap"><button class="bC" type="button" disabled>See my work</button></span></div>
+        <div class="st"><em>Secondary</em><span class="bC-wrap"><button class="bC blue" type="button">Get in touch</button><span class="sfx" aria-hidden="true">ドン</span></span></div>
+      </div>
+      <p>Best for the one primary action per page; too loud to repeat.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- NAVIGATION -->
+<section class="band gutter"><div class="wrap">
+  <h2>Navigation</h2>
+  <p class="why">Desktop and 390px phone, current section marked by more than colour. Section jumps keep the instant-transmission streak from the locked page whichever is picked.</p>
+  <div class="opts stack">
+    <div class="opt">
+      <h3>A · Ink bar <small>locked mockup</small></h3>
+      <p>Black bar, orange underline; the current section is a gold slab.</p>
+      <div class="st"><em>Desktop</em><div class="frame" style="width:100%"><nav class="nA" aria-label="Option A desktop"><span class="mk">T. SINGH</span><span class="ln"><a href="#" class="on" aria-current="true">Forms</a><a href="#">Lab</a><a href="#">Work</a><a href="#">Scouter</a><a href="#">Contact</a></span></nav><div class="body"></div></div></div>
+      <div class="st"><em>Phone · links scroll sideways</em><div class="frame phone"><nav class="nA" aria-label="Option A phone"><span class="mk">T. SINGH</span><span class="ln"><a href="#">Forms</a><a href="#" class="on" aria-current="true">Lab</a><a href="#">Work</a><a href="#">Scouter</a><a href="#">Contact</a></span></nav><div class="body"></div></div></div>
+    </div>
+    <div class="opt">
+      <h3>B · Scouter HUD</h3>
+      <p>The bar is a lens readout; the current section is locked in a target bracket with a red marker.</p>
+      <div class="st"><em>Desktop</em><div class="frame" style="width:100%"><nav class="nB" aria-label="Option B desktop"><span class="mk">◎ T.SINGH</span><span class="ln"><a href="#" class="on" aria-current="true">Forms</a><a href="#">Lab</a><a href="#">Work</a><a href="#">Scouter</a><a href="#">Contact</a></span></nav><div class="body"></div></div></div>
+      <div class="st"><em>Phone</em><div class="frame phone"><nav class="nB" aria-label="Option B phone"><span class="mk">◎</span><span class="ln"><a href="#">Forms</a><a href="#" class="on" aria-current="true">Lab</a><a href="#">Work</a><a href="#">Scouter</a><a href="#">Contact</a></span></nav><div class="body"></div></div></div>
+    </div>
+    <div class="opt">
+      <h3>C · Capsule dock</h3>
+      <p>A floating paper capsule at the bottom of the screen, within thumb reach on a phone. Current section in gi orange.</p>
+      <div class="st"><em>Desktop</em><div class="frame" style="width:100%"><div class="nC-host"><nav class="nC" aria-label="Option C desktop"><a href="#" class="mk">TS</a><a href="#" class="on" aria-current="true">Forms</a><a href="#">Lab</a><a href="#">Work</a><a href="#">Scouter</a><a href="#">Contact</a></nav></div></div></div>
+      <div class="st"><em>Phone</em><div class="frame phone"><div class="nC-host"><nav class="nC" aria-label="Option C phone"><a href="#" class="mk">TS</a><a href="#">Forms</a><a href="#" class="on" aria-current="true">Lab</a><a href="#">Work</a><a href="#">Scouter</a><a href="#">Contact</a></nav></div></div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- FIELDS -->
+<section class="band gutter"><div class="wrap">
+  <h2>Form fields</h2>
+  <p class="why">Rest, focus, filled, error and disabled. Errors carry an icon and words, never colour alone. These stay readable: the motif is on the frame, never the text.</p>
+  <div class="opts">
+    <div class="opt">
+      <h3>A · Panel field <small>locked mockup</small></h3>
+      <p>Navy panel; focus throws a hard gold shadow.</p>
+      <div class="fld fldA"><label for="a1">Name</label><input class="iA" id="a1" placeholder="Your name"></div>
+      <div class="fld fldA"><label for="a2">Name · focus</label><input class="iA f" id="a2" value="Priya"></div>
+      <div class="fld fldA"><label for="a3">Email · error</label><input class="iA e" id="a3" value="priya@" aria-invalid="true" aria-describedby="a3e"><span class="err-msg" id="a3e">Enter an email address like name@example.com</span></div>
+      <div class="fld fldA"><label for="a4">Message · disabled</label><textarea class="iA" id="a4" rows="2" disabled>Sending…</textarea></div>
+    </div>
+    <div class="opt">
+      <h3>B · Speech balloon</h3>
+      <p>Inputs are speech balloons with a tail; labels are caption boxes. Focus rings the balloon in gold.</p>
+      <div class="fld fldB"><label for="b1">Name</label><div class="bal"><input class="iB" id="b1" placeholder="Your name"></div></div>
+      <div class="fld fldB"><label for="b2">Name · focus</label><div class="bal"><input class="iB f" id="b2" value="Priya"></div></div>
+      <div class="fld fldB"><label for="b3">Email · error</label><div class="bal e"><input class="iB e" id="b3" value="priya@" aria-invalid="true" aria-describedby="b3e"></div><span class="err-msg" id="b3e">Enter an email address like name@example.com</span></div>
+      <div class="fld fldB"><label for="b4">Message · disabled</label><div class="bal"><textarea class="iB" id="b4" rows="2" disabled>Sending…</textarea></div></div>
+    </div>
+    <div class="opt">
+      <h3>C · Scouter field</h3>
+      <p>Green-lens input in the readout face; focus locks target brackets onto the corners.</p>
+      <div class="fld fldC"><label for="c1">Name</label><div class="lensbox"><input class="iC" id="c1" placeholder="Your name"></div></div>
+      <div class="fld fldC"><label for="c2">Name · focus</label><div class="lensbox f"><input class="iC" id="c2" value="Priya"></div></div>
+      <div class="fld fldC"><label for="c3">Email · error</label><div class="lensbox e"><input class="iC" id="c3" value="priya@" aria-invalid="true" aria-describedby="c3e"></div><span class="err-msg" id="c3e">Enter an email address like name@example.com</span></div>
+      <div class="fld fldC"><label for="c4">Message · disabled</label><div class="lensbox"><textarea class="iC" id="c4" rows="2" disabled>Sending…</textarea></div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- CARDS -->
+<section class="band gutter"><div class="wrap">
+  <h2>Cards</h2>
+  <p class="why">For roles, projects and posts. Rest, hover, highlighted, and the loading skeleton each option uses.</p>
+  <div class="opts">
+    <div class="opt">
+      <h3>A · Cel card <small>locked mockup</small></h3>
+      <p>Hard shadow that deepens on hover. Highlighted cards wear a jagged gold aura crest.</p>
+      <div class="st" style="width:100%"><em>Rest</em><article class="cA"><span class="gA mu">Base form</span><h4 class="ct">Web Developer</h4><p class="cm">Freelance · Mar 2021 – Oct 2026</p><p class="cp">Websites and web apps for my own clients.</p></article></div>
+      <div class="st" style="width:100%"><em>Hover</em><article class="cA h"><span class="gA ki">Powering up</span><h4 class="ct">IT Consultant</h4><p class="cm">Truqorun · Oct 2026 – present</p></article></div>
+      <div class="st" style="width:100%"><em>Highlighted</em><article class="cA max"><span class="gA">Full power</span><h4 class="ct">Nobility Care Australia</h4><p class="cm">Developer Programmer · Feb 2023 – present</p></article></div>
+      <div class="st" style="width:100%"><em>Loading</em><div class="cA skel" aria-label="Loading"><i class="s"></i><i class="t"></i><i></i><i></i></div></div>
+    </div>
+    <div class="opt">
+      <h3>B · Manga panel</h3>
+      <p>Paper panel with a slanted edge; speed lines streak across on hover.</p>
+      <div class="st" style="width:100%"><em>Rest</em><article class="cB"><span class="gA or">Nobility Care Australia</span><h4 class="ct">NCA public website</h4><p class="cm">Next.js 16 · Tailwind v4 · Firebase</p></article></div>
+      <div class="st" style="width:100%"><em>Hover</em><article class="cB h"><span class="gA or">Tinker Together</span><h4 class="ct">Toll</h4><p class="cm">Godot 4.7 · public beta</p></article></div>
+      <div class="st" style="width:100%"><em>Loading</em><div class="cB skel" aria-label="Loading"><i class="s"></i><i class="t"></i><i></i></div></div>
+    </div>
+    <div class="opt">
+      <h3>C · Power tier</h3>
+      <p>The card fills with aura from the bottom by tier, with a level meter. Hover surges it.</p>
+      <div class="st" style="width:100%"><em>Base</em><article class="cC" style="--lvl:15%;--c:var(--muted)"><div class="meter" aria-label="Level 1 of 3"><i class="on"></i><i></i><i></i></div><h4 class="ct">Web Developer Intern</h4><p class="cm">Easylink Finance · 2022</p></article></div>
+      <div class="st" style="width:100%"><em>Powering up · hover</em><article class="cC h" style="--lvl:35%;--c:var(--ki)"><div class="meter" aria-label="Level 2 of 3"><i class="on"></i><i class="on"></i><i></i></div><h4 class="ct">IT Help Desk Support</h4><p class="cm">Simetrix · 2026 – present</p></article></div>
+      <div class="st" style="width:100%"><em>Full power</em><article class="cC" style="--lvl:65%;--c:var(--gold)"><div class="meter" aria-label="Level 3 of 3"><i class="on"></i><i class="on"></i><i class="on"></i></div><h4 class="ct">Tinker Together</h4><p class="cm">Head of Studio · 2026 – present</p></article></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- BADGES -->
+<section class="band gutter"><div class="wrap">
+  <h2>Badges</h2>
+  <p class="why">Status, tier and organisation labels. Includes the open question from the tokens: ink or white text on orange.</p>
+  <div class="opts">
+    <div class="opt">
+      <h3>A · Slab <small>locked mockup</small></h3>
+      <div class="row"><span class="gA">Full power</span><span class="gA ki">Powering up</span><span class="gA mu">Base form</span><span class="gA al">Off the scale</span></div>
+      <div class="st"><em>Orange: ink on gi orange (mockup, 7.17:1)</em><span class="gA or">Nobility Care Australia</span></div>
+      <div class="st"><em>Orange: white on ember (standard, 5.18:1)</em><span class="gA em">Nobility Care Australia</span></div>
+    </div>
+    <div class="opt">
+      <h3>B · Stamp</h3>
+      <p>A rubber stamp on paper, slightly askew. For project status.</p>
+      <div class="row paper-bg"><span class="gB">In progress</span><span class="gB ok">Live</span><span class="gB ok">Public beta</span></div>
+    </div>
+    <div class="opt">
+      <h3>C · Sound-effect chip</h3>
+      <p>A slanted ink chip with a tiny katakana mark. For tags and stack.</p>
+      <div class="row"><span class="gC"><b aria-hidden="true">ド</b>Next.js</span><span class="gC"><b aria-hidden="true">ゴ</b>Firebase</span><span class="gC"><b aria-hidden="true">バ</b>Godot</span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- TOASTS -->
+<section class="band gutter"><div class="wrap">
+  <h2>Toasts</h2>
+  <p class="why">Success and error after an action, such as sending the contact form. Text names what happened; the action word matches the button ("Send message" → "Message sent").</p>
+  <div class="opts">
+    <div class="opt">
+      <h3>A · Impact note</h3>
+      <div class="toast-demo">
+        <div class="tA" role="status"><span class="burst" aria-hidden="true">ドン</span><div><b>Message sent</b><span>Tanveer will reply to priya@example.com.</span></div></div>
+        <div class="tA err" role="alert"><span class="burst" aria-hidden="true">!</span><div><b>Message not sent</b><span>The connection dropped. Try again in a moment.</span></div></div>
+      </div>
+    </div>
+    <div class="opt">
+      <h3>B · Scouter alert</h3>
+      <div class="toast-demo">
+        <div class="tB" role="status"><b>TRANSMISSION SENT</b>Message sent. Tanveer will reply to priya@example.com.</div>
+        <div class="tB err" role="alert"><b>SIGNAL LOST</b>Message not sent. The connection dropped. Try again in a moment.</div>
+      </div>
+    </div>
+    <div class="opt">
+      <h3>C · Narration box</h3>
+      <div class="toast-demo">
+        <div class="tC" data-k="Meanwhile…" role="status">Message sent. Tanveer will reply to priya@example.com.</div>
+        <div class="tC err" data-k="But then…" role="alert">Message not sent. The connection dropped. Try again in a moment.</div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- DIALOGS -->
+<section class="band gutter"><div class="wrap">
+  <h2>Dialogs and sheets</h2>
+  <p class="why">For project details and anything secondary. Backdrop click and Escape close; focus is trapped and returns to the trigger. Shown open.</p>
+  <div class="opts">
+    <div class="opt">
+      <h3>A · Panel zoom</h3>
+      <p>A manga panel zooms out of the page with a burst behind it.</p>
+      <div class="dlg-stage"><div class="dA" role="dialog" aria-modal="true" aria-labelledby="dah"><button class="dlg-x" type="button" aria-label="Close">✕</button><h4 class="dlg-h" id="dah">NCA learning platform</h4><p class="dlg-p">Block-based module authoring, learning paths by department, a compliance dashboard and certificates.</p><button class="bA sm" type="button">Visit the site</button></div></div>
+    </div>
+    <div class="opt">
+      <h3>B · Instant transmission</h3>
+      <p>The dialog streaks in sideways and settles; closes the same way.</p>
+      <div class="dlg-stage"><div class="dB" role="dialog" aria-modal="true" aria-labelledby="dbh"><button class="dlg-x" type="button" aria-label="Close">✕</button><h4 class="dlg-h" id="dbh">NCA learning platform</h4><p class="dlg-p">Block-based module authoring, learning paths by department, a compliance dashboard and certificates.</p><button class="bA sm" type="button">Visit the site</button></div></div>
+    </div>
+    <div class="opt">
+      <h3>C · Phone sheet</h3>
+      <p>On phones, dialogs become a paper sheet from the bottom. Pairs with A or B on desktop.</p>
+      <div class="dlg-stage"><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="dch"><h4 class="dlg-h" id="dch">NCA learning platform</h4><p class="dlg-p">Block-based module authoring, learning paths by department, a compliance dashboard and certificates.</p><button class="bA sm" type="button">Visit the site</button></div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- TABS -->
+<section class="band gutter"><div class="wrap">
+  <h2>Tabs</h2>
+  <p class="why">For switching views inside a section, such as project categories. Arrow keys move between tabs.</p>
+  <div class="opts">
+    <div class="opt">
+      <h3>A · Ink tabs</h3>
+      <div class="tabA" role="tablist" aria-label="Option A"><button role="tab" aria-selected="true">Web</button><button role="tab" aria-selected="false">AI</button><button role="tab" aria-selected="false">Games</button><button role="tab" aria-selected="false">Microsoft 365</button></div>
+      <p class="tabpanel">Web projects appear here.</p>
+    </div>
+    <div class="opt">
+      <h3>B · Chapter tabs</h3>
+      <div class="tabB" role="tablist" aria-label="Option B"><button role="tab" aria-selected="true"><b>第1話</b><span>Web</span></button><button role="tab" aria-selected="false"><b>第2話</b><span>AI</span></button><button role="tab" aria-selected="false"><b>第3話</b><span>Games</span></button></div>
+      <p class="tabpanel">Web projects appear here.</p>
+    </div>
+    <div class="opt">
+      <h3>C · Power levels</h3>
+      <p>Tabs as rising bars; the chosen one glows gold. Suits ordered views only.</p>
+      <div class="tabC" role="tablist" aria-label="Option C"><button role="tab" aria-selected="false" style="--h:24px"><i></i>Base</button><button role="tab" aria-selected="false" style="--h:42px"><i></i>Rising</button><button role="tab" aria-selected="true" style="--h:62px"><i></i>Full power</button></div>
+      <p class="tabpanel">Current roles appear here.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- EMPTY & LOADING -->
+<section class="band gutter"><div class="wrap">
+  <h2>Empty and loading states</h2>
+  <p class="why">Every list says what to do next when empty. Loading uses a skeleton shaped like the result (see Cards), or this bar for actions.</p>
+  <div class="opts">
+    <div class="opt">
+      <h3>A · Quiet sky</h3>
+      <div class="empty"><span class="sfx" aria-hidden="true">シーン</span><b>No posts yet</b><p>The first one is in training. Check back soon, or follow on LinkedIn.</p></div>
+    </div>
+    <div class="opt">
+      <h3>B · No reading</h3>
+      <div class="empty lens"><b>NO READING</b><p>Nothing matches that filter. Clear it to see every project.</p><button class="bA sm" type="button">Clear filter</button></div>
+    </div>
+    <div class="opt">
+      <h3>C · Blank page</h3>
+      <div class="empty page"><span class="sfx" aria-hidden="true">シーン</span><b>To be continued</b><p>This chapter isn't drawn yet. Read the other projects meanwhile.</p></div>
+    </div>
+  </div>
+  <div class="opts" style="margin-top:20px"><div class="opt"><h3>Action loading · ki bar</h3><div class="load-ki" role="progressbar" aria-label="Sending"><i></i></div></div></div>
+</div></section>
+
+<footer class="foot gutter"><div class="wrap">Component round 1 · core kit · 2 November 2026. Signature components (aura, scouter, specimen tube, manga panel, beam) come in round 2.</div></footer>
+
+<script>
+// Live tabs: click and arrow keys, so the behaviour can be tried.
+document.querySelectorAll('[role="tablist"]').forEach((list) => {
+  const tabs = [...list.querySelectorAll('[role="tab"]')];
+  const select = (t) => { tabs.forEach((x) => { x.setAttribute("aria-selected", String(x === t)); x.tabIndex = x === t ? 0 : -1; }); t.focus(); };
+  tabs.forEach((t, i) => {
+    t.tabIndex = t.getAttribute("aria-selected") === "true" ? 0 : -1;
+    t.addEventListener("click", () => select(t));
+    t.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") select(tabs[(i + 1) % tabs.length]);
+      if (e.key === "ArrowLeft") select(tabs[(i - 1 + tabs.length) % tabs.length]);
+    });
+  });
+});
+document.querySelectorAll('a[href="#"]').forEach((a) => a.addEventListener("click", (e) => e.preventDefault()));
+</script>
+</body>
+</html>

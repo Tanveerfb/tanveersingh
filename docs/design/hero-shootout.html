@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Portfolio Hero Shootout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Barlow:wght@400;500;600;700;800&family=Chakra+Petch:wght@400;500;600;700&family=Noto+Sans+JP:wght@900&family=Share+Tech+Mono&display=swap">
+<style>
+/* Layout: a fixed switch bar over two full-page drafts (A, B) built from identical content,
+   each a hero thesis followed by career, skills, one project and a plain form. Single dark look by choice. */
+:root {
+  color-scheme: dark;
+  /* shell */
+  --shell-bg: #08090f;
+  --shell-fg: #e9ebf3;
+  --shell-muted: #9aa0b4;
+  --shell-line: #23263a;
+  /* A — Dragon Ball Z: cel-shaded, gi orange + deep blue, golden transformation */
+  --a-night: #0c1233;
+  --a-navy: #17215e;
+  --a-blue: #1f3fae;        /* fill; white text 8.6:1 */
+  --a-orange: #f47a1f;      /* gi orange: decoration and outlines, not a text fill */
+  --a-gold: #ffcf1f;        /* light fill; ink text 13.9:1 */
+  --a-gold-hi: #fff4b8;
+  --a-ink: #0a0a14;         /* cel outlines and hard shadows */
+  --a-paper: #fff8e8;       /* manga page and light text */
+  --a-text: #f4f1ff;
+  --a-muted: #b9c0e2;
+  --a-line: #2b3a8f;
+  --a-lens: #39e27e;        /* scouter lens */
+  --a-alarm: #e3262f;       /* scouter alarm; white text 4.9:1 */
+  /* B — Cyberpunk 2077 inspired */
+  --b-void: #0b0b0e;
+  --b-yellow: #f3e600;      /* fill; black text 15.9:1 */
+  --b-red: #d4102c;         /* fill; white text 5.4:1 */
+  --b-cyan: #4af2ff;
+  --b-ink: #f2f0e4;
+  --b-muted: #a8a593;
+  --b-panel: #15151a;
+  --b-line: #34331f;
+  /* type */
+  --f-a-display: "Bangers", "Impact", "Arial Black", sans-serif;
+  --f-jp: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --f-a-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+  --f-b-display: "Chakra Petch", "Segoe UI", system-ui, sans-serif;
+  --f-b-mono: "Share Tech Mono", ui-monospace, "Cascadia Mono", monospace;
+  /* motion */
+  --ease-snap: cubic-bezier(.2, .9, .1, 1);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--shell-bg); color: var(--shell-fg); font: 400 17px/1.55 var(--f-a-body); overflow-x: hidden; }
+a { color: inherit; }
+.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 1160px; margin: 0 auto; }
+
+/* ---------- switch bar ---------- */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--shell-bg); }
+.switch { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: var(--shell-bg); border-bottom: 1px solid var(--shell-line); }
+.switch .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding-block: 10px; }
+.switch p { margin: 0; font-size: 13px; color: var(--shell-muted); flex: 1 1 220px; min-width: 0; }
+.seg { display: flex; border: 1px solid var(--shell-line); border-radius: 999px; padding: 3px; gap: 3px; }
+.seg button { font: 600 14px/1 var(--f-a-body); color: var(--shell-muted); background: transparent; border: 0; border-radius: 999px; padding: 9px 14px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--shell-fg); color: var(--shell-bg); }
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid var(--a-gold); outline-offset: 2px; }
+
+/* ================= A — DRAGON BALL Z ================= */
+.opt-a { background: var(--a-night); color: var(--a-text); font-family: var(--f-a-body); }
+.a-hero { position: relative; overflow: hidden; isolation: isolate;
+  background: radial-gradient(90% 70% at 50% 62%, var(--a-navy) 0%, var(--a-night) 70%); transition: background 300ms; }
+.a-hero.is-gold { background: radial-gradient(70% 60% at 50% 58%, #5a3a0c 0%, #2a1a2e 45%, var(--a-night) 80%); }
+.a-hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
+.a-lines { position: absolute; inset: -30%; z-index: -2; opacity: 0;
+  background: repeating-conic-gradient(from 0deg at 50% 55%, color-mix(in srgb, var(--a-gold-hi) 30%, transparent) 0deg 1deg, transparent 1deg 7deg);
+  -webkit-mask: radial-gradient(circle at 50% 55%, transparent 0 22%, #000 46%); mask: radial-gradient(circle at 50% 55%, transparent 0 22%, #000 46%); }
+.a-hero.is-gold .a-lines { animation: a-lines 900ms var(--ease-snap) both; }
+@keyframes a-lines { 0% { opacity: 0; transform: scale(1.3); } 30% { opacity: 1; } 100% { opacity: .4; transform: scale(1); } }
+.a-flash { position: absolute; inset: 0; z-index: 6; pointer-events: none; background: var(--a-paper); opacity: 0; }
+.a-hero.is-flash .a-flash { animation: a-flash 380ms ease-out both; }
+@keyframes a-flash { 0% { opacity: .95; } 100% { opacity: 0; } }
+.a-hero.is-shake .a-stage { animation: a-shake 90ms linear 10; }
+@keyframes a-shake { 0% { transform: translate(0, 0); } 25% { transform: translate(-4px, 2px); } 50% { transform: translate(3px, -3px); } 75% { transform: translate(-2px, -1px); } 100% { transform: translate(0, 0); } }
+.a-stage { position: relative; display: grid; justify-items: center; text-align: center; padding-block: 64px 56px; }
+.a-rumble { font: 900 clamp(26px, 4vw, 44px)/1 var(--f-jp); color: var(--a-gold); -webkit-text-stroke: 2px var(--a-ink); paint-order: stroke fill; letter-spacing: -.02em;
+  text-shadow: 3px 3px 0 var(--a-ink); transform: rotate(-4deg); margin-bottom: 6px; user-select: none; }
+.a-hero.is-gold .a-rumble { animation: a-pop 500ms var(--ease-snap) both; }
+@keyframes a-pop { 0% { transform: rotate(-4deg) scale(.6); } 60% { transform: rotate(-4deg) scale(1.15); } 100% { transform: rotate(-4deg) scale(1); } }
+.a-eyebrow { display: inline-block; font: 800 13px/1 var(--f-a-body); letter-spacing: .16em; text-transform: uppercase; color: var(--a-ink); background: var(--a-orange);
+  padding: 7px 12px; border: 2px solid var(--a-ink); box-shadow: 3px 3px 0 var(--a-ink); margin: 6px 0 18px; }
+.a-name { font: 400 clamp(64px, 13.5vw, 184px)/.84 var(--f-a-display); letter-spacing: .02em; margin: 0; text-transform: uppercase;
+  color: var(--a-gold); -webkit-text-stroke: 6px var(--a-ink); paint-order: stroke fill; text-shadow: 7px 7px 0 var(--a-ink); transition: color 200ms; }
+.a-name span { display: block; color: var(--a-orange); }
+.a-hero:not(.is-gold) .a-name { color: var(--a-paper); }
+.a-hero:not(.is-gold) .a-name span { color: #8fb0ff; }
+.a-thesis { font: 800 clamp(22px, 2.8vw, 32px)/1.15 var(--f-a-body); margin: 26px 0 8px; text-wrap: balance; max-width: 24ch; color: var(--a-text); text-shadow: 2px 2px 0 var(--a-ink); }
+.a-roles { margin: 0 0 26px; color: var(--a-muted); max-width: 56ch; }
+.a-roles b { color: var(--a-text); font-weight: 700; }
+.a-ctas { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+.a-btn { font: 400 24px/1 var(--f-a-display); letter-spacing: .05em; text-decoration: none; padding: 14px 24px 12px; color: var(--a-ink); background: var(--a-gold);
+  border: 3px solid var(--a-ink); box-shadow: 5px 5px 0 var(--a-ink); transition: transform 120ms var(--ease-snap), box-shadow 120ms; }
+.a-btn:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--a-ink); }
+.a-btn:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--a-ink); }
+.a-btn.blue { background: var(--a-blue); color: #fff; }
+.a-replay { margin-top: 22px; font: 700 13px/1 var(--f-a-body); color: var(--a-muted); background: transparent; border: 2px solid var(--a-line); padding: 8px 12px; cursor: pointer; }
+.a-replay:hover { color: var(--a-text); border-color: var(--a-gold); }
+
+/* energy beam divider */
+.a-beam { position: relative; height: 46px; background: var(--a-night); overflow: hidden; }
+.a-beam i { position: absolute; left: 0; right: 0; top: 50%; height: 26px; transform: translateY(-50%) scaleX(0); transform-origin: left center; border-radius: 0 20px 20px 0;
+  background: linear-gradient(180deg, #4f8cff 0 18%, #bfe0ff 18% 36%, #ffffff 36% 64%, #bfe0ff 64% 82%, #4f8cff 82%); box-shadow: 0 0 0 3px var(--a-ink); }
+.a-beam b { position: absolute; left: max(10px, env(safe-area-inset-left, 0px)); top: 50%; width: 46px; height: 46px; transform: translate(0, -50%) scale(0); border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0 30%, #bfe0ff 31% 55%, #4f8cff 56%); box-shadow: 0 0 0 3px var(--a-ink); }
+.opt-a.is-fired .a-beam b { animation: a-orb 500ms var(--ease-snap) 1.6s both; }
+.opt-a.is-fired .a-beam i { animation: a-fire 700ms cubic-bezier(.5, 0, .2, 1) 2s both; }
+@keyframes a-orb { to { transform: translate(0, -50%) scale(1); } }
+@keyframes a-fire { to { transform: translateY(-50%) scaleX(1); } }
+
+.a-sec { padding-block: 64px; }
+.a-h2 { font: 400 clamp(42px, 6vw, 72px)/.95 var(--f-a-display); letter-spacing: .02em; margin: 0 0 30px; color: var(--a-paper); -webkit-text-stroke: 4px var(--a-ink); paint-order: stroke fill; text-shadow: 5px 5px 0 var(--a-ink); }
+.a-h2 em { font-style: normal; color: var(--a-gold); }
+.a-kicker { font: 900 20px/1 var(--f-jp); color: var(--a-orange); margin: 0 0 8px; }
+
+/* transformation stages */
+.a-forms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.a-form { position: relative; background: var(--a-navy); border: 3px solid var(--a-ink); box-shadow: 6px 6px 0 var(--a-ink); padding: 24px 24px 22px; min-width: 0; }
+.a-form.max { background: linear-gradient(180deg, #3a2a10 0%, var(--a-navy) 70%); }
+.a-form.max::before { content: ""; position: absolute; left: -3px; right: -3px; top: -26px; height: 30px; background: var(--a-gold);
+  clip-path: polygon(0 100%, 4% 30%, 8% 80%, 13% 0, 18% 70%, 24% 20%, 30% 85%, 36% 10%, 42% 75%, 48% 25%, 54% 90%, 60% 5%, 66% 70%, 72% 25%, 78% 85%, 84% 15%, 90% 70%, 95% 30%, 100% 100%); }
+.a-level { display: inline-block; font: 800 12px/1 var(--f-a-body); letter-spacing: .14em; text-transform: uppercase; padding: 6px 9px; border: 2px solid var(--a-ink); background: var(--a-gold); color: var(--a-ink); }
+.a-form h3 { font: 400 34px/1 var(--f-a-display); letter-spacing: .03em; margin: 14px 0 4px; color: var(--a-paper); }
+.a-meta { font-size: 14px; color: var(--a-muted); margin: 0 0 12px; }
+.a-form p.d { margin: 0; color: var(--a-text); font-size: 16px; }
+.a-tiers { margin-top: 26px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.a-tier { border: 2px solid var(--a-ink); background: var(--a-night); padding: 12px 14px; min-width: 0; box-shadow: 4px 4px 0 var(--a-ink); }
+.a-tier .a-level { background: #8fb0ff; font-size: 11px; }
+.a-tier.base .a-level { background: var(--a-muted); }
+.a-tier b { display: block; font-weight: 700; font-size: 15px; margin-top: 8px; }
+.a-tier span { color: var(--a-muted); font-size: 13px; }
+.a-tier span.a-level { color: var(--a-ink); font-size: 11px; }
+
+/* Z-era scouter: green lens that overloads */
+.a-scout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: center; }
+.a-device { position: relative; max-width: 100%; }
+.a-lens { position: relative; aspect-ratio: 1.5 / 1; max-width: 100%; border: 4px solid var(--a-ink); border-radius: 10px 60px 10px 10px; overflow: hidden;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--a-lens) 55%, transparent), color-mix(in srgb, var(--a-lens) 25%, transparent)), #0d2a1a;
+  box-shadow: 8px 8px 0 var(--a-ink); padding: 22px 24px; font-family: var(--f-b-mono); color: #d9ffe8; display: grid; align-content: center; }
+.a-lens::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(0,0,0,.12) 3px 4px); }
+.a-lens .tri { position: absolute; width: 0; height: 0; border-left: 9px solid transparent; border-right: 9px solid transparent; border-bottom: 14px solid var(--a-alarm); }
+.a-read { position: relative; z-index: 1; display: grid; gap: 6px; font-size: 14px; }
+.a-read .num { font: 400 clamp(30px, 4.4vw, 50px)/1 var(--f-a-display); letter-spacing: .04em; color: #ffffff; -webkit-text-stroke: 2px #0d2a1a; paint-order: stroke fill; }
+.a-read .unit { color: #d9ffe8; }
+.a-boom { position: absolute; top: -34px; right: -18px; width: 46%; aspect-ratio: 1.4 / 1; z-index: 2; display: grid; place-items: center; pointer-events: none; opacity: 0; }
+.a-boom svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.a-boom span { position: relative; font: 900 clamp(26px, 3.4vw, 40px)/1 var(--f-jp); color: var(--a-gold); -webkit-text-stroke: 3px var(--a-ink); paint-order: stroke fill; text-shadow: 4px 4px 0 var(--a-ink); transform: rotate(-8deg); }
+.a-sec.is-overload .a-boom { animation: a-boom 700ms var(--ease-snap) 1.5s both; }
+.a-sec.is-overload .a-read .num { animation: a-climb 1.5s steps(6) both; }
+@keyframes a-boom { 0% { opacity: 0; transform: scale(.4); } 60% { opacity: 1; transform: scale(1.08); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes a-climb { 0% { opacity: .3; } 100% { opacity: 1; } }
+.a-alarm { justify-self: start; font: 400 12px/1 var(--f-b-mono); color: #fff; background: var(--a-alarm); padding: 5px 8px; letter-spacing: .06em; }
+.a-skills { display: grid; gap: 14px; }
+.a-skill { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 12px; align-items: baseline; padding-bottom: 12px; border-bottom: 2px dashed var(--a-line); }
+.a-skill dt { font: 800 12px/1.4 var(--f-a-body); letter-spacing: .14em; text-transform: uppercase; color: var(--a-gold); }
+.a-skill dd { margin: 0; }
+
+/* manga page: paper gutters, black-bordered panels */
+.a-page { background: var(--a-paper); color: var(--a-ink); }
+.a-page .a-h2 { color: var(--a-paper); }
+.a-page .a-kicker { color: #c2410c; }
+.a-panels { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); grid-template-rows: auto auto; gap: 12px; }
+.a-pn { position: relative; border: 4px solid var(--a-ink); background: #ffffff; padding: 24px; min-width: 0; }
+.a-pn.main { grid-row: span 2; clip-path: polygon(0 0, 100% 0, 94% 100%, 0 100%); padding-right: 9%; }
+.a-pn.main h3 { font: 400 clamp(34px, 4vw, 50px)/1 var(--f-a-display); letter-spacing: .03em; margin: 12px 0 10px; }
+.a-pn.main p { margin: 0 0 16px; max-width: 58ch; }
+.a-pn .a-level { background: var(--a-orange); }
+.a-chips { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0; }
+.a-chips li { font-size: 13px; font-weight: 600; padding: 4px 9px; border: 2px solid var(--a-ink); }
+.a-pn.act { min-height: 180px; display: grid; place-items: center; overflow: hidden;
+  background: repeating-conic-gradient(from 0deg at 50% 50%, var(--a-ink) 0deg 1.4deg, #ffffff 1.4deg 9deg); }
+.a-pn.act::before { content: ""; position: absolute; width: 46%; aspect-ratio: 1; border-radius: 50%; background: #ffffff; }
+.a-pn.act span { position: relative; font: 900 clamp(48px, 7vw, 84px)/1 var(--f-jp); color: var(--a-orange); -webkit-text-stroke: 3px var(--a-ink); paint-order: stroke fill; transform: rotate(-6deg); }
+.a-pn.tone { background: radial-gradient(circle at 1px 1px, rgba(10,10,20,.35) 1.1px, transparent 1.6px) 0 0 / 8px 8px, #ffffff; display: grid; align-content: center; gap: 4px; }
+.a-pn.tone b { font: 400 26px/1 var(--f-a-display); letter-spacing: .04em; }
+.a-pn.tone span { font-size: 14px; }
+
+/* plain form — restraint check */
+.plain { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 32px; }
+.plain form { display: grid; gap: 14px; }
+.field { display: grid; gap: 6px; }
+.field label { font-weight: 600; font-size: 15px; }
+.opt-a .field input, .opt-a .field textarea { font: inherit; color: var(--a-text); background: var(--a-navy); border: 2px solid var(--a-line); padding: 12px 14px; border-radius: 0; }
+.opt-a .field input:focus, .opt-a .field textarea:focus { border-color: var(--a-gold); outline: none; }
+.note { font-size: 14px; color: var(--a-muted); margin: 0; }
+.opt-a .send { justify-self: start; font: 700 16px/1 var(--f-a-body); color: #fff; background: var(--a-blue); border: 2px solid var(--a-ink); box-shadow: 4px 4px 0 var(--a-ink); padding: 14px 22px; cursor: pointer; }
+.sent { font-size: 15px; margin: 0; }
+
+/* ================= B — CYBERPUNK 2077 INSPIRED ================= */
+.opt-b { background: var(--b-void); color: var(--b-ink); font-family: var(--f-b-display); }
+.b-hero { position: relative; overflow: hidden; isolation: isolate; background:
+  linear-gradient(90deg, color-mix(in srgb, var(--b-yellow) 7%, transparent) 1px, transparent 1px) 0 0 / 48px 48px,
+  linear-gradient(0deg, color-mix(in srgb, var(--b-yellow) 7%, transparent) 1px, transparent 1px) 0 0 / 48px 48px, var(--b-void); }
+.b-hero .wrap { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr); gap: 28px; padding-block: 64px 56px; align-items: end; }
+.b-slab { background: var(--b-yellow); color: var(--b-void); padding: 26px 28px 30px; clip-path: polygon(0 0, calc(100% - 40px) 0, 100% 40px, 100% 100%, 22px 100%, 0 calc(100% - 22px)); position: relative; }
+.b-code { font: 400 13px/1 var(--f-b-mono); letter-spacing: .08em; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-bottom: 2px solid var(--b-void); padding-bottom: 10px; }
+.b-name { position: relative; font: 700 clamp(56px, 10.5vw, 148px)/.84 var(--f-b-display); text-transform: uppercase; margin: 18px 0 6px; letter-spacing: -.03em; }
+.b-name::before, .b-name::after { content: attr(data-t); position: absolute; inset: 0; pointer-events: none; opacity: 0; }
+.b-name::before { color: var(--b-red); }
+.b-name::after { color: var(--b-cyan); mix-blend-mode: multiply; }
+.b-hero.is-glitch .b-name::before { animation: b-g1 700ms steps(2) 200ms both; }
+.b-hero.is-glitch .b-name::after { animation: b-g2 700ms steps(2) 200ms both; }
+@keyframes b-g1 { 0% { opacity: 1; clip-path: inset(10% 0 70% 0); transform: translate(-8px, 0); } 30% { clip-path: inset(55% 0 20% 0); transform: translate(6px, 0); } 60% { clip-path: inset(30% 0 50% 0); transform: translate(-4px, 0); } 99% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes b-g2 { 0% { opacity: 1; clip-path: inset(65% 0 5% 0); transform: translate(8px, 0); } 30% { clip-path: inset(5% 0 75% 0); transform: translate(-6px, 0); } 60% { clip-path: inset(40% 0 35% 0); transform: translate(5px, 0); } 99% { opacity: 1; } 100% { opacity: 0; } }
+.b-thesis { font: 600 clamp(20px, 2.3vw, 28px)/1.15 var(--f-b-display); margin: 12px 0 0; text-wrap: balance; max-width: 26ch; }
+.b-roles { margin: 22px 0 22px; color: var(--b-muted); max-width: 56ch; font-size: 17px; }
+.b-roles b { color: var(--b-ink); font-weight: 600; }
+.b-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+.b-btn { font: 700 16px/1 var(--f-b-display); letter-spacing: .08em; text-transform: uppercase; text-decoration: none; padding: 15px 22px; background: var(--b-red); color: #fff;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%); display: inline-flex; gap: 10px; align-items: center; transition: transform 140ms; }
+.b-btn:hover { transform: translateX(3px); }
+.b-btn.ghost { background: transparent; color: var(--b-cyan); box-shadow: inset 0 0 0 1px var(--b-cyan); clip-path: none; }
+.b-hud { font: 400 13px/1.7 var(--f-b-mono); color: var(--b-cyan); border: 1px solid color-mix(in srgb, var(--b-cyan) 45%, transparent); padding: 16px 18px; position: relative; }
+.b-hud::before { content: ""; position: absolute; top: -1px; left: -1px; width: 18px; height: 18px; border-top: 3px solid var(--b-yellow); border-left: 3px solid var(--b-yellow); }
+.b-hud dl { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 14px; }
+.b-hud dt { color: var(--b-muted); }
+.b-hud dd { margin: 0; color: var(--b-ink); }
+.b-sweep { position: absolute; inset: 0; z-index: 3; pointer-events: none; background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--b-cyan) 18%, transparent) 48%, transparent 52%); transform: translateY(-100%); }
+.b-hero.is-glitch .b-sweep { animation: b-sweep 1100ms ease-out both; }
+@keyframes b-sweep { to { transform: translateY(100%); } }
+.b-replay { justify-self: start; font: 400 12px/1 var(--f-b-mono); color: var(--b-muted); background: transparent; border: 1px solid var(--b-line); padding: 8px 10px; cursor: pointer; margin-top: 12px; }
+.b-sec { padding-block: 60px; border-top: 1px solid var(--b-line); }
+.b-label { font: 400 13px/1 var(--f-b-mono); letter-spacing: .12em; color: var(--b-red); margin: 0; text-transform: uppercase; }
+.b-h2 { font: 700 clamp(34px, 4.6vw, 52px)/1 var(--f-b-display); text-transform: uppercase; margin: 8px 0 26px; letter-spacing: -.01em; }
+.b-h2 em { font-style: normal; color: var(--b-yellow); }
+.b-gigs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.b-gig { background: var(--b-panel); border: 1px solid var(--b-line); padding: 22px; position: relative; clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%); }
+.b-gig.top { border-color: var(--b-yellow); box-shadow: inset 4px 0 0 var(--b-yellow); }
+.b-st { font: 400 12px/1 var(--f-b-mono); letter-spacing: .1em; display: inline-flex; gap: 8px; align-items: center; color: var(--b-void); background: var(--b-yellow); padding: 5px 8px; text-transform: uppercase; }
+.b-st.alt { background: var(--b-cyan); }
+.b-gig h3 { font: 700 26px/1.05 var(--f-b-display); text-transform: uppercase; margin: 14px 0 4px; }
+.b-meta { font: 400 13px/1.4 var(--f-b-mono); color: var(--b-muted); margin: 0 0 12px; }
+.b-gig p.d { margin: 0; font-size: 16px; font-family: var(--f-a-body); }
+.b-earlier { margin-top: 16px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.b-mini { border-top: 2px solid var(--b-line); padding-top: 10px; min-width: 0; }
+.b-mini.now { border-color: var(--b-cyan); }
+.b-mini b { display: block; font-size: 15px; font-weight: 600; }
+.b-mini span { font: 400 12px/1.4 var(--f-b-mono); color: var(--b-muted); }
+.b-deck { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.b-slot { border: 1px solid var(--b-line); padding: 16px; background: var(--b-panel); min-width: 0; }
+.b-slot dt { font: 400 12px/1 var(--f-b-mono); letter-spacing: .12em; color: var(--b-yellow); text-transform: uppercase; margin-bottom: 10px; }
+.b-slot dd { margin: 0; font-family: var(--f-a-body); font-size: 15px; }
+.b-slot.stat { background: var(--b-yellow); color: var(--b-void); border-color: var(--b-yellow); }
+.b-slot.stat dt { color: var(--b-void); }
+.b-slot.stat dd { font: 700 34px/1 var(--f-b-display); }
+.b-slot.stat small { display: block; font: 400 12px/1.4 var(--f-b-mono); margin-top: 8px; }
+.b-shard { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr); border: 1px solid var(--b-yellow); }
+.b-shard .body { padding: 26px; min-width: 0; }
+.b-shard h3 { font: 700 clamp(28px, 3.4vw, 40px)/1 var(--f-b-display); text-transform: uppercase; margin: 10px 0 10px; }
+.b-shard p { margin: 0 0 14px; font-family: var(--f-a-body); max-width: 58ch; }
+.b-shard .art { background: repeating-linear-gradient(135deg, var(--b-yellow) 0 14px, var(--b-void) 14px 28px); display: grid; place-items: center; min-height: 200px; }
+.b-shard .art span { background: var(--b-void); color: var(--b-yellow); font: 700 22px/1 var(--f-b-display); padding: 12px 16px; letter-spacing: .06em; text-transform: uppercase; }
+.b-chips { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0; }
+.b-chips li { font: 400 12px/1 var(--f-b-mono); padding: 6px 8px; border: 1px solid var(--b-line); color: var(--b-muted); }
+.opt-b .field label { font-family: var(--f-b-display); }
+.opt-b .field input, .opt-b .field textarea { font: 400 16px/1.4 var(--f-a-body); color: var(--b-ink); background: var(--b-panel); border: 1px solid var(--b-line); padding: 12px 14px; border-radius: 0; }
+.opt-b .field input:focus, .opt-b .field textarea:focus { border-color: var(--b-yellow); outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--b-yellow) 22%, transparent); }
+.opt-b .note { color: var(--b-muted); }
+.opt-b .send { justify-self: start; font: 700 15px/1 var(--f-b-display); letter-spacing: .08em; text-transform: uppercase; color: var(--b-void); background: var(--b-yellow); border: 0; padding: 14px 22px; cursor: pointer; }
+
+.foot { padding-block: 28px 40px; font-size: 13px; color: var(--shell-muted); border-top: 1px solid var(--shell-line); background: var(--shell-bg); }
+
+/* ---------- phone ---------- */
+@media (max-width: 760px) {
+  .b-hero .wrap, .a-scout, .plain, .b-shard { grid-template-columns: minmax(0, 1fr); }
+  .a-stage { padding-block: 44px 40px; }
+  .a-name { -webkit-text-stroke: 4px var(--a-ink); text-shadow: 5px 5px 0 var(--a-ink); }
+  .a-forms, .b-gigs { grid-template-columns: minmax(0, 1fr); }
+  .a-form.max + .a-form.max { margin-top: 20px; }
+  .a-tiers, .b-earlier { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .a-panels { grid-template-columns: minmax(0, 1fr); }
+  .a-pn.main { grid-row: auto; clip-path: polygon(0 0, 100% 0, 100% 94%, 0 100%); padding-right: 24px; padding-bottom: 36px; }
+  .a-skill { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .a-lens { aspect-ratio: auto; padding: 22px 20px; border-radius: 10px 40px 10px 10px; }
+  .a-boom { right: 0; }
+  .b-deck { grid-template-columns: minmax(0, 1fr); }
+  .b-shard .art { min-height: 120px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .a-lines { opacity: .4; }
+  .a-boom { opacity: 1; }
+  .opt-a .a-beam i { transform: translateY(-50%) scaleX(1); }
+  .opt-a .a-beam b { transform: translate(0, -50%) scale(1); }
+}
+</style>
+</head>
+<body>
+
+<div class="switch gutter">
+  <div class="wrap">
+    <div class="seg" role="group" aria-label="Choose a draft">
+      <button type="button" id="btn-a" aria-pressed="true" data-opt="a">A · Dragon Ball Z</button>
+      <button type="button" id="btn-b" aria-pressed="false" data-opt="b">B · Cyberpunk 2077</button>
+    </div>
+    <p>Draft mockup. Same content in both; copy is a draft for your approval.</p>
+  </div>
+</div>
+
+<!-- ======================= OPTION A ======================= -->
+<main class="opt-a" id="a">
+  <section class="a-hero gutter" id="a-hero" aria-label="Introduction">
+    <div class="a-lines" aria-hidden="true"></div>
+    <canvas id="aura" aria-hidden="true"></canvas>
+    <div class="a-flash" aria-hidden="true"></div>
+    <div class="wrap a-stage">
+      <div class="a-rumble" aria-hidden="true">ゴゴゴゴ</div>
+      <p class="a-eyebrow">Sydney · Developer &amp; studio head</p>
+      <h1 class="a-name" id="a-name">Tanveer<span>Singh</span></h1>
+      <p class="a-thesis">Websites, platforms and practical AI.</p>
+      <p class="a-roles"><b>Developer Programmer at Nobility Care Australia.</b> <b>Head of Studio at Tinker Together.</b> I build websites and web platforms made for the people who use them, and add AI where it earns its place.</p>
+      <div class="a-ctas">
+        <a class="a-btn" href="#a-work">See my work</a>
+        <a class="a-btn blue" href="#a-contact">Get in touch</a>
+      </div>
+      <button type="button" class="a-replay" id="a-replay">Power up again</button>
+    </div>
+  </section>
+  <div class="a-beam" aria-hidden="true"><b></b><i></i></div>
+
+  <section class="a-sec gutter" aria-labelledby="a-forms-h">
+    <div class="wrap">
+      <p class="a-kicker">変身</p>
+      <h2 class="a-h2" id="a-forms-h">Every <em>form</em> so far</h2>
+      <div class="a-forms">
+        <article class="a-form max">
+          <span class="a-level">Full power</span>
+          <h3>Nobility Care Australia</h3>
+          <p class="a-meta">Developer Programmer · Contract · Feb 2023 – present · Campbelltown, NSW</p>
+          <p class="d">Built and maintain the public website, the staff portal and the learning platform for an NDIS provider. Also the SharePoint, Microsoft 365 and Power Automate setup.</p>
+        </article>
+        <article class="a-form max">
+          <span class="a-level">Full power</span>
+          <h3>Tinker Together</h3>
+          <p class="a-meta">Head of Studio · Oct 2026 – present · Sydney</p>
+          <p class="d">My web development and AI studio. Custom websites, content back ends, staff portals and learning platforms, with AI on hosted or local models.</p>
+        </article>
+      </div>
+      <div class="a-tiers">
+        <div class="a-tier"><span class="a-level">Powering up</span><b>IT Consultant</b><span>Truqorun · Oct 2026 – present</span></div>
+        <div class="a-tier"><span class="a-level">Powering up</span><b>IT Help Desk Support</b><span>Simetrix Digital Technologies · Jan 2026 – present</span></div>
+        <div class="a-tier base"><span class="a-level">Base form</span><b>Web Developer</b><span>Freelance · Mar 2021 – Oct 2026</span></div>
+        <div class="a-tier base"><span class="a-level">Base form</span><b>Web Developer Intern</b><span>Easylink Finance · Apr – Jul 2022</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="a-sec gutter" id="a-scan" aria-labelledby="a-scan-h">
+    <div class="wrap a-scout">
+      <div class="a-device">
+        <div class="a-lens" role="img" aria-label="Scouter reading: over 1,000 GitHub contributions in 2026, counted by GitHub. The scouter overloads.">
+          <span class="tri" style="top: 18%; right: 22%;"></span>
+          <span class="tri" style="bottom: 22%; left: 58%;"></span>
+          <div class="a-read" aria-hidden="true">
+            <span>TARGET LOCKED · SYDNEY</span>
+            <span class="num">1,000+</span>
+            <span class="unit">GITHUB CONTRIBUTIONS · 2026 · COUNTED BY GITHUB</span>
+            <span class="a-alarm">STILL RISING</span>
+          </div>
+        </div>
+        <div class="a-boom" aria-hidden="true">
+          <svg viewBox="0 0 200 140" preserveAspectRatio="none"><polygon points="100,4 116,40 160,14 140,54 196,58 146,78 178,122 124,96 104,136 88,98 30,128 58,82 4,66 56,52 30,12 82,40" fill="#fff4b8" stroke="#0a0a14" stroke-width="3"/></svg>
+          <span>ボン!</span>
+        </div>
+      </div>
+      <div>
+        <p class="a-kicker">スカウター</p>
+        <h2 class="a-h2" id="a-scan-h">What I <em>fight</em> with</h2>
+        <dl class="a-skills">
+          <div class="a-skill"><dt>Web</dt><dd>Next.js, React, TypeScript, Node.js, Tailwind CSS, SCSS, Vercel</dd></div>
+          <div class="a-skill"><dt>Back end</dt><dd>Firebase (Firestore, Auth, Storage, Cloud Functions), Zod, Zustand</dd></div>
+          <div class="a-skill"><dt>AI</dt><dd>Claude and Gemini, local models on Ollama and LM Studio, the Vercel AI SDK, ComfyUI</dd></div>
+          <div class="a-skill"><dt>Microsoft 365</dt><dd>SharePoint, Power Automate, Forms, Teams</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="a-sec a-page gutter" id="a-work" aria-labelledby="a-work-h">
+    <div class="wrap">
+      <p class="a-kicker">第1話</p>
+      <h2 class="a-h2" id="a-work-h">The <em>work</em></h2>
+      <div class="a-panels">
+        <article class="a-pn main">
+          <span class="a-level">Nobility Care Australia</span>
+          <h3>NCA public website</h3>
+          <p>Sixteen service pages for an NDIS provider, in light, dark and high-contrast themes. A contrast audit fails the build on any WCAG AA failure, and an admin area runs the blog, news, FAQs, reviews and vacancies.</p>
+          <ul class="a-chips"><li>Next.js 16</li><li>TypeScript</li><li>Tailwind v4</li><li>Firebase</li><li>next-intl</li></ul>
+        </article>
+        <div class="a-pn act" aria-hidden="true"><span>ドン!</span></div>
+        <div class="a-pn tone"><b>nobilitycare.com.au</b><span>Live, and maintained since launch</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="a-sec gutter" id="a-contact" aria-labelledby="a-contact-h">
+    <div class="wrap plain">
+      <div>
+        <p class="a-kicker">連絡</p>
+        <h2 class="a-h2" id="a-contact-h">Get in <em>touch</em></h2>
+        <p class="note">The form stays readable: no outlines on text, no motion. Messages go to Tanveer on Discord.</p>
+      </div>
+      <form id="form-a" novalidate>
+        <div class="field"><label for="a-name-in">Name</label><input id="a-name-in" name="name" autocomplete="name" value="Priya Sharma"></div>
+        <div class="field"><label for="a-email">Email</label><input id="a-email" name="email" type="email" autocomplete="email" value="priya@example.com"></div>
+        <div class="field"><label for="a-msg">Message</label><textarea id="a-msg" name="message" rows="4">We need a staff portal for our team. Can we talk next week?</textarea></div>
+        <button class="send" type="submit">Send message</button>
+        <p class="sent note" id="a-sent" hidden>Example only. This mockup sends nothing.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<!-- ======================= OPTION B ======================= -->
+<main class="opt-b" id="b" hidden>
+  <section class="b-hero gutter" id="b-hero" aria-label="Introduction">
+    <div class="b-sweep" aria-hidden="true"></div>
+    <div class="wrap">
+      <div>
+        <div class="b-slab">
+          <div class="b-code"><span>ID // TSINGH</span><span>SYD · NSW</span></div>
+          <h1 class="b-name" data-t="Tanveer Singh">Tanveer Singh</h1>
+          <p class="b-thesis">Websites, platforms and practical AI.</p>
+        </div>
+        <p class="b-roles"><b>Developer Programmer at Nobility Care Australia.</b> <b>Head of Studio at Tinker Together.</b> I build websites and web platforms made for the people who use them, and add AI where it earns its place.</p>
+        <div class="b-ctas">
+          <a class="b-btn" href="#b-work">See my work</a>
+          <a class="b-btn ghost" href="#b-contact">Get in touch</a>
+        </div>
+      </div>
+      <div>
+        <div class="b-hud" aria-label="Profile summary">
+          <dl>
+            <dt>STATUS</dt><dd>Two active roles</dd>
+            <dt>BASE</dt><dd>Sydney, NSW</dd>
+            <dt>STACK</dt><dd>Next.js · React · TS</dd>
+            <dt>AI</dt><dd>Hosted + local</dd>
+            <dt>LANG</dt><dd>English · Hindi · Punjabi</dd>
+          </dl>
+        </div>
+        <button type="button" class="b-replay" id="b-replay">Replay intro</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="b-sec gutter" aria-labelledby="b-gigs-h">
+    <div class="wrap">
+      <p class="b-label">// Contracts</p>
+      <h2 class="b-h2" id="b-gigs-h">Active <em>gigs</em></h2>
+      <div class="b-gigs">
+        <article class="b-gig top">
+          <span class="b-st">Active</span>
+          <h3>Nobility Care Australia</h3>
+          <p class="b-meta">Developer Programmer · Contract · Feb 2023 – present · Campbelltown, NSW</p>
+          <p class="d">Built and maintain the public website, the staff portal and the learning platform for an NDIS provider. Also the SharePoint, Microsoft 365 and Power Automate setup.</p>
+        </article>
+        <article class="b-gig top">
+          <span class="b-st alt">Active</span>
+          <h3>Tinker Together</h3>
+          <p class="b-meta">Head of Studio · Oct 2026 – present · Sydney</p>
+          <p class="d">My web development and AI studio. Custom websites, content back ends, staff portals and learning platforms, with AI on hosted or local models.</p>
+        </article>
+      </div>
+      <div class="b-earlier">
+        <div class="b-mini now"><b>IT Consultant</b><span>Truqorun · Oct 2026 – present</span></div>
+        <div class="b-mini now"><b>IT Help Desk Support</b><span>Simetrix Digital Technologies · Jan 2026 – present</span></div>
+        <div class="b-mini"><b>Web Developer Intern</b><span>Easylink Finance · Apr – Jul 2022</span></div>
+        <div class="b-mini"><b>Web Developer</b><span>Freelance · Mar 2021 – Oct 2026</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="b-sec gutter" aria-labelledby="b-deck-h">
+    <div class="wrap">
+      <p class="b-label">// Cyberdeck</p>
+      <h2 class="b-h2" id="b-deck-h">Installed <em>software</em></h2>
+      <dl class="b-deck">
+        <div class="b-slot stat"><dt>GitHub · 2026</dt><dd>1,000+</dd><small>contributions, counted by GitHub</small></div>
+        <div class="b-slot"><dt>Web</dt><dd>Next.js, React, TypeScript, Node.js, Tailwind CSS, SCSS, Vercel</dd></div>
+        <div class="b-slot"><dt>Back end</dt><dd>Firebase (Firestore, Auth, Storage, Cloud Functions), Zod, Zustand</dd></div>
+        <div class="b-slot"><dt>AI</dt><dd>Claude and Gemini, local models on Ollama and LM Studio, the Vercel AI SDK, ComfyUI</dd></div>
+        <div class="b-slot"><dt>Microsoft 365</dt><dd>SharePoint, Power Automate, Forms, Teams</dd></div>
+        <div class="b-slot"><dt>Games</dt><dd>Godot 4, GDScript, Python</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="b-sec gutter" id="b-work" aria-labelledby="b-work-h">
+    <div class="wrap">
+      <p class="b-label">// Shard 01</p>
+      <h2 class="b-h2" id="b-work-h">The <em>work</em></h2>
+      <article class="b-shard">
+        <div class="body">
+          <span class="b-st">Nobility Care Australia</span>
+          <h3>NCA public website</h3>
+          <p>Sixteen service pages for an NDIS provider, in light, dark and high-contrast themes. A contrast audit fails the build on any WCAG AA failure, and an admin area runs the blog, news, FAQs, reviews and vacancies.</p>
+          <ul class="b-chips"><li>Next.js 16</li><li>TypeScript</li><li>Tailwind v4</li><li>Firebase</li><li>next-intl</li></ul>
+        </div>
+        <div class="art" aria-hidden="true"><span>nobilitycare.com.au</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="b-sec gutter" id="b-contact" aria-labelledby="b-contact-h">
+    <div class="wrap plain">
+      <div>
+        <p class="b-label">// Plain on purpose</p>
+        <h2 class="b-h2" id="b-contact-h">Get in <em>touch</em></h2>
+        <p class="note">The form stays readable: no glitch on text, no motion. Messages go to Tanveer on Discord.</p>
+      </div>
+      <form id="form-b" novalidate>
+        <div class="field"><label for="b-name">Name</label><input id="b-name" name="name" autocomplete="name" value="Priya Sharma"></div>
+        <div class="field"><label for="b-email">Email</label><input id="b-email" name="email" type="email" autocomplete="email" value="priya@example.com"></div>
+        <div class="field"><label for="b-msg">Message</label><textarea id="b-msg" name="message" rows="4">We need a staff portal for our team. Can we talk next week?</textarea></div>
+        <button class="send" type="submit">Send message</button>
+        <p class="sent note" id="b-sent" hidden>Example only. This mockup sends nothing.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="foot gutter"><div class="wrap">Hero shootout · draft 2 · 2 November 2026. Original styling inspired by each world; no characters, logos or traced art.</div></footer>
+
+<script>
+(() => {
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const optA = document.getElementById("a"), optB = document.getElementById("b");
+  const btns = document.querySelectorAll(".seg button");
+  const heroA = document.getElementById("a-hero"), heroB = document.getElementById("b-hero");
+  const nameEl = document.getElementById("a-name");
+  const scan = document.getElementById("a-scan");
+
+  // ---- Z-era aura: hard-edged flickering flames, blue while charging, gold after the transformation.
+  // Runs only during a power-up, then leaves a still frame (no background loop).
+  const cv = document.getElementById("aura"), ctx = cv.getContext("2d");
+  const BLUE = ["#2a4fd0", "#8fb0ff", "#e8f0ff"], GOLD = ["#f47a1f", "#ffcf1f", "#fff4b8"];
+  let raf = 0, t0 = 0, lastFlick = 0, gold = false, rocks = [], dpr = 1, W = 0, H = 0, box = null;
+
+  function size() {
+    const r = heroA.getBoundingClientRect(), n = nameEl.getBoundingClientRect();
+    dpr = Math.min(window.devicePixelRatio || 1, 2); W = r.width; H = r.height;
+    cv.width = Math.max(1, W * dpr); cv.height = Math.max(1, H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    box = { cx: n.left - r.left + n.width / 2, cy: n.top - r.top + n.height * .55, rx: Math.min(W * .48, n.width * .6), ry: n.height * .62 };
+  }
+  // One flame layer: a closed spiky outline around an ellipse, stretched upward like a rising aura.
+  function flame(scale, color, jitter) {
+    const pts = 46;
+    ctx.beginPath();
+    for (let i = 0; i <= pts; i++) {
+      const a = (i / pts) * Math.PI * 2, up = Math.max(0, -Math.sin(a));
+      const spike = i % 2 === 0 ? 1 + (.18 + up * .55) * (0.6 + Math.random() * jitter) : .92;
+      const x = box.cx + Math.cos(a) * box.rx * scale * (i % 2 === 0 ? 1.02 : .96);
+      const y = box.cy + Math.sin(a) * box.ry * scale * (a > Math.PI ? spike * (1 + up * .5) : .62);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.closePath(); ctx.fillStyle = color; ctx.fill();
+  }
+  function bolt() {
+    const a = Math.PI + Math.random() * Math.PI, sx = box.cx + Math.cos(a) * box.rx * .9, sy = box.cy + Math.sin(a) * box.ry * 1.1;
+    ctx.beginPath(); ctx.moveTo(sx, sy);
+    let x = sx, y = sy;
+    for (let i = 0; i < 5; i++) { x += (Math.random() - .5) * 46; y += 12 + Math.random() * 18; ctx.lineTo(x, y); }
+    ctx.strokeStyle = "#e8f6ff"; ctx.lineWidth = 2.5; ctx.stroke();
+  }
+  function drawRocks(dt) {
+    for (const r of rocks) {
+      if (raf) r.y -= r.v * dt;
+      ctx.save(); ctx.translate(r.x, r.y); ctx.rotate(r.rot);
+      ctx.beginPath(); r.shape.forEach(([px, py], i) => i ? ctx.lineTo(px, py) : ctx.moveTo(px, py)); ctx.closePath();
+      ctx.fillStyle = "#3b3550"; ctx.fill(); ctx.lineWidth = 2.5; ctx.strokeStyle = "#0a0a14"; ctx.stroke(); ctx.restore();
+    }
+  }
+  function makeRocks() {
+    rocks = Array.from({ length: Math.round(W / 90) }, () => {
+      const s = 6 + Math.random() * 14;
+      return { x: Math.random() * W, y: H - Math.random() * 40, v: .02 + Math.random() * .05, rot: Math.random() * 3,
+        shape: [[-s, 0], [-s * .4, -s * .8], [s * .6, -s * .6], [s, s * .2], [s * .2, s * .8], [-s * .7, s * .5]] };
+    });
+  }
+  function paint(dt, flick) {
+    ctx.clearRect(0, 0, W, H);
+    const c = gold ? GOLD : BLUE;
+    ctx.globalAlpha = .55; flame(1.18, c[0], flick ? 1 : 0);
+    ctx.globalAlpha = .75; flame(1.0, c[1], flick ? 1 : 0);
+    ctx.globalAlpha = .55; flame(.78, c[2], flick ? .6 : 0);
+    ctx.globalAlpha = 1;
+    if (gold && raf && Math.random() < .5) bolt();
+    drawRocks(dt);
+  }
+  let prev = 0;
+  function frame(now) {
+    const el = now - t0, dt = now - (prev || now); prev = now;
+    if (!gold && el > 900) { gold = true; heroA.classList.add("is-gold", "is-flash"); }
+    const flick = now - lastFlick > 70; if (flick) lastFlick = now;
+    if (flick) paint(dt, true); else drawRocks(0);
+    if (el < 3000) raf = requestAnimationFrame(frame);
+    else { raf = 0; heroA.classList.remove("is-shake"); paint(0, true); }
+  }
+  function powerUp() {
+    heroA.classList.remove("is-gold", "is-flash", "is-shake"); void heroA.offsetWidth;
+    optA.classList.remove("is-fired"); void optA.offsetWidth; optA.classList.add("is-fired");
+    scan.classList.remove("is-overload"); void scan.offsetWidth; scan.classList.add("is-overload");
+    size(); makeRocks();
+    if (reduce) { gold = true; heroA.classList.add("is-gold"); paint(0, true); return; }
+    gold = false; heroA.classList.add("is-shake");
+    cancelAnimationFrame(raf); prev = 0; t0 = performance.now(); raf = requestAnimationFrame(frame);
+  }
+  function glitch() { heroB.classList.remove("is-glitch"); void heroB.offsetWidth; heroB.classList.add("is-glitch"); }
+
+  function show(opt) {
+    const a = opt !== "b";
+    optA.hidden = !a; optB.hidden = a;
+    btns.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.opt === (a ? "a" : "b"))));
+    if (a) requestAnimationFrame(powerUp); else glitch();
+    try { history.replaceState(null, "", a ? "#a" : "#b"); } catch (e) { /* hash optional */ }
+  }
+  btns.forEach(b => b.addEventListener("click", () => { show(b.dataset.opt); window.scrollTo({ top: 0 }); }));
+  document.getElementById("a-replay").addEventListener("click", powerUp);
+  document.getElementById("b-replay").addEventListener("click", glitch);
+  window.addEventListener("resize", () => { if (optA.hidden) return; size(); paint(0, false); });
+  ["a", "b"].forEach(k => document.getElementById("form-" + k).addEventListener("submit", e => { e.preventDefault(); document.getElementById(k + "-sent").hidden = false; }));
+  document.fonts.ready.then(() => show(location.hash === "#b" ? "b" : "a"));
+})();
+</script>
+</body>
+</html>

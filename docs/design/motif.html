@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tanveer Singh — Round 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Barlow:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@900&family=Share+Tech+Mono&display=swap">
+<style>
+/* Layout: one long scroll in chapters — hero transformation, a sticky transformation scroll
+   for the career, the android lab for AI, a scroll-driven beam struggle, a manga chapter for
+   the work, an interactive scouter, and a charge-to-send contact form. Dark by design. */
+:root {
+  color-scheme: dark;
+  --night: #0c1233;
+  --navy: #17215e;
+  --blue: #1f3fae;          /* fill; white 8.82:1 */
+  --ki-blue: #4f8cff;
+  --ki-pale: #bfe0ff;
+  --orange: #f47a1f;        /* decoration and outlines only */
+  --gold: #ffcf1f;          /* light fill; ink 13.31:1 */
+  --gold-hi: #fff4b8;
+  --ink: #0a0a14;
+  --paper: #fff8e8;
+  --text: #f4f1ff;
+  --muted: #b9c0e2;
+  --line: #2b3a8f;
+  --lens: #39e27e;
+  --alarm: #c62828;         /* white 5.62:1 */
+  --lab: #071a1d;
+  --lab-2: #0d2a2e;
+  --print: #4fd6cf;         /* blueprint lines */
+  --f-display: "Bangers", "Impact", "Arial Black", sans-serif;
+  --f-jp: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --f-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "Share Tech Mono", ui-monospace, "Cascadia Mono", monospace;
+  --nav-h: 60px;
+  --ease-snap: cubic-bezier(.2, .9, .1, 1);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: auto; }
+body { margin: 0; background: var(--night); color: var(--text); font: 400 17px/1.55 var(--f-body); overflow-x: hidden; }
+a { color: inherit; }
+img, canvas, svg { max-width: 100%; }
+.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 1180px; margin: 0 auto; }
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* shared cel type */
+.cel { font-family: var(--f-display); letter-spacing: .03em; -webkit-text-stroke: 4px var(--ink); paint-order: stroke fill; text-shadow: 5px 5px 0 var(--ink); }
+.kicker { font: 900 20px/1 var(--f-jp); color: var(--orange); margin: 0 0 8px; }
+.h2 { font-size: clamp(44px, 6.4vw, 80px); line-height: .95; margin: 0 0 28px; color: var(--paper); }
+.h2 em { font-style: normal; color: var(--gold); }
+.badge { display: inline-block; font: 800 12px/1 var(--f-body); letter-spacing: .14em; text-transform: uppercase; padding: 6px 9px; border: 2px solid var(--ink); background: var(--gold); color: var(--ink); }
+.lede { color: var(--muted); max-width: 60ch; margin: -10px 0 30px; }
+
+/* ---------- nav + ki meter ---------- */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--ink); }
+.nav { position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 25; height: var(--nav-h); background: var(--ink); border-bottom: 3px solid var(--orange); }
+.nav .wrap { height: 100%; display: flex; align-items: center; gap: 18px; }
+.mark { font: 400 26px/1 var(--f-display); letter-spacing: .04em; color: var(--gold); text-decoration: none; -webkit-text-stroke: 1px var(--ink); white-space: nowrap; }
+.links { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; margin-left: auto; min-width: 0; }
+.links::-webkit-scrollbar { display: none; }
+.links a { font: 400 19px/1 var(--f-display); letter-spacing: .05em; text-decoration: none; color: var(--paper); padding: 10px 12px; white-space: nowrap; border: 2px solid transparent; }
+.links a:hover, .links a[aria-current="true"] { color: var(--ink); background: var(--gold); border-color: var(--ink); }
+.ki { position: fixed; z-index: 24; left: max(10px, env(safe-area-inset-left, 0px)); top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + 24px); bottom: 24px; width: 14px;
+  border: 3px solid var(--ink); background: var(--navy); box-shadow: 3px 3px 0 var(--ink); }
+.ki i { position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--ki, 0) * 100%); background: linear-gradient(0deg, var(--ki-blue), var(--ki-pale)); }
+.ki.gold i { background: linear-gradient(0deg, var(--orange), var(--gold), var(--gold-hi)); }
+.ki b { position: absolute; left: 50%; bottom: -22px; transform: translateX(-50%); font: 400 14px/1 var(--f-display); color: var(--gold); letter-spacing: .06em; }
+main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
+.chap { padding-left: max(44px, env(safe-area-inset-left, 0px)); }
+
+/* instant transmission overlay */
+.it { position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: 0;
+  background: repeating-linear-gradient(90deg, transparent 0 22px, color-mix(in srgb, var(--paper) 70%, transparent) 22px 24px), color-mix(in srgb, var(--paper) 25%, transparent); }
+.it.out { animation: it-out 200ms ease-in both; }
+.it.in { animation: it-in 280ms ease-out both; }
+@keyframes it-out { 0% { opacity: 0; transform: scaleX(1.4); } 100% { opacity: 1; transform: scaleX(1); } }
+@keyframes it-in { 0% { opacity: 1; transform: scaleY(1); } 100% { opacity: 0; transform: scaleY(1.6); } }
+
+/* ---------- hero ---------- */
+.hero { position: relative; overflow: hidden; isolation: isolate; background: radial-gradient(90% 70% at 50% 62%, var(--navy) 0%, var(--night) 70%); }
+.hero.gold { background: radial-gradient(70% 60% at 50% 58%, #5a3a0c 0%, #2a1a2e 45%, var(--night) 80%); }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
+.hero .lines { position: absolute; inset: -30%; z-index: -2; opacity: 0;
+  background: repeating-conic-gradient(from 0deg at 50% 52%, color-mix(in srgb, var(--gold-hi) 30%, transparent) 0deg 1deg, transparent 1deg 7deg);
+  -webkit-mask: radial-gradient(circle at 50% 52%, transparent 0 22%, #000 46%); mask: radial-gradient(circle at 50% 52%, transparent 0 22%, #000 46%); }
+.hero.gold .lines { animation: lines 900ms var(--ease-snap) both; }
+@keyframes lines { 0% { opacity: 0; transform: scale(1.3); } 30% { opacity: 1; } 100% { opacity: .4; transform: scale(1); } }
+.flash { position: absolute; inset: 0; z-index: 6; pointer-events: none; background: var(--paper); opacity: 0; }
+.hero.flash-on .flash { animation: flash 380ms ease-out both; }
+@keyframes flash { 0% { opacity: .95; } 100% { opacity: 0; } }
+.hero.shake .stage { animation: shake 90ms linear 10; }
+@keyframes shake { 25% { transform: translate(-4px, 2px); } 50% { transform: translate(3px, -3px); } 75% { transform: translate(-2px, -1px); } }
+.stage { display: grid; justify-items: center; text-align: center; padding-block: 72px 64px; }
+.rumble { font: 900 clamp(26px, 4vw, 46px)/1 var(--f-jp); color: var(--gold); -webkit-text-stroke: 2px var(--ink); paint-order: stroke fill; text-shadow: 3px 3px 0 var(--ink); transform: rotate(-4deg); user-select: none; }
+.hero.gold .rumble { animation: pop 500ms var(--ease-snap) both; }
+@keyframes pop { 0% { transform: rotate(-4deg) scale(.6); } 60% { transform: rotate(-4deg) scale(1.15); } 100% { transform: rotate(-4deg) scale(1); } }
+.eyebrow { font: 800 13px/1 var(--f-body); letter-spacing: .16em; text-transform: uppercase; color: var(--ink); background: var(--orange); padding: 7px 12px; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); margin: 12px 0 18px; }
+.name { font-size: clamp(66px, 14vw, 196px); line-height: .84; margin: 0; text-transform: uppercase; color: var(--paper); -webkit-text-stroke: 6px var(--ink); text-shadow: 7px 7px 0 var(--ink); transition: color 200ms; }
+.name span { display: block; color: #8fb0ff; transition: color 200ms; }
+.hero.gold .name { color: var(--gold); }
+.hero.gold .name span { color: var(--orange); }
+.thesis { font: 800 clamp(22px, 2.8vw, 34px)/1.15 var(--f-body); margin: 28px 0 8px; text-wrap: balance; max-width: 24ch; text-shadow: 2px 2px 0 var(--ink); }
+.roles { margin: 0 0 26px; color: var(--muted); max-width: 56ch; }
+.roles b { color: var(--text); }
+.ctas { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+.btn { font: 400 24px/1 var(--f-display); letter-spacing: .05em; text-decoration: none; padding: 14px 24px 12px; color: var(--ink); background: var(--gold); border: 3px solid var(--ink); box-shadow: 5px 5px 0 var(--ink); cursor: pointer; transition: transform 120ms var(--ease-snap), box-shadow 120ms; }
+.btn:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--ink); }
+.btn:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--ink); }
+.btn.blue { background: var(--blue); color: #fff; }
+.replay { margin-top: 22px; font: 700 13px/1 var(--f-body); color: var(--muted); background: transparent; border: 2px solid var(--line); padding: 8px 12px; cursor: pointer; }
+.replay:hover { color: var(--text); border-color: var(--gold); }
+
+/* ---------- transformation scroll (career) ---------- */
+.forms { position: relative; height: 330vh; background: var(--night); }
+.forms .sticky { position: sticky; top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); height: calc(100vh - var(--nav-h) - env(safe-area-inset-top, 0px)); overflow: hidden;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 24px; }
+.forms .scene { position: relative; height: 100%; display: grid; place-items: center; }
+.forms .scene canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.form-title { position: relative; text-align: center; }
+.form-title .h2 { margin: 0; transition: color 200ms; }
+.forms[data-stage="2"] .form-title .h2 { color: var(--gold); }
+.form-title .step { display: inline-block; font: 400 15px/1 var(--f-mono); color: var(--paper); background: var(--ink); padding: 7px 10px; margin-top: 14px; letter-spacing: .08em; }
+.form-title .step b { color: var(--gold); }
+.groups { position: relative; height: 100%; }
+.group { position: absolute; inset: 0; display: grid; align-content: center; gap: 18px; opacity: 0; transform: translateY(40px) scale(.98); transition: opacity 320ms, transform 420ms var(--ease-snap); pointer-events: none; }
+.forms[data-stage="0"] .group[data-g="0"], .forms[data-stage="1"] .group[data-g="1"], .forms[data-stage="2"] .group[data-g="2"] { opacity: 1; transform: none; pointer-events: auto; }
+.card { position: relative; background: var(--navy); border: 3px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); padding: 22px 22px 20px; min-width: 0; }
+.card.max { background: linear-gradient(180deg, #3a2a10 0%, var(--navy) 75%); margin-top: 24px; }
+.card.max::before { content: ""; position: absolute; left: -3px; right: -3px; top: -26px; height: 30px; background: var(--gold);
+  clip-path: polygon(0 100%, 4% 30%, 8% 80%, 13% 0, 18% 70%, 24% 20%, 30% 85%, 36% 10%, 42% 75%, 48% 25%, 54% 90%, 60% 5%, 66% 70%, 72% 25%, 78% 85%, 84% 15%, 90% 70%, 95% 30%, 100% 100%); }
+.card h3 { font: 400 32px/1 var(--f-display); letter-spacing: .03em; margin: 12px 0 4px; color: var(--paper); }
+.card .meta { font-size: 14px; color: var(--muted); margin: 0 0 10px; }
+.card p { margin: 0; }
+.badge.blue { background: #8fb0ff; }
+.badge.grey { background: var(--muted); }
+
+/* ---------- android lab (AI) ---------- */
+.lab { position: relative; background:
+  linear-gradient(90deg, color-mix(in srgb, var(--print) 10%, transparent) 1px, transparent 1px) 0 0 / 32px 32px,
+  linear-gradient(0deg, color-mix(in srgb, var(--print) 10%, transparent) 1px, transparent 1px) 0 0 / 32px 32px, var(--lab); padding-block: 80px; border-top: 4px solid var(--ink); }
+.lab .kicker { color: var(--lens); }
+.lab-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: center; margin-bottom: 40px; }
+.print { border: 2px solid var(--print); padding: 14px; background: color-mix(in srgb, var(--lab-2) 70%, transparent); position: relative; }
+.print::before { content: "SCHEMATIC · AI CORE · REV 2026"; position: absolute; top: -11px; left: 14px; background: var(--lab); padding: 0 8px; font: 400 12px/22px var(--f-mono); color: var(--print); }
+.print svg { display: block; width: 100%; height: auto; }
+.print text { font: 400 12px var(--f-mono); fill: var(--print); }
+.print .hot { fill: var(--gold); }
+.draw { stroke-dasharray: 900; stroke-dashoffset: 900; }
+.lab.seen .draw { animation: draw 1.8s ease-out both; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.tubes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.tube { position: relative; border: 3px solid var(--ink); border-radius: 70px 70px 18px 18px; background: var(--lab-2); box-shadow: 5px 5px 0 var(--ink); overflow: hidden; min-height: 360px; display: grid; align-content: end; isolation: isolate; }
+.tube::before { content: ""; position: absolute; inset: 10px 10px auto; height: 18px; border-radius: 60px 60px 0 0; border-top: 3px solid color-mix(in srgb, var(--print) 60%, transparent); }
+.tube .liquid { position: absolute; left: 0; right: 0; bottom: 0; height: 0; z-index: -1; transition: height 1.4s cubic-bezier(.3, .7, .2, 1);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--lens) 45%, transparent), color-mix(in srgb, var(--lens) 15%, transparent)); }
+.tube .liquid::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 20% 70%, rgba(255,255,255,.35) 0 3px, transparent 4px), radial-gradient(circle at 65% 40%, rgba(255,255,255,.3) 0 4px, transparent 5px), radial-gradient(circle at 40% 85%, rgba(255,255,255,.3) 0 2px, transparent 3px), radial-gradient(circle at 80% 75%, rgba(255,255,255,.25) 0 3px, transparent 4px); }
+.tube.filled .liquid { height: 94%; }
+.tube { min-height: 470px; }
+.tube .body { padding: 20px 18px 18px; background: color-mix(in srgb, var(--lab) 82%, transparent); border-top: 2px solid var(--ink); }
+.tube .code { font: 400 12px/1 var(--f-mono); color: var(--lens); letter-spacing: .12em; }
+.tube h3 { font: 400 28px/1 var(--f-display); letter-spacing: .03em; margin: 8px 0 6px; color: var(--paper); }
+.tube p { margin: 0 0 10px; font-size: 15px; }
+.tube .stack { font: 400 12px/1.5 var(--f-mono); color: var(--muted); }
+.tube .state { position: absolute; top: 38px; left: 50%; transform: translateX(-50%); font: 400 12px/1 var(--f-mono); color: var(--ink); background: var(--lens); padding: 4px 8px; white-space: nowrap; opacity: 0; transition: opacity 300ms 1.2s; }
+.tube.filled .state { opacity: 1; }
+
+/* ---------- beam struggle ---------- */
+.clash { position: relative; height: 240vh; background: var(--ink); }
+.clash .sticky { position: sticky; top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); height: calc(100vh - var(--nav-h) - env(safe-area-inset-top, 0px)); overflow: hidden; display: grid; place-items: center;
+  background: radial-gradient(60% 60% at var(--x, 50%) 50%, #2a1a3e 0%, var(--ink) 70%); }
+.clash .beam { position: absolute; top: 50%; height: clamp(54px, 9vw, 110px); transform: translateY(-50%); border: 4px solid var(--ink); }
+.clash .left { left: 0; width: calc(var(--x, 0%) ); border-left: 0; border-radius: 0 60px 60px 0;
+  background: linear-gradient(180deg, var(--ki-blue) 0 16%, var(--ki-pale) 16% 34%, #fff 34% 66%, var(--ki-pale) 66% 84%, var(--ki-blue) 84%); }
+.clash .right { right: 0; width: calc(100% - var(--x2, 100%)); border-right: 0; border-radius: 60px 0 0 60px;
+  background: linear-gradient(180deg, #a3197a 0 16%, #ff7ad0 16% 34%, #fff 34% 66%, #ff7ad0 66% 84%, #a3197a 84%); }
+.clash .ball { position: absolute; top: 50%; left: var(--x, 50%); width: clamp(120px, 18vw, 240px); aspect-ratio: 1; transform: translate(-50%, -50%) scale(var(--ball, 0)); border-radius: 50%;
+  background: radial-gradient(circle, #fff 0 28%, var(--gold-hi) 30% 46%, var(--gold) 48% 62%, transparent 64%); }
+.clash .ball::after { content: ""; position: absolute; inset: -30%; background: repeating-conic-gradient(var(--gold-hi) 0deg 4deg, transparent 4deg 18deg); -webkit-mask: radial-gradient(circle, transparent 0 34%, #000 36% 50%, transparent 70%); mask: radial-gradient(circle, transparent 0 34%, #000 36% 50%, transparent 70%); }
+.clash .sfx { position: absolute; top: 14%; left: 50%; transform: translateX(-50%) rotate(-5deg); font: 900 clamp(40px, 7vw, 90px)/1 var(--f-jp); color: var(--gold); -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; text-shadow: 5px 5px 0 #000; opacity: var(--sfx, 0); white-space: nowrap; }
+.clash .cap { position: absolute; bottom: 12%; left: 50%; transform: translateX(-50%); text-align: center; width: min(90%, 640px); }
+.clash .cap p { margin: 6px 0 0; color: var(--muted); }
+.clash .cap .cel { font-size: clamp(30px, 4.6vw, 54px); color: var(--paper); margin: 0; }
+.clash .white { position: absolute; inset: 0; background: var(--paper); opacity: var(--white, 0); pointer-events: none; }
+.clash.shaking .sticky > .shake-box { animation: shake 90ms linear infinite; }
+.shake-box { position: absolute; inset: 0; }
+
+/* ---------- manga chapter (work) ---------- */
+.saga { background: var(--paper); color: var(--ink); padding-block: 80px; }
+.saga .h2 { color: var(--paper); }
+.saga .kicker { color: #c2410c; }
+.page { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+.pn { position: relative; border: 4px solid var(--ink); background: #fff; padding: 22px; min-width: 0; overflow: hidden; }
+.pn h3 { font: 400 clamp(30px, 3.4vw, 46px)/1 var(--f-display); letter-spacing: .03em; margin: 10px 0 10px; }
+.pn p { margin: 0 0 14px; max-width: 60ch; }
+.pn .badge { background: var(--orange); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0; }
+.chips li { font-size: 13px; font-weight: 600; padding: 4px 9px; border: 2px solid var(--ink); background: #fff; }
+.pn.a { grid-column: span 4; grid-row: span 2; clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%); padding-right: 7%; }
+.pn.b { grid-column: span 2; display: grid; place-items: center; min-height: 200px; background: repeating-conic-gradient(from 0deg at 50% 50%, var(--ink) 0deg 1.4deg, #fff 1.4deg 9deg); }
+.pn.b::before { content: ""; position: absolute; width: 50%; aspect-ratio: 1; border-radius: 50%; background: #fff; }
+.pn.b span { position: relative; font: 900 clamp(46px, 6vw, 80px)/1 var(--f-jp); color: var(--orange); -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; transform: rotate(-6deg); }
+.pn.c { grid-column: span 2; background: radial-gradient(circle at 1px 1px, rgba(10,10,20,.3) 1.1px, transparent 1.6px) 0 0 / 8px 8px, #fff; }
+.pn.c h3, .pn.d h3 { font-size: clamp(26px, 2.6vw, 34px); }
+.pn.d { grid-column: span 3; clip-path: polygon(0 0, 100% 0, 100% 100%, 4% 100%); padding-left: 6%; }
+.pn.e { grid-column: span 3; background: var(--ink); color: var(--paper); clip-path: polygon(0 0, 96% 0, 100% 100%, 0 100%); }
+.pn.e .chips li { background: var(--ink); color: var(--paper); border-color: var(--paper); }
+.pn.e .badge { background: var(--gold); }
+.pn .speed { position: absolute; inset: 0; pointer-events: none; opacity: 0; background: repeating-linear-gradient(90deg, transparent 0 18px, rgba(10,10,20,.5) 18px 20px); }
+/* panels slide in from a direction once, from a visible resting state if never triggered */
+.js .pn { opacity: 0; }
+.js .pn.in { animation: slide-in 600ms var(--ease-snap) both; }
+.js .pn.in .speed { animation: speed 600ms ease-out both; }
+.pn[data-from="left"] { --dx: -70px; --dy: 0; }
+.pn[data-from="right"] { --dx: 70px; --dy: 0; }
+.pn[data-from="up"] { --dx: 0; --dy: -60px; }
+.pn[data-from="down"] { --dx: 0; --dy: 60px; }
+@keyframes slide-in { 0% { opacity: 0; transform: translate(var(--dx), var(--dy)); } 100% { opacity: 1; transform: none; } }
+@keyframes speed { 0% { opacity: .9; } 100% { opacity: 0; } }
+.caption { margin-top: 16px; font: 400 22px/1.1 var(--f-display); letter-spacing: .05em; text-align: right; }
+
+/* ---------- scouter (skills) ---------- */
+.scout { padding-block: 80px; }
+.scout .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 36px; align-items: start; }
+.device { position: sticky; top: calc(var(--nav-h) + 30px); }
+.lens { position: relative; min-height: 280px; border: 4px solid var(--ink); border-radius: 10px 70px 10px 10px; overflow: hidden;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--lens) 55%, transparent), color-mix(in srgb, var(--lens) 22%, transparent)), #0d2a1a;
+  box-shadow: 8px 8px 0 var(--ink); padding: 26px 26px 24px; font-family: var(--f-mono); color: #d9ffe8; display: grid; align-content: center; gap: 8px; }
+.lens::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(0,0,0,.12) 3px 4px); }
+.lens .tgt { font-size: 14px; letter-spacing: .08em; }
+.lens .what { font: 400 clamp(34px, 4.6vw, 54px)/1 var(--f-display); letter-spacing: .04em; color: #fff; -webkit-text-stroke: 2px #0d2a1a; paint-order: stroke fill; }
+.lens ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 14px; }
+.lens li::before { content: "▸ "; color: var(--gold); }
+.lens .reticle { position: absolute; width: 70px; height: 70px; right: 26px; top: 22px; border: 2px solid #d9ffe8; border-radius: 50%; opacity: .7; }
+.lens .reticle::before, .lens .reticle::after { content: ""; position: absolute; background: #d9ffe8; }
+.lens .reticle::before { left: 50%; top: -10px; bottom: -10px; width: 2px; }
+.lens .reticle::after { top: 50%; left: -10px; right: -10px; height: 2px; }
+.lens.scanning .reticle { animation: lock 500ms steps(4) both; }
+@keyframes lock { 0% { transform: scale(1.6) rotate(45deg); opacity: 0; } 100% { transform: none; opacity: .7; } }
+.boom { position: absolute; top: -40px; right: -14px; width: 46%; aspect-ratio: 1.4 / 1; z-index: 2; display: grid; place-items: center; pointer-events: none; opacity: 0; transform: scale(.4); }
+.boom svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.boom span { position: relative; font: 900 clamp(26px, 3.4vw, 40px)/1 var(--f-jp); color: var(--gold); -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; text-shadow: 4px 4px 0 var(--ink); transform: rotate(-8deg); }
+.device.over .boom { animation: boom 600ms var(--ease-snap) 350ms both; }
+.device.over .lens { animation: jolt 70ms linear 350ms 6; }
+@keyframes boom { 0% { opacity: 0; transform: scale(.4); } 60% { opacity: 1; transform: scale(1.1); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes jolt { 50% { transform: translate(3px, -2px); } }
+.alarm { justify-self: start; font-size: 12px; color: #fff; background: var(--alarm); padding: 5px 8px; letter-spacing: .06em; }
+.skills { display: grid; gap: 22px; }
+.skills h3 { font: 800 13px/1 var(--f-body); letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin: 0 0 10px; }
+.skills ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.skill { font: 600 15px/1 var(--f-body); color: var(--text); background: var(--navy); border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); padding: 10px 12px; cursor: crosshair; }
+.skill:hover, .skill[aria-pressed="true"] { background: var(--lens); color: var(--ink); }
+
+/* ---------- contact: charge to send ---------- */
+.contact { padding-block: 80px 96px; border-top: 4px solid var(--ink); background: linear-gradient(180deg, var(--night), #0a0e28); }
+.plain { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 36px; }
+.plain form { display: grid; gap: 14px; position: relative; }
+.field { display: grid; gap: 6px; }
+.field label { font-weight: 600; font-size: 15px; }
+.field input, .field textarea { font: inherit; color: var(--text); background: var(--navy); border: 2px solid var(--line); padding: 12px 14px; border-radius: 0; }
+.field input:focus, .field textarea:focus { border-color: var(--gold); outline: none; }
+.reach { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 10px; }
+.reach li { display: grid; gap: 2px; }
+.reach span { font: 800 12px/1 var(--f-body); letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+.reach a, .reach code { font: 600 16px/1.3 var(--f-body); color: var(--text); }
+.send-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.send { position: relative; overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none; }
+.send .charge { position: absolute; left: 0; bottom: 0; height: 6px; width: calc(var(--charge, 0) * 100%); background: var(--ki-blue); }
+.hint { font-size: 14px; color: var(--muted); margin: 0; }
+.fire { position: absolute; left: 0; right: 0; top: 50%; height: 34px; transform: translateY(-50%) scaleX(0); transform-origin: left; pointer-events: none; border: 3px solid var(--ink); border-radius: 0 30px 30px 0;
+  background: linear-gradient(180deg, var(--ki-blue) 0 18%, var(--ki-pale) 18% 36%, #fff 36% 64%, var(--ki-pale) 64% 82%, var(--ki-blue) 82%); opacity: 0; }
+.fire.go { animation: fire 650ms cubic-bezier(.5, 0, .2, 1) both; }
+.fire.big { height: 80px; }
+@keyframes fire { 0% { opacity: 1; transform: translateY(-50%) scaleX(0); } 70% { opacity: 1; transform: translateY(-50%) scaleX(1); } 100% { opacity: 0; transform: translateY(-50%) scaleX(1); } }
+.sent { margin: 0; font-weight: 600; }
+.foot { padding-block: 26px 40px; font-size: 13px; color: var(--muted); background: var(--ink); }
+
+/* ---------- phone ---------- */
+@media (max-width: 760px) {
+  :root { --nav-h: 54px; }
+  .mark { font-size: 22px; }
+  .links a { font-size: 17px; padding: 8px 9px; }
+  .ki { left: 0; right: 0; top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); bottom: auto; width: auto; height: 6px; border: 0; box-shadow: none; }
+  .ki i { top: 0; bottom: 0; height: auto; width: calc(var(--ki, 0) * 100%); background: linear-gradient(90deg, var(--ki-blue), var(--ki-pale)); }
+  .ki.gold i { background: linear-gradient(90deg, var(--orange), var(--gold), var(--gold-hi)); }
+  .ki b { display: none; }
+  .chap { padding-left: max(16px, env(safe-area-inset-left, 0px)); }
+  .stage { padding-block: 48px 44px; }
+  .name { -webkit-text-stroke: 4px var(--ink); text-shadow: 5px 5px 0 var(--ink); }
+  .forms { height: 360vh; }
+  .forms .sticky { grid-template-columns: minmax(0, 1fr); grid-template-rows: 34% 66%; gap: 0; }
+  .form-title .h2 { font-size: 46px; }
+  .group { align-content: start; padding-top: 8px; gap: 12px; }
+  .card { padding: 16px; }
+  .card h3 { font-size: 26px; }
+  .card.max { margin-top: 18px; }
+  .card p { font-size: 15px; }
+  .lab-top, .scout .grid, .plain { grid-template-columns: minmax(0, 1fr); }
+  .tubes { grid-template-columns: minmax(0, 1fr); }
+  .tube { min-height: 0; border-radius: 40px 40px 14px 14px; padding-top: 110px; }
+  .page { grid-template-columns: minmax(0, 1fr); }
+  .pn.a, .pn.b, .pn.c, .pn.d, .pn.e { grid-column: auto; grid-row: auto; clip-path: none; padding: 20px; }
+  .pn.b { min-height: 150px; }
+  .device { position: relative; top: 0; }
+  .boom { right: 0; }
+}
+
+/* ---------- reduced motion: every sequence shows its final still frame ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .forms { height: auto; }
+  .forms .sticky { position: relative; height: auto; display: block; padding-block: 60px; }
+  .forms .scene { height: 200px; }
+  .groups { height: auto; }
+  .group { position: relative; opacity: 1; transform: none; margin-bottom: 30px; pointer-events: auto; }
+  .clash { height: auto; }
+  .clash .sticky { position: relative; height: 70vh; }
+  .js .pn { opacity: 1; }
+  .tube .liquid { height: 94%; }
+  .tube .state { opacity: 1; }
+  .draw { stroke-dashoffset: 0; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav gutter">
+  <div class="wrap">
+    <a class="mark" href="#top" data-it>T. SINGH</a>
+    <nav class="links" aria-label="Sections">
+      <a href="#forms" data-it>Forms</a>
+      <a href="#lab" data-it>Lab</a>
+      <a href="#saga" data-it>Work</a>
+      <a href="#scouter" data-it>Scouter</a>
+      <a href="#contact" data-it>Contact</a>
+    </nav>
+  </div>
+</header>
+<div class="ki" id="ki" aria-hidden="true"><i></i><b>KI</b></div>
+<div class="it" id="it" aria-hidden="true"></div>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero gutter chap" id="hero" aria-label="Introduction">
+    <div class="lines" aria-hidden="true"></div>
+    <canvas id="hero-aura" aria-hidden="true"></canvas>
+    <div class="flash" aria-hidden="true"></div>
+    <div class="wrap stage">
+      <div class="rumble" aria-hidden="true">ゴゴゴゴ</div>
+      <p class="eyebrow">Sydney · Developer &amp; studio head</p>
+      <h1 class="name cel" id="name">Tanveer<span>Singh</span></h1>
+      <p class="thesis">Websites, platforms and practical AI.</p>
+      <p class="roles"><b>Developer Programmer at Nobility Care Australia.</b> <b>Head of Studio at Tinker Together.</b> I build websites and web platforms made for the people who use them, and add AI where it earns its place.</p>
+      <div class="ctas">
+        <a class="btn" href="#saga" data-it>See my work</a>
+        <a class="btn blue" href="#contact" data-it>Get in touch</a>
+      </div>
+      <button type="button" class="replay" id="replay">Power up again</button>
+    </div>
+  </section>
+
+  <!-- TRANSFORMATION SCROLL -->
+  <section class="forms gutter chap" id="forms" data-stage="0" aria-labelledby="forms-h">
+    <h2 class="sr-only" id="forms-h">Career</h2>
+    <div class="wrap sticky">
+      <div class="scene">
+        <canvas id="forms-aura" aria-hidden="true"></canvas>
+        <div class="form-title">
+          <p class="kicker">変身 · Transformations</p>
+          <p class="h2 cel" id="form-name">Base form</p>
+          <p class="step"><b id="form-step">1</b> / 3 · keep scrolling to power up</p>
+        </div>
+      </div>
+      <div class="groups">
+        <div class="group" data-g="0">
+          <article class="card"><span class="badge grey">Base form</span><h3>Web Developer</h3><p class="meta">Freelance · Mar 2021 – Oct 2026 · Greater Sydney</p><p>Websites and web apps for my own clients, until the work became a studio.</p></article>
+          <article class="card"><span class="badge grey">Base form</span><h3>Web Developer Intern</h3><p class="meta">Easylink Finance Australia · Apr – Jul 2022</p><p>A first stint inside a company, building for the web.</p></article>
+        </div>
+        <div class="group" data-g="1">
+          <article class="card"><span class="badge blue">Powering up</span><h3>IT Help Desk Support</h3><p class="meta">Simetrix Digital Technologies · Contract · Jan 2026 – present · remote</p><p>Help desk support for an industrial digital technology firm.</p></article>
+          <article class="card"><span class="badge blue">Powering up</span><h3>IT Consultant</h3><p class="meta">Truqorun · Freelance · Oct 2026 – present · remote</p><p>Information technology consulting for an agency connecting clients with makers across India and Australia.</p></article>
+        </div>
+        <div class="group" data-g="2">
+          <article class="card max"><span class="badge">Full power</span><h3>Nobility Care Australia</h3><p class="meta">Developer Programmer · Contract · Feb 2023 – present · Campbelltown, NSW</p><p>Built and maintain the public website, the staff portal and the learning platform for an NDIS provider, plus the SharePoint, Microsoft 365 and Power Automate setup.</p></article>
+          <article class="card max"><span class="badge">Full power</span><h3>Tinker Together</h3><p class="meta">Head of Studio · Oct 2026 – present · Sydney</p><p>My web development and AI studio: custom websites, content back ends, staff portals and learning platforms, with AI on hosted or local models.</p></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANDROID LAB -->
+  <section class="lab gutter chap" id="lab" aria-labelledby="lab-h">
+    <div class="wrap">
+      <div class="lab-top">
+        <div>
+          <p class="kicker">人造人間 · The lab</p>
+          <h2 class="h2 cel" id="lab-h">Built <em>intelligence</em></h2>
+          <p class="lede">I choose hosted or local models per job: Claude first, Gemini second, and local models when material shouldn't leave the building.</p>
+        </div>
+        <div class="print" aria-hidden="true">
+          <svg viewBox="0 0 420 240">
+            <circle class="draw" cx="210" cy="120" r="70" fill="none" stroke="#4fd6cf" stroke-width="2"/>
+            <circle class="draw" cx="210" cy="120" r="40" fill="none" stroke="#ffcf1f" stroke-width="2"/>
+            <path class="draw" d="M140 120 H40 M280 120 H380 M210 50 V16 M210 190 V224 M160 70 L96 30 M260 170 L330 212" stroke="#4fd6cf" stroke-width="1.5" fill="none"/>
+            <path class="draw" d="M190 120 h40 M210 100 v40" stroke="#ffcf1f" stroke-width="2" fill="none"/>
+            <text x="40" y="112">PRIMARY · CLAUDE</text>
+            <text x="300" y="112">SECOND · GEMINI</text>
+            <text x="20" y="26">OFFLINE · OLLAMA / LM STUDIO</text>
+            <text x="250" y="232">PIPELINES · COMFYUI</text>
+            <text class="hot" x="222" y="14">CORE · VERCEL AI SDK</text>
+          </svg>
+        </div>
+      </div>
+      <div class="tubes">
+        <article class="tube"><div class="liquid"></div><span class="state">ONLINE</span><div class="body"><span class="code">UNIT · RDX</span><h3>Roleodex</h3><p>A private AI chat app built around roles. It runs entirely on local models, and nothing goes to the cloud.</p><span class="stack">Next.js 16 · Vercel AI SDK · SQLite · sqlite-vec</span></div></article>
+        <article class="tube"><div class="liquid"></div><span class="state">PUBLISHED</span><div class="body"><span class="code">UNIT · FLT</span><h3>fleet-standards</h3><p>My coding standard for AI coding agents: rules, templates and skills, published as a Claude Code plugin.</p><span class="stack">Markdown · Claude Code plugin</span></div></article>
+        <article class="tube"><div class="liquid"></div><span class="state">IN PROGRESS</span><div class="body"><span class="code">UNIT · CUT</span><h3>Cutscene</h3><p>An agent-first video studio on my PC, where a person and an AI agent edit through the same engine.</p><span class="stack">In progress</span></div></article>
+        <article class="tube"><div class="liquid"></div><span class="state">ONLINE</span><div class="body"><span class="code">UNIT · AIS</span><h3>AI Studio</h3><p>Tinker Together's AI work: features where they earn their place, on hosted or local models, and in-house image pipelines.</p><span class="stack">Claude · Gemini · Ollama · ComfyUI</span></div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEAM STRUGGLE -->
+  <section class="clash" id="clash" aria-label="Transition to the work">
+    <div class="sticky">
+      <div class="shake-box">
+        <div class="beam left" aria-hidden="true"></div>
+        <div class="beam right" aria-hidden="true"></div>
+        <div class="ball" aria-hidden="true"></div>
+        <div class="sfx" aria-hidden="true" id="clash-sfx">ゴゴゴゴ</div>
+      </div>
+      <div class="cap gutter">
+        <p class="cel" id="clash-cap">Pushing through</p>
+        <p>Every project is a fight with a deadline. Scroll to win it.</p>
+      </div>
+      <div class="white" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- MANGA CHAPTER -->
+  <section class="saga gutter chap" id="saga" aria-labelledby="saga-h">
+    <div class="wrap">
+      <p class="kicker">第1話 · Chapter one</p>
+      <h2 class="h2 cel" id="saga-h">The <em>work</em></h2>
+      <div class="page">
+        <article class="pn a" data-from="left"><div class="speed"></div><span class="badge">Nobility Care Australia</span><h3>NCA public website</h3><p>Sixteen service pages for an NDIS provider, in light, dark and high-contrast themes. A contrast audit fails the build on any WCAG AA failure, and an admin area runs the blog, news, FAQs, reviews and vacancies.</p><ul class="chips"><li>Next.js 16</li><li>TypeScript</li><li>Tailwind v4</li><li>Firebase</li><li>next-intl</li><li>Leaflet</li></ul></article>
+        <div class="pn b" data-from="right" aria-hidden="true"><div class="speed"></div><span>ドン!</span></div>
+        <article class="pn c" data-from="down"><div class="speed"></div><span class="badge">Nobility Care Australia</span><h3>Learning platform</h3><p>Staff training with block-based module authoring, learning paths by department, a compliance dashboard and certificates.</p></article>
+        <article class="pn d" data-from="left"><div class="speed"></div><span class="badge">Tinker Together</span><h3>Toll</h3><p>A turn-based 3v3 card battler for Windows, built in Godot, now in public beta. A self-updating launcher with SHA-256 checks and rollback, and 472 automated tests.</p><ul class="chips"><li>Godot 4.7</li><li>GDScript</li><li>Firebase</li><li>ComfyUI</li></ul></article>
+        <article class="pn e" data-from="right"><div class="speed"></div><span class="badge">Tinker Together</span><h3>The studio site</h3><p>Portfolio, a blog with scheduled publishing and its own admin, and a brief wizard for new clients.</p><ul class="chips"><li>Next.js 16</li><li>Firebase</li><li>Vercel</li></ul></article>
+      </div>
+      <p class="caption">To be continued…</p>
+    </div>
+  </section>
+
+  <!-- SCOUTER -->
+  <section class="scout gutter chap" id="scouter" aria-labelledby="scout-h">
+    <div class="wrap grid">
+      <div class="device" id="device">
+        <div class="lens" id="lens" aria-live="polite">
+          <span class="reticle" aria-hidden="true"></span>
+          <span class="tgt" id="lens-tgt">SCOUTER READY</span>
+          <span class="what" id="lens-what">Pick a skill</span>
+          <ul id="lens-lines"><li>1,000+ GitHub contributions in 2026, counted by GitHub</li></ul>
+          <span class="alarm" id="lens-alarm" hidden>READING OFF THE SCALE</span>
+        </div>
+        <div class="boom" aria-hidden="true">
+          <svg viewBox="0 0 200 140" preserveAspectRatio="none"><polygon points="100,4 116,40 160,14 140,54 196,58 146,78 178,122 124,96 104,136 88,98 30,128 58,82 4,66 56,52 30,12 82,40" fill="#fff4b8" stroke="#0a0a14" stroke-width="3"/></svg>
+          <span>ボン!</span>
+        </div>
+      </div>
+      <div>
+        <p class="kicker">スカウター · Scouter</p>
+        <h2 class="h2 cel" id="scout-h">What I <em>fight</em> with</h2>
+        <div class="skills" id="skills">
+          <div><h3>Web</h3><ul><li><button class="skill" type="button" aria-pressed="false">Next.js</button></li><li><button class="skill" type="button" aria-pressed="false">React</button></li><li><button class="skill" type="button" aria-pressed="false">TypeScript</button></li><li><button class="skill" type="button" aria-pressed="false">Tailwind CSS</button></li></ul></div>
+          <div><h3>Back end</h3><ul><li><button class="skill" type="button" aria-pressed="false">Firebase</button></li><li><button class="skill" type="button" aria-pressed="false">Zod</button></li></ul></div>
+          <div><h3>AI</h3><ul><li><button class="skill" type="button" aria-pressed="false">Claude</button></li><li><button class="skill" type="button" aria-pressed="false">Gemini</button></li><li><button class="skill" type="button" aria-pressed="false">Local models</button></li><li><button class="skill" type="button" aria-pressed="false">Vercel AI SDK</button></li><li><button class="skill" type="button" aria-pressed="false">ComfyUI</button></li></ul></div>
+          <div><h3>Games</h3><ul><li><button class="skill" type="button" aria-pressed="false">Godot 4</button></li></ul></div>
+          <div><h3>Microsoft 365</h3><ul><li><button class="skill" type="button" aria-pressed="false">SharePoint</button></li><li><button class="skill" type="button" aria-pressed="false">Power Automate</button></li></ul></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact gutter chap" id="contact" aria-labelledby="contact-h">
+    <div class="wrap plain">
+      <div>
+        <p class="kicker">連絡 · Contact</p>
+        <h2 class="h2 cel" id="contact-h">Get in <em>touch</em></h2>
+        <ul class="reach">
+          <li><span>Email</span><code>hello@tinkertogether.studio</code></li>
+          <li><span>LinkedIn</span><a href="https://www.linkedin.com/in/tanveerfb">linkedin.com/in/tanveerfb</a></li>
+          <li><span>GitHub</span><a href="https://github.com/Tanveerfb">github.com/Tanveerfb</a></li>
+        </ul>
+      </div>
+      <form id="form" novalidate>
+        <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" value="Priya Sharma"></div>
+        <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" value="priya@example.com"></div>
+        <div class="field"><label for="f-msg">Message</label><textarea id="f-msg" name="message" rows="4">We need a staff portal for our team. Can we talk next week?</textarea></div>
+        <div class="send-row">
+          <button class="btn blue send" id="send" type="submit"><span class="charge"></span>Send message</button>
+          <p class="hint">Hold to charge it up</p>
+        </div>
+        <div class="fire" id="fire" aria-hidden="true"></div>
+        <p class="sent" id="sent" role="status" hidden>Example only. This mockup sends nothing.</p>
+      </form>
+    </div>
+  </section>
+</main>
+<footer class="foot gutter"><div class="wrap">Round 2 mockup · 2 November 2026 · original styling inspired by Dragon Ball Z; no characters, logos or traced art.</div></footer>
+
+<script>
+(() => {
+  document.documentElement.classList.add("js");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const $ = (s) => document.querySelector(s);
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const BLUE = ["#2a4fd0", "#8fb0ff", "#e8f0ff"], GOLD = ["#f47a1f", "#ffcf1f", "#fff4b8"];
+
+  // ---------- aura renderer: hard-edged flickering flames around a box ----------
+  function setup(canvas) {
+    const ctx = canvas.getContext("2d");
+    return { canvas, ctx, w: 0, h: 0, resize() {
+      const r = canvas.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, 2);
+      this.w = r.width; this.h = r.height; canvas.width = Math.max(1, r.width * d); canvas.height = Math.max(1, r.height * d); ctx.setTransform(d, 0, 0, d, 0, 0);
+    } };
+  }
+  function flame(ctx, b, scale, color, jitter, lean) {
+    const pts = 48;
+    ctx.beginPath();
+    for (let i = 0; i <= pts; i++) {
+      const a = (i / pts) * Math.PI * 2, up = Math.max(0, -Math.sin(a)), even = i % 2 === 0;
+      const spike = even ? 1 + (.18 + up * .6) * (.55 + Math.random() * jitter) : .9;
+      const x = b.cx + Math.cos(a) * b.rx * scale * (even ? 1.02 : .95) + lean * up * b.ry * scale * (even ? .9 : .5);
+      const y = b.cy + Math.sin(a) * b.ry * scale * (a > Math.PI ? spike * (1 + up * .5) : .62);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.closePath(); ctx.fillStyle = color; ctx.fill();
+  }
+  function bolt(ctx, b) {
+    const a = Math.PI + Math.random() * Math.PI; let x = b.cx + Math.cos(a) * b.rx * .9, y = b.cy + Math.sin(a) * b.ry * 1.1;
+    ctx.beginPath(); ctx.moveTo(x, y);
+    for (let i = 0; i < 5; i++) { x += (Math.random() - .5) * 46; y += 12 + Math.random() * 18; ctx.lineTo(x, y); }
+    ctx.strokeStyle = "#e8f6ff"; ctx.lineWidth = 2.5; ctx.stroke();
+  }
+  function aura(ctx, b, colors, power, lean, jitter, bolts) {
+    const s = .7 + .55 * power;
+    ctx.globalAlpha = .55; flame(ctx, b, 1.18 * s, colors[0], jitter, lean);
+    ctx.globalAlpha = .75; flame(ctx, b, 1.0 * s, colors[1], jitter, lean);
+    ctx.globalAlpha = .55; flame(ctx, b, .78 * s, colors[2], jitter * .6, lean);
+    ctx.globalAlpha = 1;
+    if (bolts) for (let i = 0; i < bolts; i++) if (Math.random() < .5) bolt(ctx, b);
+  }
+
+  // ---------- hero: transformation on load, then the aura leans toward the cursor ----------
+  const hero = $("#hero"), nameEl = $("#name"), H = setup($("#hero-aura"));
+  let hb = null, gold = false, lean = 0, heroRaf = 0, heroUntil = 0, t0 = 0, rocks = [];
+  function heroBox() {
+    H.resize(); const r = hero.getBoundingClientRect(), n = nameEl.getBoundingClientRect();
+    hb = { cx: n.left - r.left + n.width / 2, cy: n.top - r.top + n.height * .55, rx: Math.min(H.w * .48, n.width * .6), ry: n.height * .62 };
+  }
+  function makeRocks() {
+    rocks = Array.from({ length: Math.round(H.w / 90) }, () => { const s = 6 + Math.random() * 14;
+      return { x: Math.random() * H.w, y: H.h - Math.random() * 40, v: .02 + Math.random() * .05, rot: Math.random() * 3, shape: [[-s, 0], [-s * .4, -s * .8], [s * .6, -s * .6], [s, s * .2], [s * .2, s * .8], [-s * .7, s * .5]] }; });
+  }
+  function drawRocks(dt) {
+    const c = H.ctx;
+    for (const r of rocks) { r.y -= r.v * dt; c.save(); c.translate(r.x, r.y); c.rotate(r.rot); c.beginPath(); r.shape.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); c.closePath();
+      c.fillStyle = "#3b3550"; c.fill(); c.lineWidth = 2.5; c.strokeStyle = "#0a0a14"; c.stroke(); c.restore(); }
+  }
+  let prev = 0, lastFlick = 0;
+  function heroFrame(now) {
+    const dt = prev ? now - prev : 16; prev = now;
+    if (!gold && now - t0 > 900) { gold = true; hero.classList.add("gold", "flash-on"); }
+    if (now - lastFlick > 70) { lastFlick = now; H.ctx.clearRect(0, 0, H.w, H.h); aura(H.ctx, hb, gold ? GOLD : BLUE, 1, lean, 1, gold && now - t0 < 3000 ? 1 : 0); drawRocks(dt * 4); }
+    if (now < heroUntil) heroRaf = requestAnimationFrame(heroFrame); else { heroRaf = 0; prev = 0; hero.classList.remove("shake"); }
+  }
+  function runHero(ms) { heroUntil = Math.max(heroUntil, performance.now() + ms); if (!heroRaf) heroRaf = requestAnimationFrame(heroFrame); }
+  function powerUp() {
+    hero.classList.remove("gold", "flash-on", "shake"); void hero.offsetWidth; heroBox(); makeRocks();
+    if (reduce) { gold = true; hero.classList.add("gold"); aura(H.ctx, hb, GOLD, 1, 0, 0, 0); return; }
+    gold = false; hero.classList.add("shake"); t0 = performance.now(); heroUntil = 0; runHero(3000);
+  }
+  hero.addEventListener("pointermove", (e) => {
+    if (reduce || !gold) return;
+    const r = hero.getBoundingClientRect(); lean = clamp(((e.clientX - r.left) - hb.cx) / (r.width / 2), -1, 1) * .6; runHero(450);
+  });
+  hero.addEventListener("pointerleave", () => { lean = 0; if (!reduce && gold) runHero(300); });
+  $("#replay").addEventListener("click", powerUp);
+
+  // ---------- transformation scroll ----------
+  const forms = $("#forms"), F = setup($("#forms-aura")), formName = $("#form-name"), formStep = $("#form-step");
+  const STAGES = [["Base form", BLUE, .2, 0], ["Powering up", BLUE, .6, 1], ["Full power", GOLD, 1, 2]];
+  let fStage = -1, fPower = 0, formsRaf = 0, formsUntil = 0;
+  function formsFrame(now) {
+    const sc = F.canvas.parentElement.getBoundingClientRect();
+    if (F.w !== sc.width || F.h !== sc.height) F.resize();
+    const fb = { cx: F.w / 2, cy: F.h * .56, rx: Math.min(F.w * .42, 300), ry: Math.min(F.h * .22, 120) };
+    const st = STAGES[Math.max(0, fStage)];
+    F.ctx.clearRect(0, 0, F.w, F.h); aura(F.ctx, fb, st[1], fPower, 0, 1, st[3]);
+    if (now < formsUntil) formsRaf = setTimeout(() => requestAnimationFrame(formsFrame), 70); else formsRaf = 0;
+  }
+  function runForms(ms) { formsUntil = Math.max(formsUntil, performance.now() + ms); if (!formsRaf) formsRaf = setTimeout(() => requestAnimationFrame(formsFrame), 0); }
+  function onFormsScroll() {
+    const r = forms.getBoundingClientRect(), span = r.height - window.innerHeight; const p = clamp(-r.top / Math.max(1, span));
+    const s = p < .34 ? 0 : p < .67 ? 1 : 2;
+    const target = STAGES[s][2] * (.85 + .15 * ((p * 3) % 1));
+    fPower = target;
+    if (s !== fStage) { fStage = s; forms.dataset.stage = String(s); formName.textContent = STAGES[s][0]; formStep.textContent = String(s + 1);
+      if (s === 2 && !reduce) { forms.querySelector(".sticky").animate([{ transform: "translate(-5px,2px)" }, { transform: "translate(4px,-3px)" }, { transform: "none" }], { duration: 260, iterations: 2 }); } }
+    if (r.top < window.innerHeight && r.bottom > 0) runForms(reduce ? 0 : 500);
+  }
+
+  // ---------- beam struggle, driven by scroll ----------
+  const clash = $("#clash"), cs = clash.querySelector(".sticky"), clashCap = $("#clash-cap"), clashSfx = $("#clash-sfx");
+  function onClashScroll() {
+    const r = clash.getBoundingClientRect(), span = r.height - window.innerHeight; const p = reduce ? .55 : clamp(-r.top / Math.max(1, span));
+    let x, x2, ball, sfx = 0, white = 0, shaking = false;
+    if (p < .22) { const k = p / .22; x = 50 * k; x2 = 100 - 50 * k; ball = 0; }
+    else if (p < .72) { const k = (p - .22) / .5; x = 50 - 14 * Math.sin(k * Math.PI) + Math.sin(k * 40) * 2; x2 = x; ball = .8 + .2 * Math.sin(k * 30); sfx = 1; shaking = true; }
+    else { const k = clamp((p - .72) / .2); x = 50 + 50 * k * k; x2 = x; ball = 1 - k * .6; white = p > .9 ? clamp((p - .9) / .06) * (1 - clamp((p - .96) / .04)) : 0; }
+    cs.style.setProperty("--x", x + "%"); cs.style.setProperty("--x2", x2 + "%"); cs.style.setProperty("--ball", String(ball));
+    cs.style.setProperty("--sfx", String(sfx)); cs.style.setProperty("--white", String(white));
+    clash.classList.toggle("shaking", shaking && !reduce);
+    clashCap.textContent = p < .22 ? "Two forces meet" : p < .72 ? "Pushing through" : "Breakthrough";
+    clashSfx.textContent = p < .72 ? "ゴゴゴゴ" : "ドドドド";
+  }
+
+  // ---------- ki meter + nav state ----------
+  const ki = $("#ki"), links = [...document.querySelectorAll(".links a")];
+  function onScroll() {
+    const max = document.documentElement.scrollHeight - window.innerHeight, p = clamp(window.scrollY / Math.max(1, max));
+    ki.style.setProperty("--ki", p.toFixed(3)); ki.classList.toggle("gold", p > .38);
+    let cur = null; for (const a of links) { const t = document.querySelector(a.getAttribute("href")); if (t && t.getBoundingClientRect().top < window.innerHeight * .4) cur = a; }
+    links.forEach((a) => a.setAttribute("aria-current", String(a === cur)));
+    onFormsScroll(); onClashScroll();
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  // ---------- instant transmission between sections ----------
+  const it = $("#it");
+  document.querySelectorAll("[data-it]").forEach((a) => a.addEventListener("click", (e) => {
+    const target = document.querySelector(a.getAttribute("href")); if (!target) return;
+    e.preventDefault();
+    const jump = () => { window.scrollTo({ top: a.getAttribute("href") === "#top" ? 0 : target.getBoundingClientRect().top + window.scrollY - 0, behavior: "auto" }); };
+    if (reduce) { jump(); return; }
+    it.className = "it out";
+    setTimeout(() => { jump(); it.className = "it in"; }, 200);
+    setTimeout(() => { it.className = "it"; }, 500);
+  }));
+
+  // ---------- reveal on view: lab tubes fill, panels slide in ----------
+  const io = new IntersectionObserver((entries) => entries.forEach((en) => {
+    if (!en.isIntersecting) return;
+    const el = en.target;
+    if (el.classList.contains("lab")) el.classList.add("seen");
+    if (el.classList.contains("tube")) el.classList.add("filled");
+    if (el.classList.contains("pn")) el.classList.add("in");
+    io.unobserve(el);
+  }), { threshold: .25 });
+  document.querySelectorAll(".lab, .tube, .pn").forEach((el, i) => { if (el.classList.contains("tube")) el.querySelector(".liquid").style.transitionDelay = (i % 5) * 120 + "ms"; io.observe(el); });
+
+  // ---------- scouter ----------
+  const SCAN = {
+    "Next.js": { lines: ["NCA public website", "NCA learning platform", "Tinker Together website", "Roleodex"], over: true },
+    "React": { lines: ["NCA staff portal", "Every Next.js build on this page"] },
+    "TypeScript": { lines: ["NCA public website", "Strict mode on new projects"] },
+    "Tailwind CSS": { lines: ["NCA public website, on Tailwind v4"] },
+    "Firebase": { lines: ["NCA website, learning platform and staff portal", "Tinker Together website", "Toll's online saves"], over: true },
+    "Zod": { lines: ["NCA learning platform", "NCA Links Hub"] },
+    "Claude": { lines: ["First choice for AI work", "Claude Code, with my own published standard"], over: true },
+    "Gemini": { lines: ["Second choice for AI work"] },
+    "Local models": { lines: ["Ollama and LM Studio", "Roleodex runs entirely on them"] },
+    "Vercel AI SDK": { lines: ["Roleodex"] },
+    "ComfyUI": { lines: ["Toll's art", "The studio's image pipelines"] },
+    "Godot 4": { lines: ["Toll, in public beta", "472 automated tests"] },
+    "SharePoint": { lines: ["NCA's site structure and permissions", "Sites for the SIL houses"] },
+    "Power Automate": { lines: ["NCA's workflows"] },
+  };
+  const lens = $("#lens"), device = $("#device"), tgt = $("#lens-tgt"), what = $("#lens-what"), lines = $("#lens-lines"), alarm = $("#lens-alarm");
+  const skills = [...document.querySelectorAll(".skill")];
+  let scanTimer = 0;
+  function scan(btn) {
+    const key = btn.textContent, d = SCAN[key]; if (!d) return;
+    skills.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+    clearTimeout(scanTimer); device.classList.remove("over"); lens.classList.remove("scanning"); void lens.offsetWidth; lens.classList.add("scanning");
+    tgt.textContent = "SCANNING…"; what.textContent = key; lines.innerHTML = ""; alarm.hidden = true;
+    let i = 0;
+    const step = () => {
+      if (i < d.lines.length) { const li = document.createElement("li"); li.textContent = d.lines[i++]; lines.appendChild(li); scanTimer = setTimeout(step, reduce ? 0 : 160); return; }
+      tgt.textContent = "READING COMPLETE"; if (d.over) { alarm.hidden = false; device.classList.add("over"); }
+    };
+    scanTimer = setTimeout(step, reduce ? 0 : 300);
+  }
+  skills.forEach((b) => { b.addEventListener("click", () => scan(b)); b.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") scan(b); }); b.addEventListener("focus", () => scan(b)); });
+
+  // ---------- contact: hold to charge, or just click ----------
+  const send = $("#send"), fire = $("#fire"), sent = $("#sent"), form = $("#form");
+  let charge = 0, chRaf = 0, chStart = 0, charging = false;
+  function chargeFrame(now) { charge = clamp((now - chStart) / 900); send.style.setProperty("--charge", charge.toFixed(3)); if (charging) chRaf = requestAnimationFrame(chargeFrame); }
+  send.addEventListener("pointerdown", () => { if (reduce) return; charging = true; chStart = performance.now(); chRaf = requestAnimationFrame(chargeFrame); });
+  const stop = () => { charging = false; cancelAnimationFrame(chRaf); };
+  send.addEventListener("pointerleave", () => { if (charging) { stop(); charge = 0; send.style.setProperty("--charge", "0"); } });
+  form.addEventListener("submit", (e) => {
+    e.preventDefault(); stop();
+    fire.classList.toggle("big", charge >= 1); fire.classList.remove("go"); void fire.offsetWidth; if (!reduce) fire.classList.add("go");
+    charge = 0; send.style.setProperty("--charge", "0"); sent.hidden = false;
+  });
+
+  // ---------- boot ----------
+  window.addEventListener("resize", () => { heroBox(); if (!reduce) runHero(100); onScroll(); });
+  document.fonts.ready.then(() => { powerUp(); onScroll(); if (reduce) runForms(0); });
+})();
+</script>
+</body>
+</html>

@@ -1,14 +1,24 @@
 {
+  "extraKnownMarketplaces": {
+    "tanveerfb": {
+      "source": {
+        "source": "github",
+        "repo": "Tanveerfb/fleet-standards"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "fleet@tanveerfb": true
+  },
   "hooks": {
-    "PostToolUse": [
+    "PreToolUse": [
       {
-        "matcher": "Write|Edit",
+        "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
-            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \".claude/hooks/eslint-fix.ps1\"",
-            "timeout": 30,
-            "statusMessage": "ESLint fix..."
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/fleet/scripts/block-shell-writes.mjs\"",
+            "timeout": 10
           }
         ]
       }

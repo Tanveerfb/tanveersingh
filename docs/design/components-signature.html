@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Component Round 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Barlow:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@900&family=Share+Tech+Mono&display=swap">
+<style>
+/* Layout: signature-component catalogue — five bands (aura, scouter, specimen tube, manga
+   panel, beam), each with A (refined from the locked page) and B (a flowing take), every one
+   replayable. Values mirror @theme. */
+:root {
+  color-scheme: dark;
+  --night: #0c1233; --navy: #17215e; --line: #2b3a8f;
+  --ink: #0a0a14; --paper: #fff8e8; --text: #f4f1ff; --muted: #b9c0e2;
+  --blue: #1f3fae; --orange: #f47a1f; --ember: #c2410c;
+  --gold: #ffcf1f; --gold-hi: #fff4b8; --ki: #4f8cff; --ki-soft: #8fb0ff; --ki-pale: #bfe0ff;
+  --lens: #39e27e; --lens-dark: #0d2a1a; --lens-text: #d9ffe8; --alarm: #c62828;
+  --lab: #071a1d; --lab-2: #0d2a2e; --print: #4fd6cf;
+  --f-display: "Bangers", "Impact", "Arial Black", sans-serif;
+  --f-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+  --f-jp: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --f-mono: "Share Tech Mono", ui-monospace, monospace;
+  --shadow-sm: 3px 3px 0 var(--ink); --shadow: 5px 5px 0 var(--ink); --shadow-lg: 8px 8px 0 var(--ink);
+  --ease-snap: cubic-bezier(.2, .9, .1, 1); --ease-beam: cubic-bezier(.5, 0, .2, 1);
+}
+* { box-sizing: border-box; }
+html { overflow-x: clip; }
+body { margin: 0; background: var(--night); color: var(--text); font: 400 16px/1.5 var(--f-body); }
+.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 1240px; margin: 0 auto; }
+button { font: inherit; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+.top { padding-block: 40px 24px; border-bottom: 4px solid var(--ink); }
+.top h1 { font: 400 clamp(40px, 6.4vw, 74px)/.95 var(--f-display); letter-spacing: .03em; margin: 0; color: var(--gold); -webkit-text-stroke: 4px var(--ink); paint-order: stroke fill; text-shadow: 5px 5px 0 var(--ink); }
+.top p { color: var(--muted); max-width: 72ch; margin: 12px 0 0; }
+.band { padding-block: 48px; border-bottom: 2px dashed var(--line); }
+.band h2 { font: 400 clamp(32px, 4.4vw, 48px)/1 var(--f-display); letter-spacing: .03em; margin: 0 0 6px; color: var(--paper); -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; text-shadow: 4px 4px 0 var(--ink); }
+.why { color: var(--muted); margin: 0 0 26px; max-width: 78ch; }
+.opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.opt { background: color-mix(in srgb, var(--navy) 55%, var(--night)); border: 2px solid var(--line); padding: 18px; min-width: 0; display: grid; gap: 14px; align-content: start; }
+.opt > h3 { margin: 0; font: 400 26px/1 var(--f-display); letter-spacing: .04em; color: var(--gold); }
+.opt > h3 small { font: 600 13px/1 var(--f-body); letter-spacing: 0; color: var(--muted); margin-left: 6px; }
+.opt > p { margin: 0; color: var(--muted); font-size: 14px; }
+.replay { justify-self: start; font: 700 13px/1 var(--f-body); color: var(--muted); background: transparent; border: 2px solid var(--line); padding: 8px 12px; cursor: pointer; }
+.replay:hover { color: var(--text); border-color: var(--gold); }
+
+/* ================= AURA ================= */
+.stage { position: relative; height: 300px; overflow: hidden; isolation: isolate; border: 2px solid var(--ink); background: radial-gradient(70% 60% at 50% 60%, #3d2a10 0%, #1e1630 50%, var(--night) 85%); display: grid; place-items: center; }
+.stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
+.stage .nm { font: 400 clamp(46px, 7vw, 76px)/.86 var(--f-display); letter-spacing: .02em; text-transform: uppercase; text-align: center; color: var(--gold); -webkit-text-stroke: 5px var(--ink); paint-order: stroke fill; text-shadow: 6px 6px 0 var(--ink); margin: 0; }
+.stage .nm span { display: block; color: var(--orange); }
+
+/* ================= SCOUTER ================= */
+.skills { display: flex; flex-wrap: wrap; gap: 8px; }
+.sk { font: 600 14px/1 var(--f-body); color: var(--text); background: var(--navy); border: 2px solid var(--ink); box-shadow: var(--shadow-sm); padding: 9px 11px; cursor: crosshair; }
+.sk[aria-pressed="true"] { background: var(--lens); color: var(--ink); }
+/* A — lens */
+.sA { position: relative; }
+.lensA { position: relative; min-height: 210px; border: 4px solid var(--ink); border-radius: 10px 60px 10px 10px; overflow: hidden; padding: 22px; display: grid; align-content: center; gap: 6px;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--lens) 55%, transparent), color-mix(in srgb, var(--lens) 22%, transparent)), var(--lens-dark); box-shadow: var(--shadow-lg); font-family: var(--f-mono); color: var(--lens-text); }
+.lensA::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(0,0,0,.12) 3px 4px); }
+.lensA .what { font: 400 40px/1 var(--f-display); letter-spacing: .04em; color: #fff; -webkit-text-stroke: 2px var(--lens-dark); paint-order: stroke fill; }
+.lensA ul, .hudB ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 3px; font-size: 13px; }
+.lensA li::before, .hudB li::before { content: "▸ "; color: var(--gold); }
+.boom { position: absolute; top: -34px; right: -6px; width: 150px; aspect-ratio: 1.4 / 1; display: grid; place-items: center; z-index: 2; pointer-events: none; opacity: 0; transform: scale(.4); }
+.boom svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.boom span { position: relative; font: 900 30px/1 var(--f-jp); color: var(--gold); -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; transform: rotate(-8deg); }
+.sA.over .boom { animation: boom 600ms var(--ease-snap) 300ms both; }
+@keyframes boom { 60% { opacity: 1; transform: scale(1.1); } 100% { opacity: 1; transform: scale(1); } }
+/* B — HUD radar */
+.hudB { position: relative; display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 18px; align-items: center; min-height: 210px; padding: 18px; border: 3px solid var(--ink); background: var(--lens-dark); box-shadow: var(--shadow-lg); font-family: var(--f-mono); color: var(--lens-text); overflow: hidden; }
+.radar { position: relative; aspect-ratio: 1; border-radius: 50%; border: 2px solid var(--lens); background:
+  radial-gradient(circle, transparent 0 32%, color-mix(in srgb, var(--lens) 40%, transparent) 32.5% 33.5%, transparent 34% 65%, color-mix(in srgb, var(--lens) 40%, transparent) 65.5% 66.5%, transparent 67%),
+  linear-gradient(90deg, transparent 49.5%, color-mix(in srgb, var(--lens) 40%, transparent) 50%, transparent 50.5%),
+  linear-gradient(0deg, transparent 49.5%, color-mix(in srgb, var(--lens) 40%, transparent) 50%, transparent 50.5%), color-mix(in srgb, var(--lens) 12%, var(--lens-dark)); overflow: hidden; }
+.radar::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 0deg, color-mix(in srgb, var(--lens) 70%, transparent), transparent 70deg); opacity: 0; }
+.hudB.scan .radar::before { opacity: 1; animation: sweep 900ms linear 2; }
+@keyframes sweep { to { transform: rotate(360deg); } }
+.radar .blip { position: absolute; width: 10px; height: 10px; border-radius: 50%; background: var(--gold); border: 2px solid var(--ink); left: 62%; top: 30%; opacity: 0; }
+.hudB.done .radar .blip { opacity: 1; animation: blip 500ms var(--ease-snap) both; }
+@keyframes blip { 0% { transform: scale(3); } 100% { transform: scale(1); } }
+.hudB .what { font: 400 34px/1 var(--f-display); letter-spacing: .04em; color: #fff; }
+.hudB .bar { height: 10px; border: 2px solid var(--ink); background: var(--lens-dark); margin-top: 6px; }
+.hudB .bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--lens), var(--gold)); transition: width 900ms var(--ease-snap); }
+.hudB.over .bar i { background: repeating-linear-gradient(45deg, var(--alarm) 0 8px, var(--gold) 8px 16px); }
+.hudB .alarm { justify-self: start; font-size: 12px; color: #fff; background: var(--alarm); padding: 4px 8px; }
+
+/* ================= SPECIMEN TUBE ================= */
+.tubes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.tA { position: relative; border: 3px solid var(--ink); border-radius: 70px 70px 18px 18px; background: var(--lab-2); box-shadow: var(--shadow); overflow: hidden; min-height: 380px; display: grid; align-content: end; isolation: isolate; }
+.tA .liq { position: absolute; left: 0; right: 0; bottom: 0; height: 0; z-index: -1; transition: height 1.4s cubic-bezier(.3, .7, .2, 1); background: linear-gradient(180deg, color-mix(in srgb, var(--lens) 65%, transparent), color-mix(in srgb, var(--lens) 25%, transparent)); }
+.tA.full .liq { height: 94%; }
+.body { padding: 16px; background: color-mix(in srgb, var(--lab) 85%, transparent); border-top: 2px solid var(--ink); }
+.code { font: 400 11px/1 var(--f-mono); color: var(--lens); letter-spacing: .12em; }
+.body h4 { font: 400 26px/1 var(--f-display); letter-spacing: .03em; margin: 6px 0 4px; color: var(--paper); }
+.body p { margin: 0; font-size: 14px; }
+/* B — capsule chamber with caps, a floating core and rising bubbles */
+.tB { position: relative; display: grid; grid-template-rows: 18px minmax(0, 1fr) 18px auto; min-height: 380px; }
+.cap { background: linear-gradient(180deg, #5a6278, #2d3244); border: 3px solid var(--ink); border-radius: 6px; margin: 0 -4px; box-shadow: var(--shadow-sm); }
+.glass { position: relative; border-left: 3px solid var(--ink); border-right: 3px solid var(--ink); background: var(--lab-2); overflow: hidden; isolation: isolate; min-height: 210px; }
+.glass::after { content: ""; position: absolute; top: 0; bottom: 0; left: 14%; width: 8%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent); }
+.glass .liq { position: absolute; left: 0; right: 0; bottom: 0; height: 0; z-index: -1; transition: height 1.4s cubic-bezier(.3, .7, .2, 1); background: linear-gradient(180deg, color-mix(in srgb, var(--lens) 65%, transparent), color-mix(in srgb, var(--lens) 25%, transparent)); }
+.tB.full .glass .liq { height: 100%; }
+.core { position: absolute; left: 50%; top: 46%; width: 64px; height: 64px; transform: translate(-50%, -50%) scale(0); border-radius: 50%; border: 3px solid var(--ink);
+  background: radial-gradient(circle at 38% 35%, #fff 0 12%, var(--gold-hi) 14% 30%, var(--gold) 32% 60%, var(--orange) 62%); transition: transform 700ms var(--ease-snap) 900ms; }
+.tB.full .core { transform: translate(-50%, -50%) scale(1); }
+.tB:hover .core { animation: bob 1.6s ease-in-out infinite alternate; }
+@keyframes bob { from { transform: translate(-50%, -56%) scale(1); } to { transform: translate(-50%, -44%) scale(1); } }
+.bub { position: absolute; bottom: -12px; width: var(--s); height: var(--s); border-radius: 50%; border: 2px solid color-mix(in srgb, #fff 60%, transparent); left: var(--x); opacity: 0; }
+.tB:hover .bub, .tB.boil .bub { animation: bub var(--d) ease-in infinite; animation-delay: var(--dl); }
+@keyframes bub { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: .9; } 100% { transform: translateY(-240px); opacity: 0; } }
+.plate { margin-top: 10px; border: 3px solid var(--ink); background: var(--lab); box-shadow: var(--shadow-sm); }
+.plate .body { border-top: 0; background: transparent; }
+.status { display: inline-block; font: 400 11px/1 var(--f-mono); color: var(--ink); background: var(--lens); padding: 4px 7px; letter-spacing: .08em; margin-top: 8px; }
+
+/* ================= MANGA PANEL ================= */
+.page { overflow: hidden; background: var(--paper); padding: 14px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; color: var(--ink); }
+.pn { position: relative; border: 4px solid var(--ink); background: #fff; padding: 16px; min-width: 0; overflow: hidden; }
+.pn h4 { font: 400 26px/1 var(--f-display); letter-spacing: .03em; margin: 6px 0 6px; }
+.pn p { margin: 0; font-size: 14px; }
+.tag { display: inline-flex; gap: 6px; align-items: baseline; font: 400 14px/1 var(--f-display); letter-spacing: .05em; padding: 5px 10px 4px; background: var(--ink); color: var(--paper); clip-path: polygon(6% 0, 100% 0, 94% 100%, 0 100%); }
+.tag b { font: 900 11px/1 var(--f-jp); color: var(--gold); }
+.wide { grid-column: 1 / -1; }
+/* A — slide in with speed lines */
+.pA { opacity: 0; transform: translateX(var(--dx, -60px)); }
+.pA .speed { position: absolute; inset: 0; pointer-events: none; opacity: 0; background: repeating-linear-gradient(90deg, transparent 0 16px, rgba(10,10,20,.5) 16px 18px); }
+.go .pA { animation: slide 600ms var(--ease-snap) both; animation-delay: var(--dl, 0ms); }
+.go .pA .speed { animation: speedfade 600ms ease-out both; animation-delay: var(--dl, 0ms); }
+@keyframes slide { to { opacity: 1; transform: none; } }
+@keyframes speedfade { 0% { opacity: .9; } 100% { opacity: 0; } }
+.pA.act { display: grid; place-items: center; min-height: 120px; background: repeating-conic-gradient(var(--ink) 0deg 1.4deg, #fff 1.4deg 9deg); }
+.pA.act::before { content: ""; position: absolute; width: 46%; aspect-ratio: 1; border-radius: 50%; background: #fff; }
+.pA.act span, .pB.act span { position: relative; font: 900 44px/1 var(--f-jp); color: var(--orange); -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; transform: rotate(-6deg); }
+/* B — ink-wipe reveal with halftone colour */
+.pB { clip-path: inset(0 100% 0 0); }
+.go .pB { animation: wipe 700ms var(--ease-snap) both; animation-delay: var(--dl, 0ms); }
+@keyframes wipe { to { clip-path: inset(0 0 0 0); } }
+.pB.tone-o { background: radial-gradient(circle at 2px 2px, color-mix(in srgb, var(--orange) 55%, transparent) 1.6px, transparent 2.2px) 0 0 / 9px 9px, #fff; }
+.pB.tone-b { background: radial-gradient(circle at 2px 2px, color-mix(in srgb, var(--ki) 45%, transparent) 1.6px, transparent 2.2px) 0 0 / 9px 9px, #fff; }
+.pB.act { display: grid; place-items: center; min-height: 120px; background: radial-gradient(circle, #fff 0 22%, transparent 23%), repeating-conic-gradient(var(--gold) 0deg 6deg, var(--orange) 6deg 12deg); }
+.pB .title-burst { display: inline-block; background: var(--gold); border: 3px solid var(--ink); padding: 6px 12px 4px; transform: rotate(-2deg); box-shadow: var(--shadow-sm); }
+.pB .title-burst h4 { margin: 0; }
+
+/* ================= BEAM ================= */
+.range { position: relative; height: 200px; border: 2px solid var(--ink); background: radial-gradient(60% 80% at 20% 50%, #1b2a6a, var(--night) 70%); overflow: hidden; }
+/* A — striped beam (locked) */
+.bmA { position: absolute; left: 70px; right: 0; top: 50%; height: 46px; transform: translateY(-50%) scaleX(0); transform-origin: left; border: 4px solid var(--ink); border-left: 0; border-radius: 0 30px 30px 0;
+  background: linear-gradient(180deg, var(--ki) 0 16%, var(--ki-pale) 16% 34%, #fff 34% 66%, var(--ki-pale) 66% 84%, var(--ki) 84%); }
+.orbA { position: absolute; left: 24px; top: 50%; width: 64px; height: 64px; transform: translateY(-50%) scale(0); border-radius: 50%; border: 4px solid var(--ink); background: radial-gradient(circle, #fff 0 30%, var(--ki-pale) 31% 55%, var(--ki) 56%); }
+.fire .orbA { animation: orb 500ms var(--ease-snap) both; }
+.fire .bmA { animation: shoot 700ms var(--ease-beam) 500ms both; }
+@keyframes orb { to { transform: translateY(-50%) scale(1); } }
+@keyframes shoot { to { transform: translateY(-50%) scaleX(1); } }
+/* B — tapered, flowing beam drawn in SVG with a spiral core and spark ring */
+.range svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.bmB .outer { fill: var(--ki); stroke: var(--ink); stroke-width: 4; }
+.bmB .mid { fill: var(--ki-pale); }
+.bmB .core { fill: #fff; }
+.bmB .spiral { fill: none; stroke: #fff; stroke-width: 2; opacity: .7; stroke-dasharray: 14 18; }
+.bmB { clip-path: inset(0 100% 0 0); }
+.fire .bmB { animation: wipe 750ms var(--ease-beam) 450ms both; }
+.fire .bmB .spiral { animation: spin-dash 600ms linear 1.2s 3; }
+@keyframes spin-dash { to { stroke-dashoffset: -64; } }
+.spark { transform-origin: center; transform-box: fill-box; opacity: 0; }
+.fire .spark { animation: spark 500ms var(--ease-snap) 1.15s both; }
+@keyframes spark { 0% { opacity: 0; transform: scale(.3); } 50% { opacity: 1; } 100% { opacity: 1; transform: scale(1); } }
+.orbB { transform-origin: center; transform-box: fill-box; transform: scale(0); }
+.fire .orbB { animation: orbB 450ms var(--ease-snap) both; }
+@keyframes orbB { to { transform: scale(1); } }
+
+.foot { padding-block: 30px 44px; color: var(--muted); font-size: 13px; }
+@media (max-width: 900px) {
+  .opts { grid-template-columns: minmax(0, 1fr); }
+  .hudB { grid-template-columns: 100px minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .pA, .pB { opacity: 1; transform: none; clip-path: none; }
+  .bmA { transform: translateY(-50%) scaleX(1); } .orbA { transform: translateY(-50%) scale(1); }
+  .bmB { clip-path: none; } .orbB { transform: none; } .spark { opacity: 1; }
+  .tA .liq { height: 94%; } .tB .glass .liq { height: 100%; } .core { transform: translate(-50%, -50%) scale(1); }
+}
+</style>
+</head>
+<body>
+<header class="top gutter"><div class="wrap">
+  <h1>Component round 2 · signature pieces</h1>
+  <p>The pieces the site is remembered by. A is refined from the locked page; B is a flowing take, in the direction of the flame-tongue crest you picked. Every one has a replay button. Pick per component, or mix.</p>
+</div></header>
+
+<!-- AURA -->
+<section class="band gutter"><div class="wrap">
+  <h2>Aura</h2>
+  <p class="why">The hero's transformation and the career scroll both use it. It plays once, then moves only while the cursor is over it.</p>
+  <div class="opts">
+    <div class="opt">
+      <h3>A · Hard flicker <small>locked page</small></h3>
+      <p>Jagged, flickering flame shapes in three layers, with lightning. Very 90s cel.</p>
+      <div class="stage" data-aura="hard"><canvas aria-hidden="true"></canvas><p class="nm">Tanveer<span>Singh</span></p></div>
+      <button class="replay" type="button" data-replay>Power up again</button>
+    </div>
+    <div class="opt">
+      <h3>B · Flowing flames</h3>
+      <p>Smooth, curved flame tongues that rise and sway on a steady rhythm instead of flickering. Matches the card crest.</p>
+      <div class="stage" data-aura="flow"><canvas aria-hidden="true"></canvas><p class="nm">Tanveer<span>Singh</span></p></div>
+      <button class="replay" type="button" data-replay>Power up again</button>
+    </div>
+  </div>
+</div></section>
+
+<!-- SCOUTER -->
+<section class="band gutter"><div class="wrap">
+  <h2>Scouter</h2>
+  <p class="why">Pick a skill and it scans where it was used. Next.js, Firebase and Claude overload it. Readings are real, never invented numbers.</p>
+  <div class="opts">
+    <div class="opt">
+      <h3>A · Lens <small>locked page</small></h3>
+      <div class="sA" id="sA"><div class="lensA" aria-live="polite"><span id="aT">SCOUTER READY</span><span class="what" id="aW">Pick a skill</span><ul id="aL"></ul></div><div class="boom" aria-hidden="true"><svg viewBox="0 0 200 140" preserveAspectRatio="none"><polygon points="100,4 116,40 160,14 140,54 196,58 146,78 178,122 124,96 104,136 88,98 30,128 58,82 4,66 56,52 30,12 82,40" fill="#fff4b8" stroke="#0a0a14" stroke-width="3"/></svg><span>ボン!</span></div></div>
+      <div class="skills" data-scout="A"></div>
+    </div>
+    <div class="opt">
+      <h3>B · Radar HUD</h3>
+      <p>A radar sweeps, locks a blip, and a power bar fills; on overload the bar turns to hazard stripes.</p>
+      <div class="hudB" id="sB" aria-live="polite"><div class="radar" aria-hidden="true"><span class="blip"></span></div><div><span id="bT">SCOUTER READY</span><div class="what" id="bW">Pick a skill</div><ul id="bL"></ul><div class="bar" aria-hidden="true"><i id="bBar"></i></div><span class="alarm" id="bA" hidden>OFF THE SCALE</span></div></div>
+      <div class="skills" data-scout="B"></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- TUBES -->
+<section class="band gutter"><div class="wrap">
+  <h2>Specimen tube</h2>
+  <p class="why">The lab's AI projects. Fills when it comes into view.</p>
+  <div class="opts">
+    <div class="opt">
+      <h3>A · Glass tube <small>locked page</small></h3>
+      <div class="tubes" data-tubes>
+        <article class="tA"><div class="liq"></div><div class="body"><span class="code">UNIT · RDX</span><h4>Roleodex</h4><p>Private AI chat on local models only.</p></div></article>
+        <article class="tA"><div class="liq"></div><div class="body"><span class="code">UNIT · FLT</span><h4>fleet-standards</h4><p>My standard for AI coding agents.</p></div></article>
+      </div>
+      <button class="replay" type="button" data-refill>Refill</button>
+    </div>
+    <div class="opt">
+      <h3>B · Capsule chamber</h3>
+      <p>Metal caps, a glass chamber, a glowing core that forms once it fills, and a name plate below. Hover to boil it.</p>
+      <div class="tubes" data-tubes>
+        <article class="tB"><div class="cap"></div><div class="glass"><div class="liq"></div><span class="core"></span><i class="bub" style="--x:22%;--s:8px;--d:1.8s;--dl:0s"></i><i class="bub" style="--x:60%;--s:12px;--d:2.2s;--dl:.4s"></i><i class="bub" style="--x:78%;--s:6px;--d:1.5s;--dl:.8s"></i><i class="bub" style="--x:40%;--s:9px;--d:2s;--dl:1.1s"></i></div><div class="cap"></div><div class="plate"><div class="body"><span class="code">UNIT · RDX</span><h4>Roleodex</h4><p>Private AI chat on local models only.</p><span class="status">ONLINE</span></div></div></article>
+        <article class="tB"><div class="cap"></div><div class="glass"><div class="liq"></div><span class="core"></span><i class="bub" style="--x:30%;--s:10px;--d:2s;--dl:.2s"></i><i class="bub" style="--x:68%;--s:7px;--d:1.6s;--dl:.6s"></i><i class="bub" style="--x:50%;--s:11px;--d:2.4s;--dl:1s"></i></div><div class="cap"></div><div class="plate"><div class="body"><span class="code">UNIT · FLT</span><h4>fleet-standards</h4><p>My standard for AI coding agents.</p><span class="status">PUBLISHED</span></div></div></article>
+      </div>
+      <button class="replay" type="button" data-refill>Refill</button>
+    </div>
+  </div>
+</div></section>
+
+<!-- PANELS -->
+<section class="band gutter"><div class="wrap">
+  <h2>Manga panel</h2>
+  <p class="why">Project case studies, as a chapter page.</p>
+  <div class="opts">
+    <div class="opt">
+      <h3>A · Slide in <small>locked page</small></h3>
+      <p>Black and white panels slide in from alternating sides with speed lines.</p>
+      <div class="page" data-page>
+        <article class="pn pA wide" style="--dx:-60px"><div class="speed"></div><span class="tag"><b aria-hidden="true">ド</b>Nobility Care Australia</span><h4>NCA public website</h4><p>Sixteen service pages, three themes, a contrast audit that fails the build on any WCAG AA failure.</p></article>
+        <div class="pn pA act" style="--dx:60px;--dl:150ms" aria-hidden="true"><div class="speed"></div><span>ドン!</span></div>
+        <article class="pn pA" style="--dx:60px;--dl:250ms"><div class="speed"></div><span class="tag"><b aria-hidden="true">バ</b>Tinker Together</span><h4>Toll</h4><p>A 3v3 card battler in Godot, in public beta.</p></article>
+      </div>
+      <button class="replay" type="button" data-replay-page>Replay</button>
+    </div>
+    <div class="opt">
+      <h3>B · Ink wipe, in colour</h3>
+      <p>Panels are inked in left to right, with orange and blue halftone tints and a title burst.</p>
+      <div class="page" data-page>
+        <article class="pn pB tone-o wide"><span class="title-burst"><h4>NCA public website</h4></span><p style="margin-top:10px">Sixteen service pages, three themes, a contrast audit that fails the build on any WCAG AA failure.</p></article>
+        <div class="pn pB act" style="--dl:150ms" aria-hidden="true"><span>ドン!</span></div>
+        <article class="pn pB tone-b" style="--dl:250ms"><span class="tag"><b aria-hidden="true">バ</b>Tinker Together</span><h4>Toll</h4><p>A 3v3 card battler in Godot, in public beta.</p></article>
+      </div>
+      <button class="replay" type="button" data-replay-page>Replay</button>
+    </div>
+  </div>
+</div></section>
+
+<!-- BEAM -->
+<section class="band gutter"><div class="wrap">
+  <h2>Beam</h2>
+  <p class="why">Dividers, the beam struggle, and the charge-to-send contact button.</p>
+  <div class="opts">
+    <div class="opt">
+      <h3>A · Striped beam <small>locked page</small></h3>
+      <div class="range" data-range><span class="orbA"></span><span class="bmA"></span></div>
+      <button class="replay" type="button" data-fire>Fire</button>
+    </div>
+    <div class="opt">
+      <h3>B · Flowing beam</h3>
+      <p>Tapers from the orb, edges ripple, a spiral runs through the core, and a spark ring bursts at the tip.</p>
+      <div class="range" data-range>
+        <svg viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true">
+          <g class="bmB" data-beam></g>
+          <g transform="translate(560 100)"><g class="spark"><polygon points="0,-46 10,-14 40,-30 20,-2 46,8 16,14 28,42 0,22 -24,40 -14,12 -44,4 -18,-6 -36,-34 -8,-16" fill="#fff4b8" stroke="#0a0a14" stroke-width="3"/></g></g>
+          <circle class="orbB" cx="50" cy="100" r="34" fill="#4f8cff" stroke="#0a0a14" stroke-width="4"/>
+          <circle class="orbB" cx="50" cy="100" r="22" fill="#bfe0ff"/>
+          <circle class="orbB" cx="50" cy="100" r="12" fill="#fff"/>
+        </svg>
+      </div>
+      <button class="replay" type="button" data-fire>Fire</button>
+    </div>
+  </div>
+</div></section>
+
+<footer class="foot gutter"><div class="wrap">Component round 2 · 2 November 2026. After your picks: components.md, then building the site.</div></footer>
+
+<script>
+(() => {
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const GOLD = ["#f47a1f", "#ffcf1f", "#fff4b8"], BLUE = ["#2a4fd0", "#8fb0ff", "#e8f0ff"];
+
+  // ---------- auras ----------
+  // A: hard, randomly flickering spikes. B: smooth tongues whose heights follow sine waves.
+  function hardFlame(ctx, b, scale, color) {
+    const pts = 46; ctx.beginPath();
+    for (let i = 0; i <= pts; i++) {
+      const a = (i / pts) * Math.PI * 2, up = Math.max(0, -Math.sin(a)), even = i % 2 === 0;
+      const spike = even ? 1 + (.18 + up * .6) * (.55 + Math.random()) : .9;
+      const x = b.cx + Math.cos(a) * b.rx * scale * (even ? 1.02 : .95);
+      const y = b.cy + Math.sin(a) * b.ry * scale * (a > Math.PI ? spike * (1 + up * .5) : .62);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.closePath(); ctx.fillStyle = color; ctx.fill();
+  }
+  function flowFlame(ctx, b, scale, color, t, phase, lean) {
+    const n = 14; ctx.beginPath();
+    // base: lower half of the ellipse, left to right
+    for (let i = 0; i <= 20; i++) { const a = Math.PI - (i / 20) * Math.PI; const x = b.cx + Math.cos(a) * b.rx * scale, y = b.cy + Math.sin(a) * b.ry * scale * .55; i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
+    // tongues across the top, right to left, each a smooth curve to a swaying tip
+    for (let i = 0; i < n; i++) {
+      const a0 = (i / n) * Math.PI, a1 = ((i + 1) / n) * Math.PI, am = (a0 + a1) / 2;
+      const x1 = b.cx + Math.cos(a1) * b.rx * scale, y1 = b.cy - Math.sin(a1) * b.ry * scale;
+      const up = Math.sin(am), wave = .55 + .45 * Math.sin(t * 2.2 + i * 1.7 + phase);
+      const tipX = b.cx + Math.cos(am) * b.rx * scale * 1.05 + (lean + Math.sin(t * 1.3 + i) * .25) * up * b.ry * .6;
+      const tipY = b.cy - Math.sin(am) * b.ry * scale - up * b.ry * scale * (.5 + 1.1 * wave);
+      const x0 = b.cx + Math.cos(a0) * b.rx * scale, y0 = b.cy - Math.sin(a0) * b.ry * scale;
+      ctx.bezierCurveTo(x0, y0 - b.ry * .35 * up, tipX + (x0 - tipX) * .2, tipY + b.ry * .3, tipX, tipY);
+      ctx.bezierCurveTo(tipX + (x1 - tipX) * .2, tipY + b.ry * .3, x1, y1 - b.ry * .35 * up, x1, y1);
+    }
+    ctx.closePath(); ctx.fillStyle = color; ctx.fill();
+  }
+  document.querySelectorAll("[data-aura]").forEach((stage) => {
+    const kind = stage.dataset.aura, cv = stage.querySelector("canvas"), ctx = cv.getContext("2d"), nm = stage.querySelector(".nm");
+    let raf = 0, until = 0, t0 = 0, lean = 0, last = 0, w = 0, h = 0, box;
+    const size = () => { const r = stage.getBoundingClientRect(), n = nm.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2);
+      w = r.width; h = r.height; cv.width = w * d; cv.height = h * d; ctx.setTransform(d, 0, 0, d, 0, 0);
+      box = { cx: n.left - r.left + n.width / 2, cy: n.top - r.top + n.height * .6, rx: Math.min(w * .45, n.width * .62), ry: n.height * .55 }; };
+    const paint = (now) => {
+      const t = (now - t0) / 1000, gold = t > .8 || reduce, c = gold ? GOLD : BLUE;
+      ctx.clearRect(0, 0, w, h);
+      if (kind === "hard") { ctx.globalAlpha = .55; hardFlame(ctx, box, 1.18, c[0]); ctx.globalAlpha = .75; hardFlame(ctx, box, 1, c[1]); ctx.globalAlpha = .55; hardFlame(ctx, box, .78, c[2]); }
+      else { ctx.globalAlpha = .6; flowFlame(ctx, box, 1.15, c[0], t, 0, lean); ctx.globalAlpha = .8; flowFlame(ctx, box, .98, c[1], t, 2, lean); ctx.globalAlpha = .7; flowFlame(ctx, box, .78, c[2], t, 4, lean); }
+      ctx.globalAlpha = 1;
+    };
+    const frame = (now) => {
+      // hard flicker repaints at the flicker rate; flowing repaints every frame for smoothness
+      if (kind === "flow" || now - last > 70) { last = now; paint(now); }
+      if (now < until) raf = requestAnimationFrame(frame); else raf = 0;
+    };
+    const run = (ms) => { until = Math.max(until, performance.now() + ms); if (!raf) raf = requestAnimationFrame(frame); };
+    const play = () => { size(); t0 = performance.now(); until = 0; if (reduce) { paint(t0 + 2000); return; } run(2600); };
+    stage.addEventListener("pointermove", (e) => { if (reduce) return; const r = stage.getBoundingClientRect(); lean = Math.max(-1, Math.min(1, (e.clientX - r.left - box.cx) / (r.width / 2))) * .6; run(500); });
+    stage.addEventListener("pointerleave", () => { lean = 0; if (!reduce) run(400); });
+    stage.parentElement.querySelector("[data-replay]").addEventListener("click", play);
+    new ResizeObserver(() => { size(); paint(performance.now()); }).observe(stage);
+    document.fonts.ready.then(play);
+  });
+
+  // ---------- scouters ----------
+  const SCAN = {
+    "Next.js": { lines: ["NCA public website", "NCA learning platform", "Tinker Together website", "Roleodex"], over: true },
+    "Firebase": { lines: ["NCA website, learning platform and staff portal", "Tinker Together website", "Toll's online saves"], over: true },
+    "Claude": { lines: ["First choice for AI work", "Claude Code, with my own published standard"], over: true },
+    "Godot 4": { lines: ["Toll, in public beta", "472 automated tests"] },
+    "SharePoint": { lines: ["NCA's site structure and permissions"] },
+  };
+  document.querySelectorAll("[data-scout]").forEach((list) => {
+    const v = list.dataset.scout;
+    Object.keys(SCAN).forEach((k) => { const b = document.createElement("button"); b.type = "button"; b.className = "sk"; b.textContent = k; b.setAttribute("aria-pressed", "false"); list.appendChild(b); });
+    const btns = [...list.children];
+    btns.forEach((b) => b.addEventListener("click", () => {
+      btns.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      const d = SCAN[b.textContent];
+      if (v === "A") {
+        const host = document.getElementById("sA"), L = document.getElementById("aL"); host.classList.remove("over"); void host.offsetWidth;
+        document.getElementById("aT").textContent = "SCANNING…"; document.getElementById("aW").textContent = b.textContent; L.innerHTML = "";
+        d.lines.forEach((ln, i) => setTimeout(() => { const li = document.createElement("li"); li.textContent = ln; L.appendChild(li); if (i === d.lines.length - 1) { document.getElementById("aT").textContent = "READING COMPLETE"; if (d.over) host.classList.add("over"); } }, reduce ? 0 : 200 + i * 150));
+      } else {
+        const host = document.getElementById("sB"), L = document.getElementById("bL"), bar = document.getElementById("bBar"), al = document.getElementById("bA");
+        host.classList.remove("scan", "done", "over"); void host.offsetWidth; host.classList.add("scan"); bar.style.width = "0"; al.hidden = true;
+        document.getElementById("bT").textContent = "SWEEPING…"; document.getElementById("bW").textContent = b.textContent; L.innerHTML = "";
+        setTimeout(() => {
+          host.classList.add("done"); document.getElementById("bT").textContent = "TARGET LOCKED";
+          d.lines.forEach((ln) => { const li = document.createElement("li"); li.textContent = ln; L.appendChild(li); });
+          bar.style.width = d.over ? "100%" : (30 + d.lines.length * 15) + "%";
+          if (d.over) { host.classList.add("over"); al.hidden = false; }
+        }, reduce ? 0 : 1800);
+      }
+    }));
+  });
+
+  // ---------- tubes, panels, beams: play when shown, replay on demand ----------
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (!e.isIntersecting) return; const el = e.target;
+    if (el.matches("[data-tubes]")) el.querySelectorAll(".tA,.tB").forEach((t, i) => setTimeout(() => t.classList.add("full"), i * 200));
+    if (el.matches("[data-page]")) el.classList.add("go");
+    if (el.matches("[data-range]")) el.classList.add("fire");
+    io.unobserve(el); }), { threshold: .4 });
+  document.querySelectorAll("[data-tubes],[data-page],[data-range]").forEach((el) => io.observe(el));
+  const restart = (el, cls) => { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
+  document.querySelectorAll("[data-refill]").forEach((b) => b.addEventListener("click", () => { const g = b.previousElementSibling; g.querySelectorAll(".tA,.tB").forEach((t) => t.classList.remove("full")); void g.offsetWidth; setTimeout(() => g.querySelectorAll(".tA,.tB").forEach((t, i) => setTimeout(() => t.classList.add("full"), i * 200)), 50); }));
+  document.querySelectorAll("[data-replay-page]").forEach((b) => b.addEventListener("click", () => restart(b.previousElementSibling, "go")));
+  document.querySelectorAll("[data-fire]").forEach((b) => b.addEventListener("click", () => restart(b.previousElementSibling, "fire")));
+
+  // Flowing beam shape: a taper from the orb with rippling edges, plus a spiral through the core.
+  const beam = document.querySelector("[data-beam]");
+  const edge = (half, amp, freq, phase) => { let top = "", bot = ""; for (let x = 50; x <= 560; x += 10) { const k = (x - 50) / 510, hh = half * (.55 + .45 * k) + Math.sin(x / freq + phase) * amp; top += `${x},${100 - hh} `; bot = `${x},${100 + hh} ` + bot; } return `<polygon points="${top}${bot}"/>`; };
+  let spiral = "M50 100"; for (let x = 50; x <= 560; x += 6) spiral += ` L${x} ${100 + Math.sin(x / 12) * 14 * ((x - 50) / 510 + .3)}`;
+  beam.innerHTML = `<g class="outer">${edge(40, 4, 18, 0)}</g><g class="mid">${edge(27, 3, 14, 1)}</g><g class="core">${edge(13, 2, 10, 2)}</g><path class="spiral" d="${spiral}"/>`;
+})();
+</script>
+</body>
+</html>

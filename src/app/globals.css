@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — Dragon Ball Z motif, locked 2026-11-02 (docs/design/motif.html).
+ * Every value here is recorded in design-system.md; components never use a raw value.
+ * Every fill that carries text has an `on-` partner, checked for contrast (§DESIGN).
+ * Dark is the only scheme so far; the light manga-page scheme is still to be designed.
+ */
+@theme {
+  /* surfaces — night sky */
+  --color-night: #0c1233;
+  --color-navy: #17215e;
+  --color-line: #2b3a8f;
+
+  /* ink and paper */
+  --color-ink: #0a0a14;
+  --color-paper: #fff8e8;
+  --color-on-paper: #0a0a14;
+  --color-text: #f4f1ff;
+  --color-muted: #b9c0e2;
+  --color-on-muted: #0a0a14;
+
+  /* training gi */
+  --color-blue: #1f3fae;
+  --color-on-blue: #ffffff;
+  --color-orange: #f47a1f; /* decoration, outlines and display type on dark — not a text fill */
+  --color-ember: #c2410c; /* orange fill that carries text */
+  --color-on-ember: #ffffff;
+
+  /* golden transformation */
+  --color-gold: #ffcf1f;
+  --color-on-gold: #0a0a14;
+  --color-gold-hi: #fff4b8;
+
+  /* ki and energy beams */
+  --color-ki: #4f8cff;
+  --color-ki-soft: #8fb0ff;
+  --color-on-ki-soft: #0a0a14;
+  --color-ki-pale: #bfe0ff;
+
+  /* scouter */
+  --color-lens: #39e27e;
+  --color-on-lens: #0a0a14;
+  --color-lens-dark: #0d2a1a;
+  --color-lens-text: #d9ffe8;
+  --color-alarm: #c62828;
+  --color-on-alarm: #ffffff;
+
+  /* the lab (Android saga) */
+  --color-lab: #071a1d;
+  --color-lab-2: #0d2a2e;
+  --color-print: #4fd6cf;
+
+  /* type — families come from next/font in layout.tsx */
+  --font-display: var(--font-bangers), "Impact", "Arial Black", sans-serif;
+  --font-body: var(--font-barlow), "Segoe UI", system-ui, sans-serif;
+  --font-jp: var(--font-noto-jp), "Hiragino Sans", "Yu Gothic", sans-serif;
+  --font-mono: var(--font-share-tech), ui-monospace, "Cascadia Mono", monospace;
+  --font-sans: var(--font-body);
+
+  /* cel shading — outline widths and hard offset shadows */
+  --cel-stroke-sm: 2px;
+  --cel-stroke: 4px;
+  --cel-stroke-lg: 6px;
+  --shadow-cel-sm: 3px 3px 0 var(--color-ink);
+  --shadow-cel: 5px 5px 0 var(--color-ink);
+  --shadow-cel-lg: 8px 8px 0 var(--color-ink);
+  --border-cel: 3px;
+
+  /* shape */
+  --radius-none: 0;
+  --radius-lens: 10px 70px 10px 10px;
+  --radius-tube: 70px 70px 18px 18px;
+
+  /* motion */
+  --ease-snap: cubic-bezier(0.2, 0.9, 0.1, 1);
+  --ease-beam: cubic-bezier(0.5, 0, 0.2, 1);
+  --duration-press: 120ms;
+  --duration-flash: 380ms;
+  --duration-pop: 500ms;
+  --duration-slide: 600ms;
+  --duration-burst: 900ms;
+  --duration-fill: 1400ms;
+  --duration-transform: 3000ms;
+  --aura-flicker: 70ms;
+
+  /* layout */
+  --spacing-nav: 60px;
+  --container-page: 1180px;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-night);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
