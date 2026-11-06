@@ -172,3 +172,38 @@ still shows the older hard aura and striped beam; where they differ, these picks
 - **Build order: kit first, then pages.** The core kit and signature components are built
   with a hidden preview route, then the home page is composed from them
 
+---
+
+## 2026-11-06 — Kit built on `radix-ui` directly; shadcn's generated parts removed
+
+**The kit uses the `radix-ui` package directly, plus `motion`. `components.json` stays; no shadcn
+component code or styling was kept.** `shadcn init` ran as approved, but it pointed `--color-muted`
+and the radius scale at its own values, forced a white page background, and added Geist, so its
+edits to `globals.css` and `layout.tsx` were reverted. Removed with them: `cn`, `shadcn`,
+`lucide-react`, `tw-animate-css`, `class-variance-authority`. Generated components would have been
+rewritten completely anyway (§SHADCN). `cn` is a small helper in `src/lib/class-names.ts`, because
+§MODULES forbids a `utils` file; the `components.json` alias points there. **Running `shadcn add`
+or `init` again will re-edit `globals.css`: check the diff.**
+
+`motion` supplies in-view and reduced-motion detection. Animation itself stays in CSS, so durations
+and easings live only in the tokens.
+
+**`@theme` is now `@theme static`**, because the aura's canvas reads tokens at runtime and Tailwind
+otherwise drops unused ones. **Tailwind has no `duration-*` token namespace:** write
+`duration-(--duration-press)`.
+
+Three small differences from the mockups, each following a rule that outranks them:
+
+- **Dock's current section is `ember` with white text**, not gi orange with ink: the later decision
+  on text on orange
+- **Focus outlines are ink on paper and white surfaces** (dock, dialog, manga page, blank page):
+  a gold outline is close to invisible there
+- **Textareas get the error shout too**, where the mockup only drew it on a single-line input
+
+---
+
+## 2026-11-06 — No Playwright
+
+**Browser checks use the built-in browser or Claude in Chrome only** (owner). §TESTING still lists
+Playwright as a last resort; the owner has dropped it, so the master standard needs the same change.
+

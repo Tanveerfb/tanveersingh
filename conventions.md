@@ -26,7 +26,6 @@ None.
 | --- | --- | --- |
 | §NAMING | Filename lint rule (`check-file` or `unicorn/filename-case`) offered, not yet added | `docs/STATUS.md` open items |
 | §TESTING | Vitest not installed; no `npm test` | `docs/STATUS.md` open items |
-| §SHADCN | Locked component designs not yet built; no `components.md` | `docs/STATUS.md` item 1 |
 
 ---
 
@@ -40,6 +39,7 @@ None.
 - §AI — no AI features planned
 - §DESIGN — motif locked and recorded in `design-system.md`; tokens in `@theme`; every
   text-on-colour pair checked
+- §SHADCN — kit built from the locked designs on `radix-ui` behaviour; see `components.md`
 - §TRELLO — no board, by the owner's decision
 
 ---
@@ -51,7 +51,7 @@ None.
 | `conventions.md` | this file |
 | `decisions.md` | [`decisions.md`](./decisions.md) |
 | `design-system.md` | [`design-system.md`](./design-system.md) |
-| `components.md` | not yet — written with the first component |
+| `components.md` | [`components.md`](./components.md) |
 | `data-model.md` | not needed — no stored entities |
 | `environment.md` | not yet — written when the Discord webhook exists |
 | `status.md` | [`docs/STATUS.md`](./docs/STATUS.md) |

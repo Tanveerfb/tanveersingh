@@ -1,21 +1,30 @@
 @import "tailwindcss";
+@import "./motif.css";
 
 /*
  * Design tokens — Dragon Ball Z motif, locked 2026-11-02 (docs/design/motif.html).
  * Every value here is recorded in design-system.md; components never use a raw value.
  * Every fill that carries text has an `on-` partner, checked for contrast (§DESIGN).
  * Dark is the only scheme so far; the light manga-page scheme is still to be designed.
+ * `static` keeps every token in the output: the aura's canvas reads them at runtime.
  */
-@theme {
+@theme static {
   /* surfaces — night sky */
   --color-night: #0c1233;
   --color-navy: #17215e;
   --color-line: #2b3a8f;
+  --color-dusk: #1e1630; /* the aura stage's mid-tone */
+  --color-aura-deep: #3a2a10; /* the warm floor under an aura */
+  --color-range: #1b2a6a; /* the sky behind a beam */
 
   /* ink and paper */
   --color-ink: #0a0a14;
+  --color-ink-soft: #4a4860; /* secondary text on paper and balloons */
+  --color-ink-quiet: #6a6880; /* placeholders in balloons */
   --color-paper: #fff8e8;
   --color-on-paper: #0a0a14;
+  --color-narration: #fffbe0; /* the narration box under a shout balloon */
+  --color-thought: #dfe2f2; /* the disabled thought balloon */
   --color-text: #f4f1ff;
   --color-muted: #b9c0e2;
   --color-on-muted: #0a0a14;
@@ -34,9 +43,11 @@
 
   /* ki and energy beams */
   --color-ki: #4f8cff;
+  --color-ki-deep: #2a4fd0; /* the charging aura's outer flame */
   --color-ki-soft: #8fb0ff;
   --color-on-ki-soft: #0a0a14;
   --color-ki-pale: #bfe0ff;
+  --color-ki-hi: #e8f0ff; /* the charging aura's core */
 
   /* scouter */
   --color-lens: #39e27e;
@@ -50,6 +61,8 @@
   --color-lab: #071a1d;
   --color-lab-2: #0d2a2e;
   --color-print: #4fd6cf;
+  --color-cap-hi: #5a6278; /* the specimen tube's metal caps */
+  --color-cap-lo: #2d3244;
 
   /* type — families come from next/font in layout.tsx */
   --font-display: var(--font-bangers), "Impact", "Arial Black", sans-serif;
@@ -58,43 +71,119 @@
   --font-mono: var(--font-share-tech), ui-monospace, "Cascadia Mono", monospace;
   --font-sans: var(--font-body);
 
+  /* type sizes — display lettering sets tight; body sizes come from Tailwind's scale */
+  --text-code: 11px;
+  --text-caption: 13px;
+  --text-body-sm: 15px;
+  --text-sfx-sm: 30px;
+  --text-sfx-sm--line-height: 1;
+  --text-sfx: 34px;
+  --text-sfx--line-height: 1;
+  --text-sfx-lg: 44px;
+  --text-sfx-lg--line-height: 1;
+  --tracking-code: 0.12em;
+  --text-cel-sm: 17px;
+  --text-cel-sm--line-height: 1;
+  --text-cel-tab: 19px;
+  --text-cel-tab--line-height: 1;
+  --text-cel: 22px;
+  --text-cel--line-height: 1;
+  --text-cel-title: 26px;
+  --text-cel-title--line-height: 1;
+  --text-cel-lg: 28px;
+  --text-cel-lg--line-height: 1;
+  --text-cel-xl: 40px;
+  --text-cel-xl--line-height: 1;
+  --text-cel-hero: clamp(46px, 7vw, 76px);
+  --text-cel-hero--line-height: 0.86;
+  --tracking-cel: 0.05em;
+  --tracking-readout: 0.1em;
+
   /* cel shading — outline widths and hard offset shadows */
   --cel-stroke-sm: 2px;
   --cel-stroke: 4px;
   --cel-stroke-lg: 6px;
+  --shadow-cel-xs: 2px 2px 0 var(--color-ink);
   --shadow-cel-sm: 3px 3px 0 var(--color-ink);
   --shadow-cel: 5px 5px 0 var(--color-ink);
+  --shadow-cel-lift: 7px 7px 0 var(--color-ink);
   --shadow-cel-lg: 8px 8px 0 var(--color-ink);
+  --shadow-cel-press: 1px 1px 0 var(--color-ink);
+  --shadow-balloon-focus: 5px 5px 0 var(--color-gold), 0 0 0 1px var(--color-ink);
   --border-cel: 3px;
 
   /* shape */
   --radius-none: 0;
   --radius-lens: 10px 70px 10px 10px;
   --radius-tube: 70px 70px 18px 18px;
+  --radius-balloon: 30px / 26px;
+  --radius-balloon-lg: 34px / 30px;
 
   /* motion */
   --ease-snap: cubic-bezier(0.2, 0.9, 0.1, 1);
   --ease-beam: cubic-bezier(0.5, 0, 0.2, 1);
+  --ease-fill: cubic-bezier(0.3, 0.7, 0.2, 1);
   --duration-press: 120ms;
+  --duration-balloon: 160ms;
+  --duration-streak-out: 200ms;
+  --duration-streak-in: 280ms;
   --duration-flash: 380ms;
   --duration-pop: 500ms;
   --duration-slide: 600ms;
+  --duration-core: 700ms;
+  --duration-beam: 750ms;
   --duration-burst: 900ms;
   --duration-fill: 1400ms;
+  --duration-aura-charge: 800ms; /* blue until here, then gold */
+  --duration-aura: 2600ms;
   --duration-transform: 3000ms;
+  --duration-scan-lead: 200ms;
+  --duration-scan-step: 150ms;
+  --duration-panel-step: 125ms;
   --aura-flicker: 70ms;
 
   /* layout */
   --spacing-nav: 60px;
+  --spacing-cap: 18px;
+  --spacing-glass: 210px;
+  --spacing-crest: 58px;
   --container-page: 1180px;
+  --container-dialog: 30rem;
+  --container-toast: 22.5rem;
 }
 
 :root {
   color-scheme: dark;
 }
 
+html {
+  overflow-x: clip;
+}
+
 body {
   background: var(--color-night);
   color: var(--color-text);
   font-family: var(--font-body);
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+}
+
+/* Movement becomes an instant change. Every component's resting state is its final frame. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

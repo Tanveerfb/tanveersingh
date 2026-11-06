@@ -44,7 +44,15 @@ every mockup round of the first session.
 - **The pane's screenshot frame is not the page width.** It crops a 1043px page to an 800px
   frame; content cut off at the right edge of a screenshot is usually fine. Check
   `innerWidth` and element rects before "fixing" it.
-- **Reduced motion cannot be emulated in the pane.** Say it is unverified; don't claim it.
+- **Reduced motion cannot be emulated in the pane.** Say it is unverified; don't claim it. Never
+  reach for Playwright: the owner has dropped it. Use the built-in browser or Claude in Chrome.
+- **A hidden pane throttles frames.** `tabs_context` says when the pane is hidden. Animations,
+  scroll reveals and screenshots then lag, so a finished sequence can read as stuck. Read the
+  state again a moment later before treating it as a bug.
+- **The console keeps old errors.** An error from a half-applied hot reload stays listed after a
+  fresh load; check its stack against the current code.
+- **A new token may need a dev server restart.** A token added to `@theme` while the server runs
+  can stay missing from the CSS, and a `var()` to it silently voids the whole declaration.
 - **The pane may say it could not show the file** after a Write — that refers to opening
   the raw file, not the dev-server URL. Use the URL.
 - **CSS `transform` on an SVG element overrides its `transform` attribute.** Animate an inner

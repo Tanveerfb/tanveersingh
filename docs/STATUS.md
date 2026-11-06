@@ -2,11 +2,10 @@
 
 ## Start here
 
-**State:** Rebuild on the `rebuild` branch (first commit 2026-11-02). Fresh Next.js 16 on fleet
-v3.8.0. Design phase complete: motif, tokens, core kit and signature components all locked —
-see *What exists*. The app itself is a holding page; no real components or pages yet.
-**Next:** Build the kit — `shadcn init` without losing our `@theme`, add `motion`, then the
-core kit and signature components on a hidden preview route (Open item 1).
+**State:** Rebuild on the `rebuild` branch. Next.js 16 on fleet v3.8.0. Design locked; the core
+kit and signature components are built and visible at `/kit` in development (`components.md`).
+The site itself is still a holding page.
+**Next:** The owner looks over `/kit`. Then content files, drafted for his approval (Open item 1).
 **Blocked on:** nothing.
 **Don't trust:** which repo serves the live site. `about-tanveer.md` says
 tanveersingh22.vercel.app is a React Three Fiber portfolio, but neither `master` nor `Beta`
@@ -44,41 +43,50 @@ Where `motif.html` and the component picks differ (hard aura, striped beam), the
 **Code:** Next 16.4.3, React 19.3, TS strict, Tailwind v4. Tokens in `@theme` in
 `src/app/globals.css`; fonts (Bangers, Barlow, Noto Sans JP 900, Share Tech Mono) via
 `next/font` in `src/app/layout.tsx`; holding page `src/app/page.tsx`. Env checking in
-`src/lib/env.ts` and `src/lib/server-env.ts`. `zod`, `server-only`.
+`src/lib/env.ts` and `src/lib/server-env.ts`. `zod`, `server-only`, `radix-ui`, `motion`. The
+kit is in `src/components/ui/`, its drawn parts in `src/app/motif.css`, its preview at `/kit`
+(404 in production); registry in `components.md`.
 
 **Standard:** fleet v3.8.0 — `project-rules.md`, `.claude/skills/`, `.claude/fleet/`,
 `.githooks/pre-commit`, shell-write hook in `.claude/settings.json`.
 
-**Docs:** `CLAUDE.md`, `conventions.md`, `decisions.md`, `design-system.md`, this file.
+**Docs:** `CLAUDE.md`, `conventions.md`, `decisions.md`, `design-system.md`, `components.md`,
+this file.
 
 ---
 
 ## Open items
 
-1. **Build the kit** — `shadcn init` (it edits `globals.css`; keep our `@theme`), add
-   `motion`; build core kit + signature components on a hidden preview route; write
-   `components.md`; see reduced motion working in a real browser setting
-2. **Content files** — typed content from `about-tanveer.md`; copy drafted, owner approves
-3. **Home page** — composed from the kit, following `motif.html` and the picks
-4. **Contact form** — Server Action → Discord webhook; `environment.md` once the webhook exists
-5. **Light scheme** — the manga-page scheme needs its own mockup round before light tokens
-6. **Vitest** wired to `npm test`
-7. **Filename lint rule** offered (§NAMING)
-8. **Owner questions** — photo (`public/images/profile.png`?), domain, interests to show,
+1. **Content files** — typed content from `about-tanveer.md`; copy drafted, owner approves
+2. **Home page** — composed from the kit, following `motif.html` and the picks, with the
+   page-level sequences (`components.md`, *Not built yet*)
+3. **Contact form** — Server Action → Discord webhook; `environment.md` once the webhook exists
+4. **Light scheme** — the manga-page scheme needs its own mockup round before light tokens
+5. **Vitest** wired to `npm test`
+6. **Filename lint rule** offered (§NAMING)
+7. **Owner questions** — photo (`public/images/profile.png`?), domain, interests to show,
    language levels, whether the beam struggle's pink opposing beam stays
-9. **`npm audit`** advisories reviewed
-10. **Live-site source** — find which repo/Vercel project serves tanveersingh22.vercel.app
-    before any merge
+8. **`npm audit`** advisories reviewed
+9. **Live-site source** — find which repo/Vercel project serves tanveersingh22.vercel.app
+   before any merge
+10. **Propose to fleet-standards:** drop Playwright from §TESTING (`decisions.md`, 2026-11-06)
+11. **Reduced motion** — seen only partly; the owner to try `/kit` with the setting on
 
-(Renumbered this checkpoint: navigation, base components and the first commit are done or
-folded into item 1.)
+(Renumbered 2026-11-06: building the kit is done.)
 
 ---
 
 ## Verified this checkpoint, by measurement
 
-- `npm run build` passes clean with tokens and fonts (2 static routes) — 2026-11-02
-- `npx tsc --noEmit` and `npm run lint` clean
+- `npm run build`, `npx tsc --noEmit` and `npm run lint` pass clean with the kit — 2026-11-06
+- `/kit` in the built-in browser at desktop and 375px: no horizontal scroll; dialog traps focus,
+  closes on Escape and returns focus; toasts, scouter overload, tube fill, manga panels, beam and
+  instant transmission all ran; arrow keys move between tabs. Toast swipe not exercised
+- A production server answers 404 at `/kit` and 200 at `/` — 2026-11-06
+- Reduced motion, by measurement only, with the setting emulated before the owner ruled out
+  Playwright: aura paints gold, jump is immediate, scouter finishes at once, panels and beam are
+  in their final frame. Not looked at by eye; tube liquid not measured (its height token was
+  missing at the time)
 - Token utilities render in the browser: `font-display` → Bangers, `text-gold` → `#ffcf1f`,
   body `#0c1233`
 - All 17 token text-on-colour pairs computed with the WCAG 2 formula (`design-system.md`)
@@ -94,11 +102,18 @@ rejected it outright. Z won only after a rebuild in cel style. Don't drift back 
 ## Assumed, not verified
 
 - Vercel's production branch is `master` (from the old `CLAUDE.md`)
-- Reduced-motion fallbacks in the mockups — written, never seen (the pane cannot emulate it)
+- Reduced motion on the kit — partly measured, see above (the pane cannot emulate it)
 
 ---
 
 ## Session log
+
+### 2026-11-06 — kit built
+
+Built the core kit and signature components from the locked designs, with `/kit` as the preview.
+`shadcn init` damaged the tokens and fonts, so its CSS and layout edits were reverted and the kit
+uses `radix-ui` directly (`decisions.md`). Owner ruled out Playwright mid-session. Dev server left
+running on :3000.
 
 ### 2026-11-02 (1st session) — rebuild set up, design locked
 

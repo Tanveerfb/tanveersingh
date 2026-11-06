@@ -67,7 +67,10 @@ Everything in `project-rules.md` applies and is **not repeated here**. Project-s
 - **Never publish** his phone number, personal email or birthday. Contact shown: LinkedIn,
   GitHub, hello@tinkertogether.studio, and the contact form (owner, 2026-11-02)
 - **Projects cleared to show** — see `decisions.md` (2026-11-02). Ask before adding any other
-- **Mockups open on his phone** — he reviews on mobile; desktop and 390px from the same markup
+- **He reviews mockups on his PC, not his phone** (owner, 2026-11-02). Mockups still render
+  desktop and 390px from the same markup
+- **Browser checks: the built-in browser or Claude in Chrome. Never Playwright** (owner,
+  2026-11-06)
 - **The old site's code is not a reference.** It lives in `master`'s history for content
   lookups only; never copy a pattern from it
 
@@ -81,6 +84,8 @@ npm run build          # production build — verify after changes
 npm run lint           # ESLint flat config (eslint.config.mjs)
 ```
 
+`/kit` shows every kit component in development and answers 404 in production.
+
 No `test` script yet (Vitest is an open checklist item). Do not invent one.
 
 **Do not use `npm run lint` to validate builds — use `npm run build`.**
@@ -91,14 +96,15 @@ them here.
 
 ## Technology
 
-Verified against `package.json` and `node_modules`, **2026-11-02**.
+Verified against `package.json` and `node_modules`, **2026-11-06**.
 
 | | |
 | --- | --- |
 | Next.js | 16.4.3, App Router, `src/` layout |
 | React / TypeScript | 19.3.0 / 5.x, strict |
 | Node | 24.x (`engines` and `.nvmrc`) |
-| Styling | Tailwind v4, CSS-first (`@theme` in `src/app/globals.css`) |
+| Styling | Tailwind v4, CSS-first (`@theme static` in `src/app/globals.css`; drawn parts in `src/app/motif.css`) |
+| Components | Own kit in `src/components/ui/` (`components.md`), on `radix-ui` 1.8 behaviour; `motion` 14 for in-view and reduced-motion detection |
 | Fonts | Bangers, Barlow, Noto Sans JP 900, Share Tech Mono — `next/font` in `src/app/layout.tsx` |
 | Validation | zod 4 (env, contact form) |
 | Data | None — content is typed files in the repo. No Firebase (owner, 2026-11-02) |
@@ -120,6 +126,8 @@ Verified against `package.json` and `node_modules`, **2026-11-02**.
   from the project root without `cd`, or use absolute paths
 - **Scaffolding or installing into the scratchpad path** — it exceeds Windows' path length
   (`ENAMETOOLONG`)
+- **Accepting `shadcn init` or `add` without reading the diff** — it re-points our colour and
+  radius tokens and forces a white page (`decisions.md`, 2026-11-06)
 
 ## Known non-blocking issues
 

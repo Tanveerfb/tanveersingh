@@ -96,23 +96,26 @@ directional, not specification):
 
 In `@theme` in `src/app/globals.css` since 2026-11-02, derived from the locked mockup. That
 file is the source of truth for values; this section says what each group is for. Tailwind
-generates the utilities (`bg-gold`, `text-on-gold`, `font-display`, `shadow-cel`, `ease-snap`,
-`duration-burst`…). **Components use these and nothing else** (§STYLING).
+generates the utilities (`bg-gold`, `text-on-gold`, `font-display`, `shadow-cel`, `ease-snap`…).
+Durations have no utility namespace: write `duration-(--duration-burst)`. The kit's drawn shapes,
+screentones and keyframes are utilities in `src/app/motif.css`. **Components use these and nothing
+else** (§STYLING).
 
 | Group | Tokens | Use |
 | --- | --- | --- |
-| Surfaces | `night`, `navy`, `line` | Page, raised panels, quiet borders |
-| Ink and paper | `ink`, `paper`, `text`, `muted` | Outlines and shadows; manga page; body and secondary text |
+| Surfaces | `night`, `navy`, `line`, `dusk`, `aura-deep`, `range` | Page, raised panels, quiet borders; the aura stage and card floor; the sky behind a beam |
+| Ink and paper | `ink`, `ink-soft`, `ink-quiet`, `paper`, `narration`, `thought`, `text`, `muted` | Outlines and shadows; secondary text and placeholders on light; manga page; error narration box; disabled balloon; body and secondary text |
 | Training gi | `blue`, `orange`, `ember` | Secondary action; orange for decoration and display type on dark; `ember` when orange carries text |
 | Golden form | `gold`, `gold-hi` | Primary action, full-power state, highlights |
-| Ki | `ki`, `ki-soft`, `ki-pale` | Beams, charging, powering-up state |
+| Ki | `ki`, `ki-deep`, `ki-soft`, `ki-pale`, `ki-hi` | Beams, charging, powering-up state |
 | Scouter | `lens`, `lens-dark`, `lens-text`, `alarm` | The scouter only |
-| The lab | `lab`, `lab-2`, `print` | The AI section only |
+| The lab | `lab`, `lab-2`, `print`, `cap-hi`, `cap-lo` | The AI section only; the specimen tube's metal caps |
 | Type | `display` (Bangers), `body` (Barlow), `jp` (Noto Sans JP 900), `mono` (Share Tech Mono) | Display lettering; running text; sound effects; readouts |
-| Cel shading | `--cel-stroke-sm/–/lg` (2/4/6px), `shadow-cel-sm/–/lg` (3/5/8px offset), `--border-cel` (3px) | Outlined lettering, hard shadows, panel borders |
-| Shape | `radius-none`, `radius-lens`, `radius-tube` | Square by default; the scouter lens and specimen tube shapes |
-| Motion | `ease-snap`, `ease-beam`; `duration-press` 120 · `flash` 380 · `pop` 500 · `slide` 600 · `burst` 900 · `fill` 1400 · `transform` 3000ms; `--aura-flicker` 70ms | Every animation |
-| Layout | `spacing-nav` 60px, `container-page` 1180px | Nav height, content width |
+| Type sizes | `text-code` 11, `caption` 13, `body-sm` 15; `cel-sm` 17, `cel-tab` 19, `cel` 22, `cel-title` 26, `cel-lg` 28, `cel-xl` 40, `cel-hero` 46–76; `sfx-sm` 30, `sfx` 34, `sfx-lg` 44px; `tracking-cel`, `readout`, `code` | Readouts, small text, display lettering, sound effects |
+| Cel shading | `--cel-stroke-sm/–/lg` (2/4/6px), `shadow-cel-xs/sm/–/lift/lg/press` (2/3/5/7/8/1px offset), `shadow-balloon-focus`, `--border-cel` (3px) | Outlined lettering, hard shadows, panel borders |
+| Shape | `radius-none`, `radius-lens`, `radius-tube`, `radius-balloon`, `radius-balloon-lg` | Square by default; the scouter lens, specimen tube and speech balloon shapes |
+| Motion | `ease-snap`, `ease-beam`, `ease-fill`; `--duration-press` 120 · `balloon` 160 · `streak-out` 200 · `streak-in` 280 · `flash` 380 · `pop` 500 · `slide` 600 · `core` 700 · `beam` 750 · `burst` 900 · `fill` 1400 · `aura` 2600 · `transform` 3000ms; `aura-charge` 800, `scan-lead` 200, `scan-step` 150, `panel-step` 125ms; `--aura-flicker` 70ms | Every animation |
+| Layout | `spacing-nav` 60, `cap` 18, `glass` 210, `crest` 58px; `container-page` 1180px, `dialog` 30rem, `toast` 22.5rem | Nav height, tube and crest parts, content widths |
 
 Fonts load through `next/font/google` in `src/app/layout.tsx`; Noto Sans JP is weight 900
 only and not preloaded (decorative, large glyph set).
@@ -141,6 +144,12 @@ Every fill that carries text has an `on-` partner token. WCAG 2 ratios, computed
 | `print` | `lab` | 10.09:1 |
 | `lens-text` | `lens-dark` | 14.25:1 |
 | `ember` (kicker on the manga page) | `paper` | 4.89:1 |
+| `ink-soft` | `paper` / white / `thought` | 8.31 / 8.80 / 6.83:1 |
+| `ink-quiet` (placeholder) | white | 5.38:1 |
+| `ink` | `narration` / `thought` / white | 18.87 / 15.28 / 19.69:1 |
+| `muted` | `aura-deep` (top of the full-power card) | 7.71:1 |
+| `paper` | `aura-deep` | 13.07:1 |
+| `lens-text` / white | toast face (`lens` 30% over `lens-dark`, `#1a6138`) | 6.91 / 7.47:1 |
 
 **Orange carries white text on `ember`** (owner, 2026-11-02). `orange` itself never carries
 text; it stays decoration, outlines and display type on dark.
