@@ -5,12 +5,11 @@
 **State:** Rebuild on the `rebuild` branch. Next.js 16 on fleet v3.8.0. Design locked; the core
 kit and signature components are built (`/kit`, development only). The home page is built on
 `rebuild` from `docs/design/home.html` and the owner's approved copy in `src/content/`.
-**Next:** The owner sets `DISCORD_CONTACT_WEBHOOK_URL` on Vercel and looks over a preview. Then find
-what serves the live site (Open item 1) before any merge.
+**Next:** The owner sets `DISCORD_CONTACT_WEBHOOK_URL` on Vercel and looks over a preview, then says
+`git CPR` when ready. `master` auto-deploys to tanveersingh22.vercel.app and tanveer.truqorun.com.
 **Blocked on:** the owner, for the webhook; until it's set the form says the message wasn't sent.
-**Don't trust:** which repo serves the live site. `about-tanveer.md` says
-tanveersingh22.vercel.app is a React Three Fiber portfolio, but neither `master` nor `Beta`
-here contains three.js. Check the Vercel project before merging `rebuild` anywhere.
+**Don't trust:** `about-tanveer.md` on the current portfolio: it says React Three Fiber, but the live
+site is `master` here, with no three.js.
 
 > **Things that will save a session:** in Git Bash, `npx`/`npm` after a `cd` fails on the
 > owner's `fnm` hook — run from the project root. The scratchpad path is too long for
@@ -59,12 +58,13 @@ this file.
 
 ## Open items
 
-1. **Live-site source** — find which repo/Vercel project serves tanveersingh22.vercel.app
-   before any merge
+1. **Vercel Node version** — the project setting says 22.x, `package.json` says 24.x; the `rebuild`
+   previews build. Confirm which it uses and align the setting at release
 2. **Webhook** — owner creates it and sets `DISCORD_CONTACT_WEBHOOK_URL` on Vercel; then send one
    real message
 3. **Reduced motion** — seen only partly; the owner to try the site with the setting on
-4. **Domain** — tanveersingh22.vercel.app or `tanveer.tinkertogether.studio`; decide at launch.
+4. **Domain** — tanveersingh22.vercel.app, tanveer.truqorun.com (attached now) or
+   `tanveer.tinkertogether.studio`; decide at launch.
    `NEXT_PUBLIC_SITE_URL` and share metadata follow from it
 5. **Light scheme** — the manga-page scheme needs its own mockup round before light tokens
 6. **Vitest** wired to `npm test`; `contact-schema.ts` is the first thing to test
@@ -84,6 +84,8 @@ this file.
   closes on Escape and returns focus; toasts, scouter overload, tube fill, manga panels, beam and
   instant transmission all ran; arrow keys move between tabs. Toast swipe not exercised
 - A production server answers 404 at `/kit` and 200 at `/` — 2026-11-06
+- On Vercel: project `tanveersingh` is linked to this repo; production serves `master` at `0fa3e86`;
+  the `rebuild` preview of `6fecad0` is READY. Previews sit behind Vercel login — 2026-11-06
 - Home page in the built-in browser at desktop and 375px: no horizontal scroll; hero settles on
   gold; ladder, lab, struggle, work and contact seen; dock tracks and keeps the current section
   in sight. Scouter overload on desktop by measurement
@@ -109,7 +111,6 @@ rejected it outright. Z won only after a rebuild in cel style. Don't drift back 
 
 ## Assumed, not verified
 
-- Vercel's production branch is `master` (from the old `CLAUDE.md`)
 - Reduced motion on the kit — partly measured, see above (the pane cannot emulate it)
 
 ---

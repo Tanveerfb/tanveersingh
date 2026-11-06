@@ -296,3 +296,15 @@ something that failed.
 **The hero's charging look is held by CSS animations**, with the golden form as the resting style.
 A slow load or reduced motion therefore lands on gold rather than depending on script.
 
+---
+
+## 2026-11-06 — Webhook goes in through Vercel; live site confirmed
+
+**The owner adds the Discord webhook in the Vercel dashboard. It is never pasted into chat**: chat is
+stored, and whoever holds the URL can post to the channel. The site works without it, saying the
+message wasn't sent.
+
+Checked through the Vercel connector: the live site is this repo's `master`, in project
+`tanveersingh`. The fact sheet's React Three Fiber description is out of date. A release also
+reaches `tanveer.truqorun.com`, which is attached to the same project.
+
