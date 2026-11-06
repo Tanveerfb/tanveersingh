@@ -213,8 +213,9 @@
 @utility clip-chip {
   clip-path: polygon(6% 0, 100% 0, 94% 100%, 0 100%);
 }
+/* Teeth have a fixed depth in pixels, so they never reach further in on a taller field. */
 @utility clip-shout {
-  clip-path: polygon(0% 18%, 4% 0%, 9% 14%, 15% 2%, 21% 15%, 28% 0%, 34% 14%, 41% 1%, 47% 15%, 54% 0%, 60% 14%, 67% 2%, 73% 15%, 80% 0%, 86% 14%, 92% 1%, 96% 16%, 100% 8%, 98% 32%, 100% 50%, 97% 68%, 100% 92%, 94% 84%, 88% 100%, 82% 86%, 75% 100%, 69% 85%, 62% 100%, 56% 86%, 49% 100%, 43% 85%, 36% 100%, 30% 86%, 23% 100%, 17% 85%, 10% 100%, 5% 84%, 0% 94%, 3% 70%, 0% 50%, 3% 30%);
+  clip-path: polygon(0 14px, 4% 0, 9% 12px, 15% 2px, 21% 13px, 28% 0, 34% 12px, 41% 1px, 47% 13px, 54% 0, 60% 12px, 67% 2px, 73% 13px, 80% 0, 86% 12px, 92% 1px, 96% 13px, 100% 6px, calc(100% - 9px) 32%, 100% 50%, calc(100% - 9px) 68%, 100% calc(100% - 6px), 94% calc(100% - 13px), 88% 100%, 82% calc(100% - 12px), 75% 100%, 69% calc(100% - 13px), 62% 100%, 56% calc(100% - 12px), 49% 100%, 43% calc(100% - 13px), 36% 100%, 30% calc(100% - 12px), 23% 100%, 17% calc(100% - 13px), 10% 100%, 5% calc(100% - 12px), 0 calc(100% - 6px), 9px 70%, 0 50%, 9px 30%);
 }
 
 /* The balloon tail: two triangles, so the outline stays unbroken. */

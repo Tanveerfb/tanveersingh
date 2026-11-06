@@ -115,6 +115,10 @@ Built the core kit and signature components from the locked designs, with `/kit`
 uses `radix-ui` directly (`decisions.md`). Owner ruled out Playwright mid-session. Dev server left
 running on :3000.
 
+Owner's review of `/kit`: scouter, tube, manga panels, dock and buttons look good. Fixed: text
+overlapped the jagged shout border (teeth now a fixed depth; text clipped clear of them). Still
+open with him: unsure about the fields overall; the beam "could be made better".
+
 ### 2026-11-02 (1st session) — rebuild set up, design locked
 
 First commit on `rebuild`, pushed (not `master`; nothing deploys).

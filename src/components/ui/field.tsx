@@ -5,7 +5,9 @@ import { cn } from "@/lib/class-names";
 
 const CONTROL = "relative block w-full text-ink placeholder:text-ink-quiet";
 const REST = "rounded-balloon border-3 border-ink bg-white px-5 py-3.25 shadow-cel-sm transition-[scale,box-shadow] duration-(--duration-balloon) ease-snap focus:scale-[1.015] focus:shadow-balloon-focus focus:outline-none";
-const SHOUT = "bg-transparent px-6.5 py-5 focus:outline-none";
+// A transparent border, not padding: scrolled text is clipped at the border, so long text can
+// never run into the jagged teeth.
+const SHOUT = "border-x-26 border-y-20 border-transparent bg-transparent focus:outline-none";
 const THINK = "cursor-not-allowed rounded-balloon border-3 border-dashed border-ink bg-thought px-5 py-3.25 text-ink-soft";
 
 type FieldState = "rest" | "shout" | "think";
@@ -144,11 +146,25 @@ export function TextareaField({
           setLength(event.currentTarget.value.length);
           onInput?.(event);
         }}
-        className={cn(controlClass(state), "min-h-30 resize-y pb-7.5", state === "rest" && "rounded-balloon-lg", className)}
+        className={cn(
+          controlClass(state),
+          "min-h-30",
+          state === "rest" && "resize-y rounded-balloon-lg pb-7.5",
+          state === "shout" && "resize-none",
+          state === "shout" && maxLength !== undefined && "border-b-38",
+          state === "think" && "resize-none",
+          className,
+        )}
         {...props}
       />
       {maxLength && (
-        <span id={countId} className="pointer-events-none absolute right-4.5 bottom-2.25 font-mono text-xs/none text-ink-soft">
+        <span
+          id={countId}
+          className={cn(
+            "pointer-events-none absolute bg-white px-1 font-mono text-xs/none text-ink-soft",
+            state === "shout" ? "right-6.5 bottom-5" : "right-4.5 bottom-2.25",
+          )}
+        >
           {length} / {maxLength}
         </span>
       )}

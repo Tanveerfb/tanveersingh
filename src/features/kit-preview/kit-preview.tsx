@@ -120,6 +120,20 @@ export function KitPreview() {
             <div className="md:col-span-2">
               <TextareaField label="Message" rows={2} defaultValue="Too short" error="Tell me a little more about what you need" />
             </div>
+            <div className="md:col-span-2">
+              <TextareaField
+                label="Message"
+                rows={3}
+                maxLength={1000}
+                defaultValue={"We need a staff portal for our team, with rosters, leave requests and training records in one place. ".repeat(6)}
+                error="Keep it under 1000 characters"
+              />
+            </div>
+            <InputField
+              label="Email"
+              defaultValue="a.very.long.address.that.keeps.going.past.the.edge.of.the.balloon.for.testing@example.com"
+              error="Enter an email address like name@example.com"
+            />
           </div>
         </Band>
 
