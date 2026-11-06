@@ -5,9 +5,9 @@
 **State:** Rebuild on the `rebuild` branch. Next.js 16 on fleet v3.8.0. Design locked; the core
 kit and signature components are built (`/kit`, development only). The home page is built on
 `rebuild` from `docs/design/home.html` and the owner's approved copy in `src/content/`.
-**Next:** The owner sets `DISCORD_CONTACT_WEBHOOK_URL` on Vercel and looks over a preview, then says
-`git CPR` when ready. `master` auto-deploys to tanveersingh22.vercel.app and tanveer.truqorun.com.
-**Blocked on:** the owner, for the webhook; until it's set the form says the message wasn't sent.
+**Next:** The owner sends one real message from a `rebuild` preview, then says `git CPR` when ready.
+`master` auto-deploys to tanveersingh22.vercel.app and tanveer.truqorun.com.
+**Blocked on:** nothing on the agent's side.
 **Don't trust:** `about-tanveer.md` on the current portfolio: it says React Three Fiber, but the live
 site is `master` here, with no three.js.
 
@@ -60,8 +60,8 @@ this file.
 
 1. **Vercel Node version** — the project setting says 22.x, `package.json` says 24.x; the `rebuild`
    previews build. Confirm which it uses and align the setting at release
-2. **Webhook** — owner creates it and sets `DISCORD_CONTACT_WEBHOOK_URL` on Vercel; then send one
-   real message
+2. **Webhook** — set on Vercel 2026-11-06; send one real message from a preview to prove it. Remove
+   the old site's unused variables at release (`environment.md`)
 3. **Reduced motion** — seen only partly; the owner to try the site with the setting on
 4. **Domain** — tanveersingh22.vercel.app, tanveer.truqorun.com (attached now) or
    `tanveer.tinkertogether.studio`; decide at launch.
