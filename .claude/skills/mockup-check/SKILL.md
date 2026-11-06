@@ -47,8 +47,12 @@ every mockup round of the first session.
 - **Reduced motion cannot be emulated in the pane.** Say it is unverified; don't claim it. Never
   reach for Playwright: the owner has dropped it. Use the built-in browser or Claude in Chrome.
 - **A hidden pane throttles frames.** `tabs_context` says when the pane is hidden. Animations,
-  scroll reveals and screenshots then lag, so a finished sequence can read as stuck. Read the
-  state again a moment later before treating it as a bug.
+  scroll reveals and screenshots then lag, so a finished sequence can read as stuck. A screenshot
+  pumps a frame, so take a small one or two first, then the one you judge, and read the state
+  again before treating it as a bug.
+- **A stale service worker can hijack a port.** One from another local project answered on
+  localhost:3001 (the title read "Offline · Toll Wiki") and reloaded the page mid-test. Check the
+  title and use another port; leave the other project's worker alone.
 - **The console keeps old errors.** An error from a half-applied hot reload stays listed after a
   fresh load; check its stack against the current code.
 - **A new token may need a dev server restart.** A token added to `@theme` while the server runs
