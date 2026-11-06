@@ -5,8 +5,8 @@
 **State:** Rebuild on the `rebuild` branch. Next.js 16 on fleet v3.8.0. Design locked; the core
 kit and signature components are built (`/kit`, development only). The home page is built on
 `rebuild` from `docs/design/home.html` and the owner's approved copy in `src/content/`.
-**Next:** The owner sends one real message from a `rebuild` preview, then says `git CPR` when ready.
-`master` auto-deploys to tanveersingh22.vercel.app and tanveer.truqorun.com.
+**Next:** Ready to release on the owner's `git CPR`. `master` auto-deploys to
+tanveersingh22.vercel.app and tanveer.truqorun.com; he decides whether the second stays.
 **Blocked on:** nothing on the agent's side.
 **Don't trust:** `about-tanveer.md` on the current portfolio: it says React Three Fiber, but the live
 site is `master` here, with no three.js.
@@ -60,8 +60,8 @@ this file.
 
 1. **Vercel Node version** — the project setting says 22.x, `package.json` says 24.x; the `rebuild`
    previews build. Confirm which it uses and align the setting at release
-2. **Webhook** — set on Vercel 2026-11-06; send one real message from a preview to prove it. Remove
-   the old site's unused variables at release (`environment.md`)
+2. **Check on the real site after release** — hold to charge the send button, and the beam firing
+   on send
 3. **Reduced motion** — seen only partly; the owner to try the site with the setting on
 4. **Domain** — tanveersingh22.vercel.app, tanveer.truqorun.com (attached now) or
    `tanveer.tinkertogether.studio`; decide at launch.
@@ -91,7 +91,9 @@ this file.
   in sight. Scouter overload on desktop by measurement
 - Contact form on a production build: validation errors keep what was typed; a send reached a local
   stand-in for Discord with mentions off; with no webhook it shows the "not sent" message. No client
-  bundle mentions the webhook variable. **Not tested against real Discord**
+  bundle mentions the webhook variable
+- A real message from the `2f70318` preview landed in the owner's #portfolio-submissions channel;
+  he confirmed it with a screenshot — 2026-11-06
 - Not exercised by hand: holding to charge the send button, the beam fired on send
 - Reduced motion, by measurement only, with the setting emulated before the owner ruled out
   Playwright: aura paints gold, jump is immediate, scouter finishes at once, panels and beam are
