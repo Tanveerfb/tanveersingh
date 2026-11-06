@@ -26,10 +26,6 @@
     calc(var(--i, 0) * var(--duration-panel-step)) both;
   --animate-bob: bob 1.6s ease-in-out infinite alternate;
   --animate-bubble: bubble calc(1.5s + var(--i, 0) * 0.25s) ease-in calc(var(--i, 0) * 0.4s) infinite;
-  --animate-orb: orb var(--duration-flash) var(--ease-snap) both;
-  --animate-beam-wipe: beam-wipe var(--duration-beam) var(--ease-beam) var(--duration-flash) both;
-  --animate-beam-spiral: beam-spiral var(--duration-slide) linear var(--duration-burst) 3;
-  --animate-spark: spark var(--duration-pop) var(--ease-snap) var(--duration-burst) both;
 
   @keyframes cel-spin {
     to {
@@ -165,37 +161,6 @@
       opacity: 0;
     }
   }
-  @keyframes orb {
-    from {
-      transform: scale(0);
-    }
-  }
-  @keyframes beam-wipe {
-    from {
-      clip-path: inset(0 100% 0 0);
-    }
-    to {
-      clip-path: inset(0 0 0 0);
-    }
-  }
-  @keyframes beam-spiral {
-    to {
-      stroke-dashoffset: -64;
-    }
-  }
-  @keyframes spark {
-    0% {
-      opacity: 0;
-      transform: scale(0.3);
-    }
-    50% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
 }
 
 /* ---------- lettering ---------- */
@@ -213,58 +178,33 @@
 @utility clip-chip {
   clip-path: polygon(6% 0, 100% 0, 94% 100%, 0 100%);
 }
-/* Teeth have a fixed depth in pixels, so they never reach further in on a taller field. */
-@utility clip-shout {
-  clip-path: polygon(0 14px, 4% 0, 9% 12px, 15% 2px, 21% 13px, 28% 0, 34% 12px, 41% 1px, 47% 13px, 54% 0, 60% 12px, 67% 2px, 73% 13px, 80% 0, 86% 12px, 92% 1px, 96% 13px, 100% 6px, calc(100% - 9px) 32%, 100% 50%, calc(100% - 9px) 68%, 100% calc(100% - 6px), 94% calc(100% - 13px), 88% 100%, 82% calc(100% - 12px), 75% 100%, 69% calc(100% - 13px), 62% 100%, 56% calc(100% - 12px), 49% 100%, 43% calc(100% - 13px), 36% 100%, 30% calc(100% - 12px), 23% 100%, 17% calc(100% - 13px), 10% 100%, 5% calc(100% - 12px), 0 calc(100% - 6px), 9px 70%, 0 50%, 9px 30%);
-}
 
-/* The balloon tail: two triangles, so the outline stays unbroken. */
-@utility balloon-tail {
-  &::before,
+/* ---------- caption-panel field ---------- */
+/* The shadow is a strip of speed lines: ink at rest, gold on focus. */
+@utility speed-shadow {
   &::after {
     content: "";
     position: absolute;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    pointer-events: none;
+    inset: 6px -6px -6px 6px;
+    z-index: -1;
+    background: repeating-linear-gradient(90deg, var(--shade, var(--color-ink)) 0 5px, transparent 5px 8px);
+    transition: inset var(--duration-press) var(--ease-snap);
   }
-  &::before {
-    left: 34px;
-    bottom: -17px;
-    border-width: 18px 0 0 22px;
-    border-color: var(--color-ink) transparent transparent transparent;
+  &:focus-within {
+    --shade: var(--shade-focus, var(--color-gold));
   }
-  &::after {
-    left: 37.5px;
-    bottom: -10px;
-    border-width: 12px 0 0 15px;
-    border-color: var(--color-white) transparent transparent transparent;
+  &:focus-within::after {
+    inset: 8px -8px -8px 8px;
   }
 }
-
-/* The thought balloon's tail: two shrinking bubbles. */
-@utility thought-tail {
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    border: var(--cel-stroke-sm) solid var(--color-ink);
-    background: var(--color-thought);
-    border-radius: 50%;
-  }
-  &::before {
-    left: 30px;
-    bottom: -12px;
-    width: 12px;
-    height: 12px;
-  }
-  &::after {
-    left: 20px;
-    bottom: -20px;
-    width: 7px;
-    height: 7px;
-  }
+@utility speed-shadow-alarm {
+  --shade: var(--color-alarm);
+  --shade-focus: var(--color-alarm);
+}
+@utility field-disabled {
+  background:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-ink) 18%, transparent) 1px, transparent 1.6px) 0 0 / 6px 6px,
+    var(--color-thought);
 }
 
 /* ---------- card crest ---------- */
@@ -325,13 +265,6 @@
 }
 @utility beam-range {
   background: radial-gradient(60% 80% at 20% 50%, var(--color-range), var(--color-night) 70%);
-}
-@utility svg-origin-center {
-  transform-origin: center;
-  transform-box: fill-box;
-}
-@utility beam-spiral-dash {
-  stroke-dasharray: 14 18;
 }
 
 /* ---------- specimen tube ---------- */

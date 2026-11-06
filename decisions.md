@@ -207,3 +207,17 @@ Three small differences from the mockups, each following a rule that outranks th
 **Browser checks use the built-in browser or Claude in Chrome only** (owner). §TESTING still lists
 Playwright as a last resort; the owner has dropped it, so the master standard needs the same change.
 
+---
+
+## 2026-11-06 — Fields and beam redesigned
+
+**From `docs/design/fields-beam.html`, the owner picked fields 2, caption panel, and beam B, impact
+frame.** These replace the speech-balloon fields and the flowing beam, the earlier picks.
+
+Seeing the built kit, the owner was unsure about the balloon fields, whose jagged error shape had
+also overlapped its text, and felt the beam could be better. Scouter, specimen tube, manga panels,
+dock and buttons were approved as built.
+
+Impact frame's two inverted frames flash once per firing, which stays under the three-flashes-a-
+second limit, and reduced motion skips straight to the final still.
+

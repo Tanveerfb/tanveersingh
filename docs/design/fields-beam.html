@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fields and beam round</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Barlow:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@900&family=Share+Tech+Mono&display=swap">
+<style>
+/* Layout: revision catalogue — three field directions, each in every state, then three beams.
+   Colours and easings mirror @theme in src/app/globals.css. */
+:root {
+  color-scheme: dark;
+  --night: #0c1233; --navy: #17215e; --line: #2b3a8f; --aura-deep: #3a2a10;
+  --ink: #0a0a14; --ink-soft: #4a4860; --ink-quiet: #6a6880; --paper: #fff8e8; --narration: #fffbe0; --thought: #dfe2f2;
+  --text: #f4f1ff; --muted: #b9c0e2; --orange: #f47a1f; --gold: #ffcf1f; --gold-hi: #fff4b8;
+  --ki: #4f8cff; --ki-pale: #bfe0ff; --alarm: #c62828;
+  --f-display: "Bangers", "Impact", "Arial Black", sans-serif;
+  --f-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+  --f-jp: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --f-mono: "Share Tech Mono", ui-monospace, monospace;
+  --shadow-sm: 3px 3px 0 var(--ink); --shadow: 5px 5px 0 var(--ink);
+  --ease-snap: cubic-bezier(.2, .9, .1, 1);
+}
+* { box-sizing: border-box; }
+html { overflow-x: clip; }
+body { margin: 0; background: var(--night); color: var(--text); font: 400 16px/1.5 var(--f-body); }
+input, textarea, button { font: inherit; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 1240px; margin: 0 auto; }
+.top { padding-block: 40px 24px; border-bottom: 4px solid var(--ink); }
+.top h1 { font: 400 clamp(40px, 6.4vw, 74px)/.95 var(--f-display); letter-spacing: .03em; margin: 0; color: var(--gold); -webkit-text-stroke: 4px var(--ink); paint-order: stroke fill; text-shadow: 5px 5px 0 var(--ink); }
+.top p { color: var(--muted); max-width: 72ch; margin: 12px 0 0; }
+.band { padding-block: 48px; border-bottom: 2px dashed var(--line); }
+.band h2 { font: 400 clamp(32px, 4.4vw, 48px)/1 var(--f-display); letter-spacing: .03em; margin: 0 0 24px; color: var(--paper); -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; text-shadow: 4px 4px 0 var(--ink); }
+.opts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.opts.one { grid-template-columns: minmax(0, 1fr); }
+.opt { background: color-mix(in srgb, var(--navy) 55%, var(--night)); border: 2px solid var(--line); padding: 20px; min-width: 0; display: grid; gap: 20px; align-content: start; }
+.opt > h3 { margin: 0; font: 400 26px/1 var(--f-display); letter-spacing: .04em; color: var(--gold); }
+.opt > p { margin: -10px 0 0; color: var(--muted); font-size: 14px; }
+.st { font: 400 11px/1 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 -12px; }
+.fld { display: grid; gap: 8px; min-width: 0; align-content: start; }
+.why-err { display: flex; gap: 8px; align-items: center; justify-self: start; font: 600 14px/1.3 var(--f-body); color: var(--ink); background: var(--narration); border: 2px solid var(--ink); padding: 6px 10px; }
+.why-err::before { content: "!"; flex: none; display: grid; place-items: center; width: 20px; height: 20px; font: 800 13px/1 var(--f-body); color: #fff; background: var(--alarm); border: 2px solid var(--ink); }
+.count { font: 400 12px/1 var(--f-mono); justify-self: end; color: var(--muted); }
+
+/* ================= 1 — CALM BALLOON ================= */
+.b1 label { font: 400 19px/1 var(--f-display); letter-spacing: .05em; color: var(--paper); }
+.b1 small { font: 600 12px/1 var(--f-body); letter-spacing: 0; color: var(--muted); margin-left: 6px; }
+.b1 .box { position: relative; margin-bottom: 10px; }
+.b1 input, .b1 textarea { display: block; width: 100%; color: var(--ink); background: #fff; border: 3px solid var(--ink); border-radius: 22px; padding: 12px 18px; box-shadow: var(--shadow-sm); resize: vertical; transition: box-shadow 160ms; }
+.b1 textarea { min-height: 120px; }
+.b1 ::placeholder { color: var(--ink-quiet); }
+.b1 .box::before, .b1 .box::after { content: ""; position: absolute; left: 30px; width: 0; height: 0; border-style: solid; pointer-events: none; }
+.b1 .box::before { bottom: -13px; border-width: 14px 0 0 16px; border-color: var(--ink) transparent transparent; }
+.b1 .box::after { bottom: -7px; left: 33px; border-width: 9px 0 0 10px; border-color: #fff transparent transparent; }
+.b1 input:focus, .b1 textarea:focus, .b1 .f input { outline: none; box-shadow: 5px 5px 0 var(--gold), 0 0 0 1px var(--ink); }
+.b1 .e input, .b1 .e textarea { border-color: var(--alarm); }
+.b1 .e::before { border-top-color: var(--alarm); }
+/* perched on the top edge, ending above the text line so text can never run under it */
+.b1 .burst { position: absolute; top: -30px; right: 8px; width: 42px; height: 42px; display: grid; place-items: center; font: 800 16px/1 var(--f-body); color: #fff; background: var(--alarm); pointer-events: none; clip-path: polygon(50% 0, 61% 26%, 90% 12%, 76% 40%, 100% 50%, 76% 60%, 90% 88%, 61% 74%, 50% 100%, 39% 74%, 10% 88%, 24% 60%, 0 50%, 24% 40%, 10% 12%, 39% 26%); }
+.b1 .d input, .b1 .d textarea { color: var(--ink-soft); background: var(--thought); border-style: dashed; box-shadow: none; cursor: not-allowed; }
+.b1 .d::before, .b1 .d::after { border: 2px solid var(--ink); background: var(--thought); border-radius: 50%; }
+.b1 .d::before { left: 28px; bottom: -11px; width: 10px; height: 10px; }
+.b1 .d::after { left: 20px; bottom: -18px; width: 6px; height: 6px; }
+
+/* ================= 2 — CAPTION PANEL ================= */
+.b2 { gap: 0; }
+.b2 label { justify-self: start; position: relative; z-index: 1; font: 400 16px/1 var(--f-display); letter-spacing: .06em; color: var(--paper); background: var(--ink); padding: 6px 12px 4px; transition: background 120ms, color 120ms; }
+.b2 small { font: 600 12px/1 var(--f-body); letter-spacing: 0; opacity: .8; margin-left: 6px; }
+.b2 .box { position: relative; isolation: isolate; margin: 0 8px 8px 0; }
+/* the shadow is a strip of ink speed lines, which turns gold on focus */
+.b2 .box::after { content: ""; position: absolute; inset: 6px -6px -6px 6px; z-index: -1; background: repeating-linear-gradient(90deg, var(--shade, var(--ink)) 0 5px, transparent 5px 8px); transition: inset 140ms var(--ease-snap); }
+.b2 input, .b2 textarea { display: block; width: 100%; color: var(--ink); background: var(--paper); border: 3px solid var(--ink); border-radius: 0; padding: 12px 14px; resize: vertical; }
+.b2 textarea { min-height: 120px; }
+.b2 ::placeholder { color: var(--ink-quiet); }
+.b2 input:focus, .b2 textarea:focus { outline: none; }
+.b2:focus-within label, .b2.f label { background: var(--gold); color: var(--ink); }
+.b2 .box:focus-within, .b2.f .box { --shade: var(--gold); }
+.b2 .box:focus-within::after, .b2.f .box::after { inset: 8px -8px -8px 8px; }
+.b2.e label { background: var(--alarm); color: #fff; }
+.b2.e .box { --shade: var(--alarm); }
+.b2.e input, .b2.e textarea { border-color: var(--alarm); }
+.b2.e .why-err { margin-top: 6px; }
+.b2.d label { background: var(--ink-soft); }
+.b2.d .box::after { display: none; }
+.b2.d input, .b2.d textarea { color: var(--ink-soft); border-style: dashed; cursor: not-allowed; background: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--ink) 18%, transparent) 1px, transparent 1.6px) 0 0 / 6px 6px, var(--thought); }
+.b2 .count { margin-top: 4px; }
+
+/* ================= 3 — KI FIELD ================= */
+.b3 { gap: 22px; }
+.b3 label { font: 400 19px/1 var(--f-display); letter-spacing: .05em; color: var(--paper); margin-bottom: -2px; }
+.b3 small { font: 600 12px/1 var(--f-body); letter-spacing: 0; color: var(--muted); margin-left: 6px; }
+.b3 .box { position: relative; isolation: isolate; border: 3px solid var(--ink); box-shadow: var(--shadow); background: var(--navy); }
+/* a transparent bottom border keeps scrolled text clear of the meter */
+.b3 input, .b3 textarea { display: block; width: 100%; color: var(--text); background: transparent; border: 0 solid transparent; border-bottom-width: 12px; border-radius: 0; padding: 13px 14px 4px; resize: vertical; }
+.b3 textarea { min-height: 120px; }
+.b3 ::placeholder { color: var(--muted); }
+.b3 input:focus, .b3 textarea:focus { outline: none; }
+/* a flame crest that rises off the top edge on focus */
+.b3 .crest { position: absolute; left: -3px; width: calc(100% + 6px); bottom: calc(100% + 1px); height: 20px; overflow: visible; pointer-events: none; transform: scaleY(0); transform-origin: bottom; transition: transform 240ms var(--ease-snap); }
+.b3 .crest path:nth-child(1) { fill: var(--orange); } .b3 .crest path:nth-child(2) { fill: var(--gold); } .b3 .crest path:nth-child(3) { fill: var(--gold-hi); }
+.b3 .box:focus-within .crest, .b3.f .crest { transform: scaleY(1); }
+.b3 .box:focus-within, .b3.f .box { border-color: var(--ink); background: linear-gradient(180deg, var(--aura-deep), var(--navy) 70%); }
+/* the ki meter along the bottom edge: fills with what has been written */
+.b3 .meter { position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: var(--ink); }
+.b3 .meter i { display: block; height: 100%; width: var(--fill, 0%); background: linear-gradient(90deg, var(--ki), var(--ki-pale)); transition: width 200ms var(--ease-snap); }
+.b3.e .box { box-shadow: 5px 5px 0 var(--alarm); }
+.b3.e .crest path { fill: var(--alarm); } .b3.e .crest { transform: scaleY(1); }
+.b3.e .meter i { background: var(--alarm); }
+.b3.d .box { border-style: dashed; box-shadow: none; background: transparent; }
+.b3.d input, .b3.d textarea { color: var(--muted); cursor: not-allowed; }
+.b3.d .meter { display: none; }
+
+/* ================= BEAMS ================= */
+.range { position: relative; height: clamp(170px, 26vw, 260px); border: 3px solid var(--ink); overflow: hidden; background: radial-gradient(60% 80% at 16% 50%, #1b2a6a, var(--night) 70%); }
+.range canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.fire { justify-self: start; font: 400 17px/1 var(--f-display); letter-spacing: .05em; color: var(--paper); background: transparent; border: 3px solid var(--line); padding: 8px 14px 7px; cursor: pointer; }
+.fire:hover { border-color: var(--gold); color: var(--gold); }
+
+.foot { padding-block: 30px 44px; color: var(--muted); font-size: 13px; }
+@media (max-width: 1000px) { .opts { grid-template-columns: minmax(0, 1fr); } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<header class="top gutter"><div class="wrap">
+  <h1>Fields and beam</h1>
+  <p>Three directions for each. Type in the fields and tab through them; every text box is live. Long text is in each one so overlap shows up. Pick one of each, or mix.</p>
+</div></header>
+
+<section class="band gutter"><div class="wrap">
+  <h2>Fields</h2>
+  <div class="opts">
+
+    <div class="opt">
+      <h3>1 · Calm balloon</h3>
+      <p>Still a speech balloon, with less going on: no tilted caption boxes, and an error is a red outline with one small burst, not a jagged shape.</p>
+      <p class="st">Rest</p>
+      <div class="fld b1"><label for="a1">Name</label><div class="box"><input id="a1" placeholder="Your name"></div></div>
+      <p class="st">Focus</p>
+      <div class="fld b1"><label for="a2">Name</label><div class="box f"><input id="a2" value="Priya Sharma"></div></div>
+      <p class="st">Error · long text</p>
+      <div class="fld b1"><label for="a3">Email</label><div class="box e"><input id="a3" value="a.very.long.address.that.keeps.going.past.the.edge@example.com" aria-invalid="true" aria-describedby="a3e"><span class="burst" aria-hidden="true">!</span></div><span class="why-err" id="a3e">Enter an email address like name@example.com</span></div>
+      <p class="st">Disabled</p>
+      <div class="fld b1"><label for="a4">Email <small>while sending</small></label><div class="box d"><input id="a4" value="priya@example.com" disabled></div></div>
+      <p class="st">Message · count</p>
+      <div class="fld b1"><label for="a5">Message</label><div class="box"><textarea id="a5" rows="4" maxlength="1000" data-count="a5c" data-long></textarea></div><span class="count" id="a5c"></span></div>
+    </div>
+
+    <div class="opt">
+      <h3>2 · Caption panel</h3>
+      <p>A square manga panel on paper, with a black caption tab joined on top. Its shadow is a strip of speed lines that turns gold on focus and red on error.</p>
+      <p class="st">Rest</p>
+      <div class="fld b2"><label for="b1">Name</label><div class="box"><input id="b1" placeholder="Your name"></div></div>
+      <p class="st">Focus</p>
+      <div class="fld b2 f"><label for="b2">Name</label><div class="box"><input id="b2" value="Priya Sharma"></div></div>
+      <p class="st">Error · long text</p>
+      <div class="fld b2 e"><label for="b3">Email</label><div class="box"><input id="b3" value="a.very.long.address.that.keeps.going.past.the.edge@example.com" aria-invalid="true" aria-describedby="b3e"></div><span class="why-err" id="b3e">Enter an email address like name@example.com</span></div>
+      <p class="st">Disabled</p>
+      <div class="fld b2 d"><label for="b4">Email <small>while sending</small></label><div class="box"><input id="b4" value="priya@example.com" disabled></div></div>
+      <p class="st">Message · count</p>
+      <div class="fld b2"><label for="b5">Message</label><div class="box"><textarea id="b5" rows="4" maxlength="1000" data-count="b5c" data-long></textarea></div><span class="count" id="b5c"></span></div>
+    </div>
+
+    <div class="opt">
+      <h3>3 · Ki field</h3>
+      <p>Dark, like the rest of the page. Focus lights a low flame crest, matching the full-power card. A ki meter along the bottom fills as you write.</p>
+      <p class="st">Rest</p>
+      <div class="fld b3"><label for="c1">Name</label><div class="box" data-crest><input id="c1" placeholder="Your name" data-meter><span class="meter" aria-hidden="true"><i></i></span></div></div>
+      <p class="st">Focus</p>
+      <div class="fld b3 f"><label for="c2">Name</label><div class="box" data-crest><input id="c2" value="Priya Sharma" data-meter><span class="meter" aria-hidden="true"><i></i></span></div></div>
+      <p class="st">Error · long text</p>
+      <div class="fld b3 e"><label for="c3">Email</label><div class="box" data-crest><input id="c3" value="a.very.long.address.that.keeps.going.past.the.edge@example.com" aria-invalid="true" aria-describedby="c3e" data-meter><span class="meter" aria-hidden="true"><i></i></span></div><span class="why-err" id="c3e">Enter an email address like name@example.com</span></div>
+      <p class="st">Disabled</p>
+      <div class="fld b3 d"><label for="c4">Email <small>while sending</small></label><div class="box"><input id="c4" value="priya@example.com" disabled></div></div>
+      <p class="st">Message · count</p>
+      <div class="fld b3"><label for="c5">Message</label><div class="box" data-crest><textarea id="c5" rows="4" maxlength="1000" data-count="c5c" data-long data-meter></textarea><span class="meter" aria-hidden="true"><i></i></span></div><span class="count" id="c5c"></span></div>
+    </div>
+
+  </div>
+</div></section>
+
+<section class="band gutter"><div class="wrap">
+  <h2>Beam</h2>
+  <div class="opts one">
+    <div class="opt">
+      <h3>A · Living beam</h3>
+      <p>The current beam, brought to life. Energy gathers into a round orb, the beam surges out with a rounded head, and its edges ripple while it fires, then settle.</p>
+      <div class="range"><canvas data-beam="living" aria-hidden="true"></canvas></div>
+      <button class="fire" type="button">Fire</button>
+    </div>
+    <div class="opt">
+      <h3>B · Impact frame</h3>
+      <p>The Z-era TV moment: hard bands, radiating speed lines, and two single inverted frames at the instant it fires, with a ドン. The loudest of the three. It flashes only once per firing.</p>
+      <div class="range"><canvas data-beam="impact" aria-hidden="true"></canvas></div>
+      <button class="fire" type="button">Fire</button>
+    </div>
+    <div class="opt">
+      <h3>C · Shock rings</h3>
+      <p>A slimmer beam with rings of force travelling down it, and a flame corona round the orb. Reads best as a thin divider between sections.</p>
+      <div class="range"><canvas data-beam="rings" aria-hidden="true"></canvas></div>
+      <button class="fire" type="button">Fire</button>
+    </div>
+  </div>
+</div></section>
+
+<footer class="foot gutter"><div class="wrap">Fields and beam round · mockup only, nothing here is built yet.</div></footer>
+
+<script>
+(() => {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const C = { ink: "#0a0a14", paper: "#fff8e8", ki: "#4f8cff", pale: "#bfe0ff", white: "#ffffff", gold: "#ffcf1f", hi: "#fff4b8", orange: "#f47a1f" };
+
+  // ---------- fields ----------
+  const LONG = "We need a staff portal for our team, with rosters, leave requests and training records in one place. ".repeat(4).trim();
+  document.querySelectorAll("[data-long]").forEach((t) => { t.value = LONG; });
+  document.querySelectorAll("[data-count]").forEach((t) => {
+    const out = document.getElementById(t.dataset.count);
+    const sync = () => { out.textContent = `${t.value.length} / ${t.maxLength}`; };
+    t.addEventListener("input", sync); sync();
+  });
+  // Meter: a single line fills over 40 characters, a message over its limit.
+  document.querySelectorAll("[data-meter]").forEach((f) => {
+    const box = f.closest(".box"), cap = f.maxLength > 0 ? f.maxLength : 40;
+    const sync = () => box.style.setProperty("--fill", Math.min(100, f.value.length / cap * 100) + "%");
+    f.addEventListener("input", sync); sync();
+  });
+  function flamePath(w, h, n, k, seed) {
+    let s = seed; const r = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+    const step = w / n; let d = `M0 ${h}`;
+    for (let i = 0; i < n; i++) {
+      const x0 = i * step, x1 = x0 + step, tx = x0 + step * (.35 + r() * .3), ty = h - h * k * (.45 + r() * .55);
+      d += ` C ${x0 + step * .1} ${h * .55}, ${tx - step * .25} ${ty + h * .25}, ${tx} ${ty} C ${tx + step * .2} ${ty + h * .3}, ${x1 - step * .1} ${h * .6}, ${x1} ${h}`;
+    }
+    return d + " Z";
+  }
+  document.querySelectorAll("[data-crest]").forEach((box) => {
+    box.insertAdjacentHTML("afterbegin", `<svg class="crest" viewBox="0 0 400 20" preserveAspectRatio="none" aria-hidden="true"><path d="${flamePath(400, 20, 22, 1, 7)}"/><path d="${flamePath(400, 20, 18, .72, 3)}"/><path d="${flamePath(400, 20, 15, .42, 11)}"/></svg>`);
+  });
+
+  // ---------- beams ----------
+  const CHARGE = 750, TRAVEL = 420, END = 2900;
+  const ease = (p) => 1 - Math.pow(1 - Math.min(1, Math.max(0, p)), 3);
+
+  function bodyPath(ctx, g, half, amp, freq, phase, phaseT) {
+    const pts = [];
+    for (let x = g.ox; x < g.hx; x += 7) pts.push(x);
+    pts.push(g.hx);
+    const edge = (x, sign) => {
+      const p = (x - g.ox) / (g.tip - g.ox);
+      return g.cy + sign * (half * (.62 + .38 * p) + Math.sin(x / freq - phaseT + phase) * amp);
+    };
+    ctx.beginPath();
+    pts.forEach((x, i) => { const y = edge(x, -1); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
+    const headR = Math.abs(edge(g.hx, 1) - edge(g.hx, -1)) / 2;
+    ctx.arc(g.hx, g.cy, headR, -Math.PI / 2, Math.PI / 2);
+    [...pts].reverse().forEach((x) => ctx.lineTo(x, edge(x, 1)));
+    ctx.closePath();
+  }
+  function star(ctx, x, y, r, n, inner, rot) {
+    ctx.beginPath();
+    for (let i = 0; i < n * 2; i++) {
+      const a = rot + i * Math.PI / n, R = i % 2 ? r * inner : r;
+      const px = x + Math.cos(a) * R, py = y + Math.sin(a) * R;
+      i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+    }
+    ctx.closePath();
+  }
+  function orb(ctx, g, r, stroke) {
+    [[1, C.ki], [.66, C.pale], [.36, C.white]].forEach(([k, col], i) => {
+      ctx.beginPath(); ctx.arc(g.ox, g.cy, r * k, 0, Math.PI * 2); ctx.fillStyle = col; ctx.fill();
+      if (!i) { ctx.lineWidth = stroke; ctx.strokeStyle = C.ink; ctx.stroke(); }
+    });
+  }
+  function gather(ctx, g, t) {
+    const p = t / CHARGE;
+    if (p >= 1) return;
+    for (let i = 0; i < 16; i++) {
+      const a = i * 2.399, d = (1 - ((p * 1.6 + i * .13) % 1)) * g.h * .6 + g.r * .6;
+      ctx.beginPath(); ctx.arc(g.ox + Math.cos(a) * d, g.cy + Math.sin(a) * d * .7, 2.2 + (i % 3), 0, Math.PI * 2);
+      ctx.fillStyle = i % 2 ? C.pale : C.white; ctx.fill(); ctx.lineWidth = 1.5; ctx.strokeStyle = C.ink; ctx.stroke();
+    }
+  }
+
+  const DRAW = {
+    living(ctx, g, t) {
+      const pt = t * .009;
+      gather(ctx, g, t);
+      if (g.k > 0) {
+        [[g.h * .21, 5, 26, 0, C.ki], [g.h * .145, 4, 20, 1, C.pale], [g.h * .07, 2.5, 15, 2, C.white]].forEach(([half, amp, f, ph, col], i) => {
+          bodyPath(ctx, g, half * ease(g.k * 1.4), amp, f, ph, pt); ctx.fillStyle = col; ctx.fill();
+          if (!i) { ctx.lineWidth = 4; ctx.strokeStyle = C.ink; ctx.stroke(); }
+        });
+        const fl = g.h * .3 * (.9 + .12 * Math.sin(t * .02));
+        star(ctx, g.hx + g.h * .05, g.cy, fl, 9, .48, t * .002); ctx.fillStyle = C.hi; ctx.fill(); ctx.lineWidth = 3; ctx.strokeStyle = C.ink; ctx.stroke();
+      }
+      orb(ctx, g, g.r * ease(t / CHARGE), 4);
+    },
+    impact(ctx, g, t) {
+      const dt = t - CHARGE, w = g.w, h = g.h;
+      const flash = dt >= 0 && dt < 60 ? 1 : dt >= 60 && dt < 120 ? 2 : 0;
+      if (flash) { ctx.fillStyle = flash === 1 ? C.ink : C.paper; ctx.fillRect(0, 0, w, h); }
+      if (dt > 0) {
+        ctx.fillStyle = flash === 2 ? C.ink : C.paper; ctx.globalAlpha = flash ? 1 : .22;
+        for (let i = 0; i < 34; i++) {
+          const a = i / 34 * Math.PI * 2 + .08, w2 = .022 + (i % 3) * .01, R = w * 1.3;
+          ctx.beginPath(); ctx.moveTo(g.ox + Math.cos(a) * g.r * 1.5, g.cy + Math.sin(a) * g.r * 1.5);
+          ctx.lineTo(g.ox + Math.cos(a - w2) * R, g.cy + Math.sin(a - w2) * R); ctx.lineTo(g.ox + Math.cos(a + w2) * R, g.cy + Math.sin(a + w2) * R); ctx.closePath(); ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+      }
+      gather(ctx, g, t);
+      if (g.k > 0) {
+        const jit = t < END - 300 ? Math.sin(t * .05) * 1.2 : 0;
+        const bands = flash === 1 ? [[.23, C.white]] : flash === 2 ? [[.23, C.ink]] : [[.23, C.ki], [.16, C.pale], [.08, C.white]];
+        bands.forEach(([k, col], i) => {
+          bodyPath(ctx, g, h * k + jit, 0, 30, 0, 0); ctx.fillStyle = col; ctx.fill();
+          if (!i && !flash) { ctx.lineWidth = 5; ctx.strokeStyle = C.ink; ctx.stroke(); }
+        });
+        if (!flash) {
+          star(ctx, g.hx + h * .06, g.cy, h * .36, 11, .42, .3); ctx.fillStyle = C.hi; ctx.fill(); ctx.lineWidth = 4; ctx.strokeStyle = C.ink; ctx.stroke();
+          if (dt > 200) {
+            const s = ease((dt - 200) / 160), fs = Math.round(h * .24 * s);
+            if (fs > 3) { ctx.font = `900 ${fs}px "Noto Sans JP", sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.lineJoin = "round"; ctx.lineWidth = Math.max(3, fs * .12); ctx.strokeStyle = C.ink; ctx.save(); ctx.translate(g.tip - h * .55, h * .19); ctx.rotate(-.1); ctx.strokeText("ドン!", 0, 0); ctx.fillStyle = C.orange; ctx.fillText("ドン!", 0, 0); ctx.restore(); }
+          }
+        }
+      }
+      if (flash !== 1 && flash !== 2) orb(ctx, g, g.r * 1.1 * ease(t / CHARGE), 5);
+    },
+    rings(ctx, g, t) {
+      const pt = t * .007, half = g.h * .13;
+      gather(ctx, g, t);
+      const ringsAt = [];
+      if (g.k > 0) {
+        for (let i = 0; i < 6; i++) {
+          const x = g.ox + g.r + ((i / 6 + t * .00032) % 1) * (g.hx - g.ox - g.r);
+          ringsAt.push(x);
+        }
+      }
+      const ring = (x, start, end) => {
+        const p = (x - g.ox) / (g.tip - g.ox), ry = half * (1.25 + .55 * p);
+        [[6, C.ink], [3, C.pale]].forEach(([lw, col]) => { ctx.beginPath(); ctx.ellipse(x, g.cy, ry * .34, ry, 0, start, end); ctx.lineWidth = lw; ctx.strokeStyle = col; ctx.stroke(); });
+      };
+      ringsAt.forEach((x) => ring(x, Math.PI / 2, Math.PI * 1.5));
+      if (g.k > 0) {
+        [[half, 2, 24, 0, C.ki], [half * .62, 1.5, 18, 1, C.pale], [half * .3, 1, 14, 2, C.white]].forEach(([hh, amp, f, ph, col], i) => {
+          bodyPath(ctx, g, hh * ease(g.k * 1.4), amp, f, ph, pt); ctx.fillStyle = col; ctx.fill();
+          if (!i) { ctx.lineWidth = 4; ctx.strokeStyle = C.ink; ctx.stroke(); }
+        });
+      }
+      ringsAt.forEach((x) => ring(x, -Math.PI / 2, Math.PI / 2));
+      const grow = ease(t / CHARGE);
+      if (grow > .05) {
+        star(ctx, g.ox, g.cy, g.r * 1.55 * grow, 12, .68, t * .0012); ctx.fillStyle = C.gold; ctx.fill(); ctx.lineWidth = 3; ctx.strokeStyle = C.ink; ctx.stroke();
+      }
+      orb(ctx, g, g.r * grow, 4);
+    },
+  };
+
+  document.querySelectorAll("[data-beam]").forEach((cv) => {
+    const ctx = cv.getContext("2d"), mode = cv.dataset.beam, host = cv.parentElement;
+    let raf = 0, start = 0, w = 0, h = 0, dpr = 1;
+    const size = () => { const r = host.getBoundingClientRect(); dpr = Math.min(devicePixelRatio || 1, 2); w = host.clientWidth; h = host.clientHeight; cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+    const paint = (t) => {
+      ctx.clearRect(0, 0, w, h);
+      const ox = Math.max(h * .3, 44), tip = w - h * .42, k = ease((t - CHARGE) / TRAVEL);
+      DRAW[mode](ctx, { w, h, cy: h / 2, ox, tip, hx: ox + (tip - ox) * k, k, r: h * .19 }, t);
+    };
+    const frame = (now) => { const t = now - start; paint(Math.min(t, END)); raf = t < END ? requestAnimationFrame(frame) : 0; };
+    const fire = () => { size(); cancelAnimationFrame(raf); if (reduce) { paint(END); return; } start = performance.now(); raf = requestAnimationFrame(frame); };
+    host.parentElement.querySelector(".fire").addEventListener("click", fire);
+    size(); paint(END);
+    new ResizeObserver(() => { if (raf) return; size(); paint(END); }).observe(host);
+    const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { io.disconnect(); fire(); } }, { threshold: .5 });
+    document.fonts.ready.then(() => { paint(END); io.observe(host); });
+  });
+})();
+</script>
+</body>
+</html>

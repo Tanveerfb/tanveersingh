@@ -3,6 +3,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { drawFlowingFlame, type FlameBox } from "@/lib/aura-flame";
 import { cn } from "@/lib/class-names";
+import { cssDurationMs } from "@/lib/css-duration";
 
 const CHARGING = ["--color-ki-deep", "--color-ki-soft", "--color-ki-hi"];
 const GOLDEN = ["--color-orange", "--color-gold", "--color-gold-hi"];
@@ -41,8 +42,8 @@ export function Aura({ children, className }: AuraProps) {
     const token = (name: string) => styles.getPropertyValue(name).trim();
     const charging = CHARGING.map(token);
     const golden = GOLDEN.map(token);
-    const chargeMs = parseFloat(token("--duration-aura-charge"));
-    const playMs = parseFloat(token("--duration-aura"));
+    const chargeMs = cssDurationMs(token("--duration-aura-charge"));
+    const playMs = cssDurationMs(token("--duration-aura"));
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let raf = 0;

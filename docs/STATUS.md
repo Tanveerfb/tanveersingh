@@ -36,6 +36,7 @@ visual change goes through a mockup he approves.
 | `components-core-kit.html` | Core kit options; picks in `decisions.md` |
 | `components-core-kit-revisions.html` | Polished balloon fields; flame-tongue card crest |
 | `components-signature.html` | Aura, scouter, tube, panel, beam options; picks in `decisions.md` |
+| `fields-beam.html` | Caption panel fields and impact frame beam, replacing the earlier picks |
 | `hero-shootout.html` | The Cyberpunk vs Dragon Ball shootout that chose the motif |
 
 Where `motif.html` and the component picks differ (hard aura, striped beam), the picks win.
@@ -115,9 +116,11 @@ Built the core kit and signature components from the locked designs, with `/kit`
 uses `radix-ui` directly (`decisions.md`). Owner ruled out Playwright mid-session. Dev server left
 running on :3000.
 
-Owner's review of `/kit`: scouter, tube, manga panels, dock and buttons look good. Fixed: text
-overlapped the jagged shout border (teeth now a fixed depth; text clipped clear of them). Still
-open with him: unsure about the fields overall; the beam "could be made better".
+Owner's review of `/kit`: scouter, tube, manga panels, dock and buttons look good. The balloon
+fields' jagged error overlapped its text and he was unsure of them; the beam "could be made
+better". A new mockup round chose caption panel fields and the impact frame beam, both now built.
+The aura and beam were reading duration tokens in the wrong unit once minified (`css-duration.ts`
+fixes it), so the aura had been cutting its animation short.
 
 ### 2026-11-02 (1st session) — rebuild set up, design locked
 

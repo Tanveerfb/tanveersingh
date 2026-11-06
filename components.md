@@ -6,7 +6,8 @@ moved or removed. Verify against `src/components/` before building; this is an i
 **See them all:** `npm run dev`, then `/kit`. That route answers 404 in production.
 
 **Locked designs:** `docs/design/components-core-kit.html`, `components-core-kit-revisions.html`,
-`components-signature.html`; picks in `decisions.md`. Behaviour comes from `radix-ui` where a
+`components-signature.html`, `fields-beam.html` (replaces the earlier fields and beam); picks in
+`decisions.md`. Behaviour comes from `radix-ui` where a
 primitive exists; everything visible is ours (§SHADCN).
 
 ## Core kit — `src/components/ui/`
@@ -15,7 +16,7 @@ primitive exists; everything visible is ours (§SHADCN).
 | --- | --- | --- | --- |
 | `button.tsx` | `Button` | A, cel slab | `primary` / `secondary` / `ghost`; `sm` / `md` / `lg`; `loading`, `fullWidth`, icons, `asChild` for links |
 | `capsule-dock.tsx` | `CapsuleDock` | C, capsule dock | Fixed at the bottom; marks the current section; jumps by instant transmission |
-| `field.tsx` | `InputField`, `TextareaField` | B, speech balloon (revised) | Rest balloon, error shout with narration box, disabled thought balloon; count from `maxLength` |
+| `field.tsx` | `InputField`, `TextareaField` | Caption panel (`fields-beam.html`, option 2) | Paper panel with a caption tab; speed-line shadow, gold on focus, red on error; screentone when disabled; count below, from `maxLength` |
 | `card.tsx` | `Card`, `CardTitle`, `CardMeta`, `CardBody`, `CardSkeleton` | A, cel card | `highlighted` adds the flame-tongue crest; give it `tabIndex={0}` if it should sway on focus |
 | `chip.tsx` | `Chip` | C, sound-effect chip | The badge: tiers, tags, stack |
 | `toast.tsx` | `ToastProvider`, `ToastContext` | B, scouter alert | Call through `useToast`; errors announce assertively and stay longer |
@@ -33,7 +34,7 @@ primitive exists; everything visible is ours (§SHADCN).
 | `scouter.tsx` | `Scouter`, `ScouterReading` | A, green lens | Readings passed in: real facts only; `overload` sets off the ボン |
 | `specimen-tube.tsx` | `SpecimenTube` | B, capsule chamber | Fills on view; boils on hover |
 | `manga-panel.tsx` | `MangaPage`, `MangaPanel`, `MangaPanelTitle`, `MangaPanelText`, `MangaActionPanel` | A, black and white | Panels slide in with speed lines; `from`, `order`, `wide` |
-| `beam.tsx` | `Beam` | B, flowing beam | Fires on view. New `key` fires again. Its drawing stretches to fit, so the orb goes oval on very wide layouts |
+| `beam.tsx` | `Beam` | Impact frame (`fields-beam.html`, option B) | Canvas. Fires on view, then rests on its final still. New `key` fires again |
 
 ## Supporting code
 
@@ -45,7 +46,8 @@ primitive exists; everything visible is ours (§SHADCN).
 | `src/hooks/use-instant-transmission.ts` | Streak out, jump, streak in; immediate under reduced motion |
 | `src/hooks/use-toast.ts` | Shows a toast |
 | `src/lib/class-names.ts` | `cn` |
-| `src/lib/flame-path.ts`, `aura-flame.ts`, `beam-geometry.ts` | Pure drawing geometry |
+| `src/lib/flame-path.ts`, `aura-flame.ts`, `beam-impact.ts` | Pure drawing |
+| `src/lib/css-duration.ts` | Reads a duration token in milliseconds, whichever unit the minifier left it in |
 | `src/features/kit-preview/` | The `/kit` page's contents; sample text from the mockups |
 
 ## Not built yet

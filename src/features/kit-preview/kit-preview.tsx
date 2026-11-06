@@ -131,7 +131,7 @@ export function KitPreview() {
             </div>
             <InputField
               label="Email"
-              defaultValue="a.very.long.address.that.keeps.going.past.the.edge.of.the.balloon.for.testing@example.com"
+              defaultValue="a.very.long.address.that.keeps.going.past.the.edge.of.the.field.for.testing@example.com"
               error="Enter an email address like name@example.com"
             />
           </div>

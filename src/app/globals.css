@@ -19,12 +19,12 @@
 
   /* ink and paper */
   --color-ink: #0a0a14;
-  --color-ink-soft: #4a4860; /* secondary text on paper and balloons */
-  --color-ink-quiet: #6a6880; /* placeholders in balloons */
+  --color-ink-soft: #4a4860; /* secondary text on paper */
+  --color-ink-quiet: #6a6880; /* placeholders in fields */
   --color-paper: #fff8e8;
   --color-on-paper: #0a0a14;
-  --color-narration: #fffbe0; /* the narration box under a shout balloon */
-  --color-thought: #dfe2f2; /* the disabled thought balloon */
+  --color-narration: #fffbe0; /* the narration box under a field's error */
+  --color-thought: #dfe2f2; /* the disabled field */
   --color-text: #f4f1ff;
   --color-muted: #b9c0e2;
   --color-on-muted: #0a0a14;
@@ -109,29 +109,28 @@
   --shadow-cel-lift: 7px 7px 0 var(--color-ink);
   --shadow-cel-lg: 8px 8px 0 var(--color-ink);
   --shadow-cel-press: 1px 1px 0 var(--color-ink);
-  --shadow-balloon-focus: 5px 5px 0 var(--color-gold), 0 0 0 1px var(--color-ink);
   --border-cel: 3px;
 
   /* shape */
   --radius-none: 0;
   --radius-lens: 10px 70px 10px 10px;
   --radius-tube: 70px 70px 18px 18px;
-  --radius-balloon: 30px / 26px;
-  --radius-balloon-lg: 34px / 30px;
 
   /* motion */
   --ease-snap: cubic-bezier(0.2, 0.9, 0.1, 1);
   --ease-beam: cubic-bezier(0.5, 0, 0.2, 1);
   --ease-fill: cubic-bezier(0.3, 0.7, 0.2, 1);
   --duration-press: 120ms;
-  --duration-balloon: 160ms;
+  --duration-impact-frame: 60ms; /* each inverted frame as the beam fires */
   --duration-streak-out: 200ms;
   --duration-streak-in: 280ms;
   --duration-flash: 380ms;
   --duration-pop: 500ms;
   --duration-slide: 600ms;
   --duration-core: 700ms;
-  --duration-beam: 750ms;
+  --duration-beam-travel: 420ms;
+  --duration-beam-charge: 750ms;
+  --duration-beam: 2900ms;
   --duration-burst: 900ms;
   --duration-fill: 1400ms;
   --duration-aura-charge: 800ms; /* blue until here, then gold */
@@ -147,6 +146,7 @@
   --spacing-cap: 18px;
   --spacing-glass: 210px;
   --spacing-crest: 58px;
+  --spacing-beam: clamp(170px, 26vw, 260px);
   --container-page: 1180px;
   --container-dialog: 30rem;
   --container-toast: 22.5rem;
