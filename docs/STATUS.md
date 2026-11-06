@@ -81,6 +81,22 @@ kit is in `src/components/ui/`, its drawn parts in `src/app/motif.css`, its prev
 
 ---
 
+## Released
+
+`master` fast-forwarded `0fa3e86..b27ee47` on `git CPR max`, 2026-11-06. Vercel deployment
+`dpl_122GVicavZiVh3QzFPcuXhAJGUaX` is READY and targets production.
+
+Checked on the live site after it deployed:
+
+- tanveersingh22.vercel.app and tanveer.truqorun.com answer 200 with the new page title
+- `/kit` and the old `/about` answer 404; `/images/profile.png` answers 200
+- In the built-in browser: hero settles on gold, photo loads, dock shows all sections, the page
+  hydrates, no horizontal scroll, no console errors on the desktop width
+- **Not sent from production:** no message through the live form, to keep test posts out of the
+  channel. The same code and variable name delivered from the preview
+
+---
+
 ## Verified this checkpoint, by measurement
 
 - `npx tsc --noEmit` exit 0, `npm run lint` exit 0, `npm run build` exit 0 (routes `/`, `/_not-found`,
@@ -144,7 +160,8 @@ rejected it outright. Z won only after a rebuild in cel style. Don't drift back 
 ## Confidence and gaps
 
 - **Verified:** the *Verified* section above, and the *Released* section below
-- **Assumed:** the release replaces every old route. Old URLs now answer 404; nothing redirects them
+- **By decision of the rebuild:** the old site's other pages are gone with nothing redirecting them;
+  `/about` was checked and answers 404
 - **Assumed:** the old live site's rollback path. Its Firebase variables are gone, so rebuilding that
   code would break; an instant rollback to its existing deployment should still work, untested
 - **Untested by a person:** holding to charge, and the beam on send. The hero's two inverted beam
