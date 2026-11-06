@@ -4,9 +4,9 @@
 
 **State:** Rebuild on the `rebuild` branch. Next.js 16 on fleet v3.8.0. Design locked; the core
 kit and signature components are built and visible at `/kit` in development (`components.md`).
-The site itself is still a holding page.
-**Next:** The owner approves the copy in `docs/content-draft.md`. Then it becomes typed content
-files and the draft is deleted (Open item 1).
+The owner's approved copy is in `src/content/`. The site itself is still a holding page.
+**Next:** The home page mockup: About and the Work tabs need designs, and the resume facts must
+read at a glance through the motion (Open item 1).
 **Blocked on:** nothing.
 **Don't trust:** which repo serves the live site. `about-tanveer.md` says
 tanveersingh22.vercel.app is a React Three Fiber portfolio, but neither `master` nor `Beta`
@@ -59,21 +59,21 @@ this file.
 
 ## Open items
 
-1. **Content files** — typed content from `about-tanveer.md`; copy drafted, owner approves
-2. **Home page** — composed from the kit, following `motif.html` and the picks, with the
-   page-level sequences (`components.md`, *Not built yet*)
-3. **Contact form** — Server Action → Discord webhook; `environment.md` once the webhook exists
-4. **Light scheme** — the manga-page scheme needs its own mockup round before light tokens
-5. **Vitest** wired to `npm test`
-6. **Filename lint rule** offered (§NAMING)
-7. **Domain** — tanveersingh22.vercel.app or `tanveer.tinkertogether.studio`; decide at launch
-8. **`npm audit`** advisories reviewed
-9. **Live-site source** — find which repo/Vercel project serves tanveersingh22.vercel.app
+1. **Home page** — mockup first, then composed from the kit and `src/content/`, following
+   `motif.html` and the picks, with the page-level sequences (`components.md`, *Not built yet*).
+   The scouter needs its resting reading from `skills.ts`
+2. **Contact form** — Server Action → Discord webhook; `environment.md` once the webhook exists
+3. **Light scheme** — the manga-page scheme needs its own mockup round before light tokens
+4. **Vitest** wired to `npm test`
+5. **Filename lint rule** offered (§NAMING)
+6. **Domain** — tanveersingh22.vercel.app or `tanveer.tinkertogether.studio`; decide at launch
+7. **`npm audit`** advisories reviewed
+8. **Live-site source** — find which repo/Vercel project serves tanveersingh22.vercel.app
    before any merge
-10. **Propose to fleet-standards:** drop Playwright from §TESTING (`decisions.md`, 2026-11-06)
-11. **Reduced motion** — seen only partly; the owner to try `/kit` with the setting on
+9. **Propose to fleet-standards:** drop Playwright from §TESTING (`decisions.md`, 2026-11-06)
+10. **Reduced motion** — seen only partly; the owner to try `/kit` with the setting on
 
-(Renumbered 2026-11-06: building the kit is done.)
+(Renumbered 2026-11-06: the kit and the content files are done.)
 
 ---
 

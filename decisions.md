@@ -258,3 +258,15 @@ publicly as coming from his own local ComfyUI pipeline. Phasmo Tourney links to 
 stands. **The Lair of Evil is dropped** (its link answers 404), and no other projects are added: the
 list cleared on 2026-11-02, as changed above, is final for now.
 
+---
+
+## 2026-11-06 — Site copy approved
+
+**The owner approved the copy, now in `src/content/`.** Changing it is his call (§OWNER). The draft
+was deleted, along with `public/images/muhammad-mustafa.png`, unused now testimonials are out.
+
+`src/content/` holds plain typed constants, without zod: nothing here crosses a boundary, and
+TypeScript checks it at build time. New sections came with the copy: **About**, for the resume
+facts, and **Work tabs** by organisation. Neither has a locked design yet; both come with the home
+page mockup.
+

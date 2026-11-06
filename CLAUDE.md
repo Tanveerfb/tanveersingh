@@ -107,7 +107,7 @@ Verified against `package.json` and `node_modules`, **2026-11-06**.
 | Components | Own kit in `src/components/ui/` (`components.md`), on `radix-ui` 1.8 behaviour; `motion` 14 for in-view and reduced-motion detection |
 | Fonts | Bangers, Barlow, Noto Sans JP 900, Share Tech Mono — `next/font` in `src/app/layout.tsx` |
 | Validation | zod 4 (env, contact form) |
-| Data | None — content is typed files in the repo. No Firebase (owner, 2026-11-02) |
+| Data | None — approved copy is typed files in `src/content/`. No Firebase (owner, 2026-11-02) |
 | Contact | Form posts server-side to a Discord webhook (`DISCORD_CONTACT_WEBHOOK_URL`) |
 | Hosting | Vercel |
 

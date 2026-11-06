@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Bangers, Barlow, Noto_Sans_JP, Share_Tech_Mono } from "next/font/google";
+import { PAGE } from "@/content/site";
 import "./globals.css";
 
 const bangers = Bangers({
@@ -29,8 +30,8 @@ const shareTech = Share_Tech_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tanveer Singh",
-  description: "Websites, platforms and practical AI.",
+  title: PAGE.title,
+  description: PAGE.description,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

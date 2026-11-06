@@ -12,21 +12,16 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { InputField, TextareaField } from "@/components/ui/field";
 import { KiLoader } from "@/components/ui/ki-loader";
 import { MangaActionPanel, MangaPage, MangaPanel, MangaPanelText, MangaPanelTitle } from "@/components/ui/manga-panel";
-import { Scouter, type ScouterReading } from "@/components/ui/scouter";
+import { Scouter } from "@/components/ui/scouter";
 import { SpecimenTube } from "@/components/ui/specimen-tube";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ToastProvider } from "@/components/ui/toast";
+import { SKILL_GROUPS } from "@/content/skills";
 import { useToast } from "@/hooks/use-toast";
 
-// Sample text from the locked mockups, for this hidden route only. Real copy comes with the
-// content files and the owner's approval.
-const READINGS: ScouterReading[] = [
-  { skill: "Next.js", lines: ["NCA public website", "NCA learning platform", "Tinker Together website", "Roleodex"], overload: true },
-  { skill: "Firebase", lines: ["NCA website, learning platform and staff portal", "Tinker Together website", "Toll's online saves"], overload: true },
-  { skill: "Claude", lines: ["First choice for AI work", "Claude Code, with my own published standard"], overload: true },
-  { skill: "Godot 4", lines: ["Toll, in public beta", "472 automated tests"] },
-  { skill: "SharePoint", lines: ["NCA's site structure and permissions"] },
-];
+const READINGS = SKILL_GROUPS.flatMap((group) => group.readings);
+
+// Elsewhere this route uses sample text from the locked mockups, to show each state.
 
 const DOCK_LINKS = [
   { href: "#buttons", label: "Buttons" },
