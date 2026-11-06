@@ -11,7 +11,8 @@ proposal, not a token.
 Dragon Ball Super draft; see `decisions.md`. **Locked 2026-11-02:** the motif mockup is
 [`docs/design/motif.html`](./docs/design/motif.html) (round 2). Refinement of individual
 components happens in the component round, not by reopening the motif. The shootout that led
-here is kept at `docs/design/hero-shootout.html`.
+here is kept at `docs/design/hero-shootout.html`. The page as built follows
+[`docs/design/home.html`](./docs/design/home.html), locked 2026-11-06.
 
 **The idea.** Tanveer's portfolio is a power-up story: someone who kept training and kept
 reaching new forms. The site is an obvious, unapologetic homage that fans recognise at once,

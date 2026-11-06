@@ -19,9 +19,10 @@ leave the block alone — `next dev` re-adds it.
   him. Audience: employers, clients and collaborators. Rebuilt from scratch on 2026-11-02; no
   code or UI carried over from the old site
 - **Repo**: `Tanveerfb/tanveersingh`, production branch `master`
-- **Deploys**: **multi-branch** (§GIT). `master` auto-deploys to Vercel
-  (tanveersingh22.vercel.app, live). Work happens on the `rebuild` working branch; it
-  reaches production only by merging into `master` on `git CPR`
+- **Deploys**: **multi-branch** (§GIT). `master` auto-deploys to Vercel project `tanveersingh`
+  (tanveersingh22.vercel.app and tanveer.truqorun.com, live). Work happens on the `rebuild`
+  working branch; it reaches production only by fast-forwarding `master` on `git CPR`:
+  `git push origin HEAD:master`, never forced
 - **Area files**: none · **Map**: not yet
 - **Trello board**: none (owner, 2026-11-02)
 - **Motif**: Universe-inspired — Dragon Ball Z, all-out homage; recorded in `design-system.md`
@@ -47,18 +48,23 @@ Two documents sit above this one:
 
 **Exceptions granted so far:** none yet — see conventions.md.
 
-**Binding design:** `design-system.md` and the locked mockups in `docs/design/` — `motif.html`
-for the page, `components-*.html` for each component (picks in `decisions.md`). Build from
-them; where `motif.html` and a component pick differ, the pick wins.
+**Binding design:** `design-system.md` and the locked mockups in `docs/design/` — `home.html` for
+the page, `fields-beam.html` for fields and the beam, `components-*.html` for the other components
+(picks in `decisions.md`), `motif.html` for the motif behind them. Build from them; where they
+differ, `home.html` wins, then `fields-beam.html`, then the component picks.
 
 **Binding content source:** `E:\Projects\project-plans\plans\portfolio\about-tanveer.md`
-(facts current to 2026-11-01). Every claim on the site comes from it or from the owner
-directly. Its *Rules for whoever builds the portfolio* section is binding, not background.
+(facts current to 2026-11-01), checked against the work in `E:\Projects`. Every claim on the site
+comes from those or from the owner directly. Its *Rules for whoever builds the portfolio* section is
+binding, not background. **The approved copy is `src/content/`**: changing it is the owner's call.
 
 ## Working agreement
 
 Everything in `project-rules.md` applies and is **not repeated here**. Project-specific:
 
+- **A glorified resume** (owner, 2026-11-06): roles, dates and skills read at a glance through the
+  motion. No testimonials; visitors wanting client words are pointed to Tinker Together. He
+  describes himself as **a web developer and AI integrator**, exploring game engines (Godot) now
 - **Nobility Care Australia first, Tinker Together second**, wherever both appear (headline,
   bio, experience, projects)
 - **No number unless something measured it.** Never invent figures, client counts or results
@@ -66,9 +72,12 @@ Everything in `project-rules.md` applies and is **not repeated here**. Project-s
   one-week sprints
 - **Never publish** his phone number, personal email or birthday. Contact shown: LinkedIn,
   GitHub, hello@tinkertogether.studio, and the contact form (owner, 2026-11-02)
-- **Projects cleared to show** — see `decisions.md` (2026-11-02). Ask before adding any other
+- **Projects cleared to show** — `src/content/work.ts`, as settled in `decisions.md` (2026-11-06).
+  Ask before adding any other
 - **He reviews mockups on his PC, not his phone** (owner, 2026-11-02). Mockups still render
   desktop and 390px from the same markup
+- **Secrets never go through chat.** He sets them in the Vercel dashboard. For Vercel work, use the
+  connector tools (owner, 2026-11-06)
 - **Browser checks: the built-in browser or Claude in Chrome. Never Playwright** (owner,
   2026-11-06)
 - **The old site's code is not a reference.** It lives in `master`'s history for content
@@ -131,4 +140,5 @@ Verified against `package.json` and `node_modules`, **2026-11-06**.
 
 ## Known non-blocking issues
 
-- `npm audit` reports advisories on a fresh install; not yet reviewed
+- `npm audit` reports 8 moderate advisories, all in lint tooling under `@typescript-eslint`;
+  production dependencies report 0 (`npm audit --omit=dev`, 2026-11-06)

@@ -2,27 +2,29 @@
 
 ## Start here
 
-**State:** Rebuild on the `rebuild` branch. Next.js 16 on fleet v3.8.0. Design locked; the core
-kit and signature components are built (`/kit`, development only). The home page is built on
-`rebuild` from `docs/design/home.html` and the owner's approved copy in `src/content/`.
-**Next:** Ready to release on the owner's `git CPR`. `master` auto-deploys to
-tanveersingh22.vercel.app and tanveer.truqorun.com; he decides whether the second stays.
-**Blocked on:** nothing on the agent's side.
-**Don't trust:** `about-tanveer.md` on the current portfolio: it says React Three Fiber, but the live
-site is `master` here, with no three.js.
+**State:** The rebuild is released on the owner's `git CPR max`, 2026-11-06: `master` was
+fast-forwarded to `rebuild`. A one-page Dragon Ball Z portfolio built from `docs/design/home.html`
+and the copy in `src/content/`, with a working contact form. *Released* section has what was checked.
+**Next:** The owner tries holding the send button and the beam on the live site (Open item 1).
+**Blocked on:** nothing.
+**Don't trust:** *Confidence and gaps*, below. Also `about-tanveer.md` on the old portfolio: it says
+React Three Fiber, but that site was this repo's `master`, with no three.js.
 
 > **Things that will save a session:** in Git Bash, `npx`/`npm` after a `cd` fails on the
 > owner's `fnm` hook — run from the project root. The scratchpad path is too long for
 > `create-next-app` on Windows. Mockups in `public/_mockups/` are cached by the browser — add
-> `?v=N` to reload. The fleet hook blocks `node -e`; put scripts in a file.
+> `?v=N` to reload. The fleet hook blocks `node -e`; put scripts in a file. Restart the dev server
+> after adding a token. Don't test on localhost:3001: a Toll Wiki service worker hijacks it in the
+> browser pane.
 
 ---
 
 ## What this project is
 
 Tanveer Singh's personal portfolio, rebuilt from scratch with an all-out Dragon Ball Z
-homage. Facts come from `E:\Projects\project-plans\plans\portfolio\about-tanveer.md`; every
-visual change goes through a mockup he approves.
+homage: in his words, a glorified resume. Facts come from
+`E:\Projects\project-plans\plans\portfolio\about-tanveer.md` and his own work in `E:\Projects`;
+every visual change goes through a mockup he approves.
 
 ---
 
@@ -32,18 +34,21 @@ visual change goes through a mockup he approves.
 
 | File | What |
 | --- | --- |
-| `motif.html` | The full-page motif mockup (round 2) |
-| `components-core-kit.html` | Core kit options; picks in `decisions.md` |
-| `components-core-kit-revisions.html` | Polished balloon fields; flame-tongue card crest |
-| `components-signature.html` | Aura, scouter, tube, panel, beam options; picks in `decisions.md` |
+| `home.html` | The home page, with the power ladder career and manga ink photo. Its white bar is mockup chrome |
 | `fields-beam.html` | Caption panel fields and impact frame beam, replacing the earlier picks |
+| `components-signature.html` | Aura, scouter, tube, panel, beam options; picks in `decisions.md` |
+| `components-core-kit.html` | Core kit options; picks in `decisions.md` |
+| `components-core-kit-revisions.html` | Balloon fields (replaced by `fields-beam.html`); flame-tongue card crest |
+| `motif.html` | The full-page motif mockup (round 2) |
 | `hero-shootout.html` | The Cyberpunk vs Dragon Ball shootout that chose the motif |
 
-Where `motif.html` and the component picks differ (hard aura, striped beam), the picks win.
+Where they differ, `home.html` wins, then `fields-beam.html`, then the component picks.
 
-**Code:** Next 16.4.3, React 19.3, TS strict, Tailwind v4. Tokens in `@theme` in
+**Code:** Next 16.4.3, React 19.3, TS strict, Tailwind v4. Tokens in `@theme static` in
 `src/app/globals.css`; fonts (Bangers, Barlow, Noto Sans JP 900, Share Tech Mono) via
-`next/font` in `src/app/layout.tsx`; holding page `src/app/page.tsx`. Env checking in
+`next/font` in `src/app/layout.tsx`. The page is `src/app/page.tsx`, composing
+`src/features/home/`; approved copy in `src/content/`. The contact form's Server Action is
+`src/features/home/contact-action.ts`, its schema `src/schemas/contact-schema.ts`. Env checking in
 `src/lib/env.ts` and `src/lib/server-env.ts`. `zod`, `server-only`, `radix-ui`, `motion`. The
 kit is in `src/components/ui/`, its drawn parts in `src/app/motif.css`, its preview at `/kit`
 (404 in production); registry in `components.md`.
@@ -51,41 +56,43 @@ kit is in `src/components/ui/`, its drawn parts in `src/app/motif.css`, its prev
 **Standard:** fleet v3.8.0 — `project-rules.md`, `.claude/skills/`, `.claude/fleet/`,
 `.githooks/pre-commit`, shell-write hook in `.claude/settings.json`.
 
-**Docs:** `CLAUDE.md`, `conventions.md`, `decisions.md`, `design-system.md`, `components.md`,
-this file.
+**Docs:** `README.md`, `CLAUDE.md`, `conventions.md`, `decisions.md`, `design-system.md`,
+`components.md`, `environment.md`, this file.
 
 ---
 
 ## Open items
 
-1. **Vercel Node version** — the project setting says 22.x, `package.json` says 24.x; the `rebuild`
-   previews build. Confirm which it uses and align the setting at release
-2. **Check on the real site after release** — hold to charge the send button, and the beam firing
-   on send
-3. **Reduced motion** — seen only partly; the owner to try the site with the setting on
-4. **Domain** — tanveersingh22.vercel.app, tanveer.truqorun.com (attached now) or
-   `tanveer.tinkertogether.studio`; decide at launch.
-   `NEXT_PUBLIC_SITE_URL` and share metadata follow from it
-5. **Light scheme** — the manga-page scheme needs its own mockup round before light tokens
-6. **Vitest** wired to `npm test`; `contact-schema.ts` is the first thing to test
-7. **Filename lint rule** offered (§NAMING)
-8. **`npm audit`** advisories reviewed
-9. **Propose to fleet-standards:** drop Playwright from §TESTING (`decisions.md`, 2026-11-06)
-10. **Contact rate limit** — none yet; add one if spam arrives
+1. **Try on the live site** — hold to charge the send button, and the beam firing on send
+2. **Reduced motion** — seen only partly; the owner to try the site with the setting on
+3. **Domain** — tanveersingh22.vercel.app and tanveer.truqorun.com serve it now;
+   `tanveer.tinkertogether.studio` is the option. His call. `NEXT_PUBLIC_SITE_URL` and share
+   metadata follow from it
+4. **Vercel Node version** — the project setting says 22.x, `package.json` says 24.x. Align the setting
+5. **Client-side form checks** — §FORMS asks for them too; only the server checks today
+6. **Light scheme** — the manga-page scheme needs its own mockup round before light tokens
+7. **Vitest** wired to `npm test`; `contact-schema.ts` is the first thing to test
+8. **Filename lint rule** offered (§NAMING)
+9. **`npm audit`** — dev tooling only; see *Confidence and gaps*
+10. **Propose to fleet-standards:** drop Playwright from §TESTING (`decisions.md`, 2026-11-06)
+11. **Contact rate limit** — none yet; add one if spam arrives
 
-(Renumbered 2026-11-06: the kit, content files, home page and contact form are done.)
+(Renumbered 2026-11-06, after the release.)
 
 ---
 
 ## Verified this checkpoint, by measurement
 
-- `npm run build`, `npx tsc --noEmit` and `npm run lint` pass clean with the kit — 2026-11-06
+- `npx tsc --noEmit` exit 0, `npm run lint` exit 0, `npm run build` exit 0 (routes `/`, `/_not-found`,
+  `/kit`), at `90480f4`, immediately before this checkpoint — 2026-11-06. No test suite exists
 - `/kit` in the built-in browser at desktop and 375px: no horizontal scroll; dialog traps focus,
   closes on Escape and returns focus; toasts, scouter overload, tube fill, manga panels, beam and
   instant transmission all ran; arrow keys move between tabs. Toast swipe not exercised
 - A production server answers 404 at `/kit` and 200 at `/` — 2026-11-06
-- On Vercel: project `tanveersingh` is linked to this repo; production serves `master` at `0fa3e86`;
-  the `rebuild` preview of `6fecad0` is READY. Previews sit behind Vercel login — 2026-11-06
+- On Vercel: project `tanveersingh` is linked to this repo, and production served `master` at
+  `0fa3e86` before this release. Previews sit behind Vercel login — 2026-11-06
+- All other Vercel variables removed by the owner; only `DISCORD_CONTACT_WEBHOOK_URL` remains, for
+  Production and Preview — read back through the connector, 2026-11-06
 - Home page in the built-in browser at desktop and 375px: no horizontal scroll; hero settles on
   gold; ladder, lab, struggle, work and contact seen; dock tracks and keeps the current section
   in sight. Scouter overload on desktop by measurement
@@ -101,25 +108,62 @@ this file.
   missing at the time)
 - Token utilities render in the browser: `font-display` → Bangers, `text-gold` → `#ffcf1f`,
   body `#0c1233`
-- All 17 token text-on-colour pairs computed with the WCAG 2 formula (`design-system.md`)
+- Token text-on-colour pairs computed with the WCAG 2 formula (`design-system.md`)
 - Every mockup checked in the browser pane at desktop and 375px: no horizontal scroll, no
   console errors
-- `origin/Beta` and `origin/master` contain no three.js (`git show …:package.json`)
+- `origin/Beta` and the old `origin/master` contain no three.js (`git show …:package.json`)
 
 **The mistake worth keeping.** The first round put Dragon Ball **Super** forward; the owner
 rejected it outright. Z won only after a rebuild in cel style. Don't drift back to soft glows.
 
 ---
 
-## Assumed, not verified
+## Tried, declined and deferred
 
-- Reduced motion on the kit — partly measured, see above (the pane cannot emulate it)
+- **shadcn's generated code: removed.** `shadcn init` re-pointed `--color-muted` and the radius scale,
+  forced a white page and added Geist. The kit uses `radix-ui` directly
+- **Speech-balloon fields and the flowing beam: replaced** after the owner saw them built. Text
+  overlapped the jagged error ("It has a very fancy border, but the text overlaps a lot")
+- **Pinned transformation scroll for the career: not used.** It showed one tier at a time and reached
+  Nobility Care last; the mockup kept it for comparison, and he chose the ladder
+- **Testimonials: ruled out** ("we don't need testimonials"). Both quotes stay on the studio's site
+- **Dropped projects:** sudoku-game ("I plan to delete it"), Better Care Supports (no longer active),
+  The Lair of Evil (link dead). **No others added** when offered Jugaad, llm-project-auditor and Velvet
+  Sprout ("none")
+- **Kept private on purpose:** form automation holding participant data, an uncommissioned client demo,
+  the Simetrix dispatch demo, his story and wiki
+- **Playwright: ruled out** ("we actually stopped using playwright long time ago"). Use the built-in
+  browser or Claude in Chrome
+- **Pasting the webhook into chat: declined.** He set it in Vercel
+- **Unanswered:** whether the portfolio should stay on tanveer.truqorun.com; he released without
+  removing it. Whether "Full website design, front and back end" suits both the Truqorun and Simetrix
+  titles: asked, then left as written when he approved the copy
+
+---
+
+## Confidence and gaps
+
+- **Verified:** the *Verified* section above, and the *Released* section below
+- **Assumed:** the release replaces every old route. Old URLs now answer 404; nothing redirects them
+- **Assumed:** the old live site's rollback path. Its Firebase variables are gone, so rebuilding that
+  code would break; an instant rollback to its existing deployment should still work, untested
+- **Untested by a person:** holding to charge, and the beam on send. The hero's two inverted beam
+  frames were never watched in real time, since the pane was hidden
+- **Partly tested:** reduced motion (above); the pane can't emulate it. The scouter at phone width
+- **Not checked:** which Node version Vercel really uses (setting 22.x, `engines` 24.x); performance on
+  a mid-range phone, which §MOTION asks for
+- **`npm audit`:** `--omit=dev` reports 0 vulnerabilities. The full audit reports 8 moderate, in lint
+  tooling under `@typescript-eslint`; its only fix is `--force`, with breaking changes, so not applied
+- **Check first if you come back cold:** the live site's form, by a real message to Discord
 
 ---
 
 ## Session log
 
-### 2026-11-06 — kit built
+### 2026-11-06 — kit, copy, home page, released
+
+Commits `1bb5598` to `90480f4`, plus the checkpoint commit that carries this entry, released to
+`master` on `git CPR max`.
 
 Built the core kit and signature components from the locked designs, with `/kit` as the preview.
 `shadcn init` damaged the tokens and fonts, so its CSS and layout edits were reverted and the kit
@@ -137,7 +181,14 @@ integrator, and wants the site read as a glorified resume. Home page locked and 
 contact form. A stale Toll Wiki service worker sits on localhost:3001 in the browser pane, which
 hijacks anything tested on that port; use another.
 
+Vercel connector settled the live-site question. The owner set the webhook and cleared the old
+variables. A real test message reached #portfolio-submissions; to send it, a 23-hour share link was
+made for that one preview, because the pane can't sign in to Vercel.
+
 ### 2026-11-02 (1st session) — rebuild set up, design locked
+
+**PARTLY RETIRED — balloon fields and the flowing beam replaced by caption panels and the impact
+frame, commit `0f1dd4d`.**
 
 First commit on `rebuild`, pushed (not `master`; nothing deploys).
 

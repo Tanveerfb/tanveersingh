@@ -53,7 +53,7 @@ None.
 | `design-system.md` | [`design-system.md`](./design-system.md) |
 | `components.md` | [`components.md`](./components.md) |
 | `data-model.md` | not needed — no stored entities |
-| `environment.md` | not yet — written when the Discord webhook exists |
+| `environment.md` | [`environment.md`](./environment.md) |
 | `status.md` | [`docs/STATUS.md`](./docs/STATUS.md) |
 | `issues.md` | not yet |
 | `roadmap.md` | not yet |
