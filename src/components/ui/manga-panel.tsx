@@ -6,12 +6,13 @@ import { cn } from "@/lib/class-names";
 
 /** The chapter page: paper gutters, ink text. Its panels slide in when it comes into view. */
 export function MangaPage({ className, children, ...props }: ComponentProps<"div">) {
-  const { ref, reveal } = useReveal<HTMLDivElement>();
+  // A long page may be taller than the screen, so a small part in view is enough to start it.
+  const { ref, reveal } = useReveal<HTMLDivElement>(0.05);
   return (
     <div
       ref={ref}
       data-reveal={reveal}
-      className={cn("group/page grid grid-cols-1 gap-2.5 overflow-hidden bg-paper p-3.5 text-on-paper min-[480px]:grid-cols-2 [&_:focus-visible]:outline-ink", className)}
+      className={cn("group/page grid grid-cols-1 gap-2.5 overflow-hidden bg-paper text-on-paper min-[480px]:grid-cols-2 [&_:focus-visible]:outline-ink", className)}
       {...props}
     >
       {children}
@@ -58,9 +59,9 @@ export function MangaPanelText({ className, ...props }: ComponentProps<"p">) {
 }
 
 /** A wordless action panel: radiating lines and a sound effect. Decoration only. */
-export function MangaActionPanel({ sfx, from = "right", order = 0, wide = false }: PanelMotion & { sfx: string }) {
+export function MangaActionPanel({ sfx, from = "right", order = 0, wide = false, className }: PanelMotion & { sfx: string; className?: string }) {
   return (
-    <div style={panelStyle(from, order)} className={cn(PANEL, "action-lines grid min-h-30 place-items-center", wide && "col-span-full")} aria-hidden="true">
+    <div style={panelStyle(from, order)} className={cn(PANEL, "action-lines grid min-h-30 place-items-center", wide && "col-span-full", className)} aria-hidden="true">
       <SpeedLines />
       <span className="absolute aspect-square w-[46%] rounded-full bg-white" />
       <span className="relative -rotate-6 font-jp text-sfx-lg font-black text-orange [-webkit-text-stroke:3px_var(--color-ink)] [paint-order:stroke_fill]">{sfx}</span>

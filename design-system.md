@@ -84,7 +84,7 @@ directional, not specification):
 | --- | --- | --- |
 | Transformation | Hero | On load: shake, rumble lettering, blue aura, flash, gold form; then the aura leans toward the cursor. Replayable |
 | Ki meter | Fixed, left edge (top bar on phone) | Fills with page scroll; blue, turns gold past the career section |
-| Transformation scroll | Career | Pinned scene; base form → powering up → full power, aura grows per stage |
+| Power ladder | Career | Replaces the pinned transformation scroll (`docs/design/home.html`): every tier visible, highest first |
 | The lab | AI | Blueprint grid, self-drawing AI-core schematic, specimen tubes that fill on view |
 | Beam struggle | Between the lab and the work | Scroll-driven clash; blue pushes through to a white-flash breakthrough |
 | Manga chapter | The work | Paper page, black-bordered panels slide in with speed lines |
@@ -114,6 +114,7 @@ else** (§STYLING).
 | Type sizes | `text-code` 11, `caption` 13, `body-sm` 15; `cel-sm` 17, `cel-tab` 19, `cel` 22, `cel-title` 26, `cel-lg` 28, `cel-xl` 40, `cel-hero` 46–76; `sfx-sm` 30, `sfx` 34, `sfx-lg` 44px; `tracking-cel`, `readout`, `code` | Readouts, small text, display lettering, sound effects |
 | Cel shading | `--cel-stroke-sm/–/lg` (2/4/6px), `shadow-cel-xs/sm/–/lift/lg/press` (2/3/5/7/8/1px offset), `--border-cel` (3px) | Outlined lettering, hard shadows, panel borders |
 | Shape | `radius-none`, `radius-lens`, `radius-tube` | Square by default; the scouter lens and specimen tube shapes |
+| Home page | `color-sky-charging`, `debris`, `clash`, `rival`, `rival-pale`; `text-kicker`, `thesis`, `h2`, `tier`, `name`, `struggle`, `rumble`, `struggle-sfx`; `spacing-hero`, `struggle`, `beam-band`, `ball` | The hero, section titles and the beam struggle |
 | Motion | `ease-snap`, `ease-beam`, `ease-fill`; `--duration-impact-frame` 60 · `press` 120 · `streak-out` 200 · `streak-in` 280 · `flash` 380 · `beam-travel` 420 · `pop` 500 · `slide` 600 · `core` 700 · `beam-charge` 750 · `burst` 900 · `fill` 1400 · `aura` 2600 · `beam` 2900 · `transform` 3000ms; `aura-charge` 800, `scan-lead` 200, `scan-step` 150, `panel-step` 125ms; `--aura-flicker` 70ms | Every animation |
 | Layout | `spacing-nav` 60, `cap` 18, `glass` 210, `crest` 58, `beam` 170–260px; `container-page` 1180px, `dialog` 30rem, `toast` 22.5rem | Nav height, tube and crest parts, content widths |
 

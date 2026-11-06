@@ -14,7 +14,7 @@ type CardProps = ComponentProps<"article"> & {
   highlighted?: boolean;
 };
 
-const CARD = "relative grid gap-2 border-3 border-ink p-5 shadow-cel";
+const CARD = "relative grid content-start gap-2 border-3 border-ink p-5 shadow-cel";
 
 /** The cel card: a hard shadow that deepens on hover. */
 export function Card({ highlighted = false, className, children, ...props }: CardProps) {

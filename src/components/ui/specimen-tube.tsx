@@ -40,7 +40,7 @@ export function SpecimenTube({ code, name, description, status }: SpecimenTubePr
       <div className="tube-cap -mx-1 rounded-md border-3 border-ink shadow-cel-sm" />
       <div className="mt-2.5 border-3 border-ink bg-lab p-4 shadow-cel-sm">
         <span className="font-mono text-code/none tracking-code text-lens">{code}</span>
-        <h3 className="mt-1.5 mb-1 font-display text-cel-title tracking-cel text-paper">{name}</h3>
+        <h3 className="mt-1.5 mb-1 font-display text-cel-title tracking-cel wrap-anywhere text-paper">{name}</h3>
         <p className="m-0 text-sm">{description}</p>
         <span className="mt-2 inline-block bg-lens px-1.75 py-1 font-mono text-code/none tracking-readout text-on-lens">{status}</span>
       </div>

@@ -4,8 +4,8 @@ import { parseEnv } from "@/lib/env";
 
 /** Server-only environment. Never import this from a client component. */
 const serverEnvSchema = z.object({
-  // Discord webhook that receives contact-form enquiries. Optional until the
-  // contact form is built; tighten to required then.
+  // Discord webhook that receives contact-form enquiries. Optional so previews build
+  // without it: unset, the form shows its "not sent" message and logs why.
   DISCORD_CONTACT_WEBHOOK_URL: z.url().optional(),
 });
 

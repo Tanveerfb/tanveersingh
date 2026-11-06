@@ -16,6 +16,11 @@
   --color-dusk: #1e1630; /* the aura stage's mid-tone */
   --color-aura-deep: #3a2a10; /* the warm floor under an aura */
   --color-range: #1b2a6a; /* the sky behind a beam */
+  --color-sky-charging: #17215e; /* the hero's sky before it turns gold */
+  --color-debris: #3b3550; /* rocks rising in the hero */
+  --color-clash: #2a1a3e; /* the glow behind the beam struggle */
+  --color-rival: #a3197a; /* the opposing beam */
+  --color-rival-pale: #ff7ad0;
 
   /* ink and paper */
   --color-ink: #0a0a14;
@@ -81,6 +86,22 @@
   --text-sfx--line-height: 1;
   --text-sfx-lg: 44px;
   --text-sfx-lg--line-height: 1;
+  --text-kicker: 20px;
+  --text-kicker--line-height: 1;
+  --text-thesis: clamp(22px, 2.8vw, 34px);
+  --text-thesis--line-height: 1.15;
+  --text-h2: clamp(44px, 6.4vw, 80px);
+  --text-h2--line-height: 0.95;
+  --text-tier: clamp(36px, 4vw, 50px);
+  --text-tier--line-height: 0.95;
+  --text-name: clamp(66px, 13vw, 176px);
+  --text-name--line-height: 0.84;
+  --text-struggle: clamp(30px, 4.6vw, 54px);
+  --text-struggle--line-height: 1;
+  --text-rumble: clamp(26px, 4vw, 46px);
+  --text-rumble--line-height: 1;
+  --text-struggle-sfx: clamp(40px, 7vw, 90px);
+  --text-struggle-sfx--line-height: 1;
   --tracking-code: 0.12em;
   --text-cel-sm: 17px;
   --text-cel-sm--line-height: 1;
@@ -146,7 +167,11 @@
   --spacing-cap: 18px;
   --spacing-glass: 210px;
   --spacing-crest: 58px;
-  --spacing-beam: clamp(170px, 26vw, 260px);
+  --spacing-beam: clamp(150px, 20vw, 230px);
+  --spacing-hero: min(100svh, 860px);
+  --spacing-struggle: 240vh;
+  --spacing-beam-band: clamp(54px, 9vw, 110px);
+  --spacing-ball: clamp(120px, 18vw, 240px);
   --container-page: 1180px;
   --container-dialog: 30rem;
   --container-toast: 22.5rem;

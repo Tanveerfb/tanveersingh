@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Home page mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Barlow:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@900&family=Share+Tech+Mono&display=swap">
+<style>
+/* Layout: one long scroll — hero, a resume-first about band, career, the lab, a beam struggle,
+   the manga work chapter, the scouter, contact — under a floating capsule dock. Values mirror
+   @theme in src/app/globals.css; components follow the locked picks. */
+:root {
+  color-scheme: dark;
+  --night: #0c1233; --navy: #17215e; --line: #2b3a8f; --dusk: #1e1630; --aura-deep: #3a2a10; --range: #1b2a6a;
+  --ink: #0a0a14; --ink-soft: #4a4860; --ink-quiet: #6a6880; --paper: #fff8e8; --narration: #fffbe0; --thought: #dfe2f2;
+  --text: #f4f1ff; --muted: #b9c0e2; --blue: #1f3fae; --orange: #f47a1f; --ember: #c2410c;
+  --gold: #ffcf1f; --gold-hi: #fff4b8; --ki: #4f8cff; --ki-soft: #8fb0ff; --ki-pale: #bfe0ff;
+  --lens: #39e27e; --lens-dark: #0d2a1a; --lens-text: #d9ffe8; --alarm: #c62828;
+  --lab: #071a1d; --lab-2: #0d2a2e; --print: #4fd6cf; --cap-hi: #5a6278; --cap-lo: #2d3244;
+  --f-display: "Bangers", "Impact", "Arial Black", sans-serif;
+  --f-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+  --f-jp: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --f-mono: "Share Tech Mono", ui-monospace, monospace;
+  --shadow-xs: 2px 2px 0 var(--ink); --shadow-sm: 3px 3px 0 var(--ink); --shadow: 5px 5px 0 var(--ink); --shadow-lg: 8px 8px 0 var(--ink);
+  --ease-snap: cubic-bezier(.2, .9, .1, 1); --ease-fill: cubic-bezier(.3, .7, .2, 1);
+}
+* { box-sizing: border-box; }
+html { overflow-x: clip; }
+body { margin: 0; background: var(--night); color: var(--text); font: 400 17px/1.55 var(--f-body); }
+a { color: inherit; }
+img, canvas, svg { max-width: 100%; }
+button, input, textarea { font: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+.gutter { padding-left: max(44px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 1180px; margin: 0 auto; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.cel { font-family: var(--f-display); letter-spacing: .03em; -webkit-text-stroke: 4px var(--ink); paint-order: stroke fill; text-shadow: 5px 5px 0 var(--ink); }
+.kicker { font: 900 20px/1 var(--f-jp); color: var(--orange); margin: 0 0 8px; }
+.h2 { font-size: clamp(44px, 6.4vw, 80px); font-weight: 400; line-height: .95; margin: 0 0 28px; color: var(--paper); }
+.h2 em { font-style: normal; color: var(--gold); }
+.chip { display: inline-flex; gap: 6px; align-items: baseline; justify-self: start; font: 400 16px/1 var(--f-display); letter-spacing: .05em; padding: 6px 12px 5px; background: var(--ink); color: var(--paper); clip-path: polygon(6% 0, 100% 0, 94% 100%, 0 100%); }
+.chip b { font: 900 13px/1 var(--f-jp); color: var(--gold); }
+.btn { display: inline-block; font: 400 22px/1 var(--f-display); letter-spacing: .05em; text-decoration: none; padding: 12px 20px 10px; color: var(--ink); background: var(--gold); border: 3px solid var(--ink); box-shadow: var(--shadow); transition: translate 120ms var(--ease-snap), box-shadow 120ms; }
+.btn:hover { translate: -2px -2px; box-shadow: 7px 7px 0 var(--ink); }
+.btn:active { translate: 3px 3px; box-shadow: 1px 1px 0 var(--ink); }
+.btn.blue { background: var(--blue); color: #fff; }
+.btn.ghost { background: transparent; color: var(--paper); border-color: var(--line); box-shadow: none; font-size: 17px; padding: 8px 14px 7px; }
+.btn.ghost:hover { translate: none; border-color: var(--gold); color: var(--gold); }
+
+/* ---------- mockup controls: not part of the design ---------- */
+.mock { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; padding-block: 10px; background: #fff; color: #111; font: 600 13px/1.3 system-ui, sans-serif; position: relative; z-index: 50; }
+.mock span { font-weight: 800; margin-right: 4px; }
+.mock button { background: #eee; color: #111; border: 1px solid #888; padding: 5px 9px; }
+.mock button[aria-pressed="true"] { background: #111; color: #fff; }
+
+/* ---------- capsule dock + ki meter ---------- */
+.dock { position: fixed; left: 50%; bottom: max(14px, env(safe-area-inset-bottom, 0px)); translate: -50% 0; z-index: 40; display: flex; gap: 4px; padding: 6px; max-width: calc(100% - 20px); overflow-x: auto; scrollbar-width: none; background: var(--paper); border: 3px solid var(--ink); border-radius: 999px; box-shadow: var(--shadow); }
+.dock a { font: 400 17px/1 var(--f-display); letter-spacing: .05em; text-decoration: none; color: var(--ink); white-space: nowrap; padding: 9px 13px; border: 2px solid transparent; border-radius: 999px; }
+.dock a:hover { border-color: var(--ink); }
+.dock a[aria-current="true"] { background: var(--ember); color: #fff; border-color: var(--ink); }
+.dock a.mk { background: var(--ink); color: var(--gold); }
+.dock :focus-visible { outline-color: var(--ink); outline-offset: -3px; }
+.ki-m { position: fixed; z-index: 24; left: 12px; top: 24px; bottom: 24px; width: 14px; border: 3px solid var(--ink); background: var(--navy); box-shadow: var(--shadow-sm); }
+.ki-m i { position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--p, 0) * 100%); background: linear-gradient(0deg, var(--ki), var(--ki-pale)); }
+.ki-m.gold i { background: linear-gradient(0deg, var(--orange), var(--gold), var(--gold-hi)); }
+.it { position: fixed; inset: 0; z-index: 30; pointer-events: none; opacity: 0; background: repeating-linear-gradient(90deg, transparent 0 22px, color-mix(in srgb, var(--paper) 70%, transparent) 22px 24px), color-mix(in srgb, var(--paper) 25%, transparent); }
+.it.out { animation: it-out 200ms ease-in both; }
+.it.in { animation: it-in 280ms ease-out both; }
+@keyframes it-out { 0% { opacity: 0; transform: scaleX(1.4); } 100% { opacity: 1; transform: scaleX(1); } }
+@keyframes it-in { 0% { opacity: 1; transform: scaleY(1); } 100% { opacity: 0; transform: scaleY(1.6); } }
+
+/* ---------- hero ---------- */
+.hero { position: relative; overflow: hidden; isolation: isolate; min-height: min(100svh, 860px); display: grid; align-items: center; background: radial-gradient(90% 70% at 50% 62%, var(--navy) 0%, var(--night) 70%); }
+.hero.gold { background: radial-gradient(70% 60% at 50% 42%, #5a3a0c 0%, var(--dusk) 48%, var(--night) 82%); }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
+.hero .lines { position: absolute; inset: -30%; z-index: -2; opacity: 0; background: repeating-conic-gradient(from 0deg at 50% 42%, color-mix(in srgb, var(--gold-hi) 30%, transparent) 0deg 1deg, transparent 1deg 7deg); -webkit-mask: radial-gradient(circle at 50% 42%, transparent 0 22%, #000 46%); mask: radial-gradient(circle at 50% 42%, transparent 0 22%, #000 46%); }
+.hero.gold .lines { animation: lines 900ms var(--ease-snap) both; }
+@keyframes lines { 0% { opacity: 0; transform: scale(1.3); } 30% { opacity: 1; } 100% { opacity: .4; transform: scale(1); } }
+.flash { position: absolute; inset: 0; z-index: 6; pointer-events: none; background: var(--paper); opacity: 0; }
+.hero.flash-on .flash { animation: flash 380ms ease-out both; }
+@keyframes flash { 0% { opacity: .95; } 100% { opacity: 0; } }
+.hero.shake .stage { animation: shake 90ms linear 10; }
+@keyframes shake { 25% { transform: translate(-4px, 2px); } 50% { transform: translate(3px, -3px); } 75% { transform: translate(-2px, -1px); } }
+.stage { display: grid; justify-items: center; text-align: center; padding-block: 48px 92px; }
+.rumble { font: 900 clamp(26px, 4vw, 46px)/1 var(--f-jp); color: var(--gold); -webkit-text-stroke: 2px var(--ink); paint-order: stroke fill; text-shadow: 3px 3px 0 var(--ink); rotate: -4deg; user-select: none; }
+.eyebrow { font: 800 13px/1.25 var(--f-body); letter-spacing: .14em; text-transform: uppercase; color: #fff; background: var(--ember); padding: 7px 12px; border: 2px solid var(--ink); box-shadow: var(--shadow-sm); margin: 12px 0 18px; }
+.name { font-size: clamp(66px, 13vw, 176px); font-weight: 400; line-height: .84; margin: 0; text-transform: uppercase; color: var(--paper); -webkit-text-stroke: 6px var(--ink); text-shadow: 7px 7px 0 var(--ink); transition: color 200ms; }
+.name span { display: block; color: var(--ki-soft); transition: color 200ms; }
+.hero.gold .name { color: var(--gold); }
+.hero.gold .name span { color: var(--orange); }
+.thesis { font: 800 clamp(22px, 2.8vw, 34px)/1.15 var(--f-body); margin: 26px 0 8px; text-wrap: balance; text-shadow: 2px 2px 0 var(--ink); }
+.roles { margin: 0 0 24px; color: var(--text); max-width: 64ch; text-shadow: 1px 1px 0 var(--ink); }
+.roles b { display: block; }
+.ctas { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; align-items: center; }
+
+/* ---------- about: the resume at a glance ---------- */
+.about { padding-block: 64px; border-top: 4px solid var(--ink); }
+.about .grid { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 44px; align-items: center; }
+.photo { position: relative; rotate: -1.5deg; border: 4px solid var(--ink); box-shadow: var(--shadow-lg); background: #fff; padding: 8px; }
+.photo .frame { position: relative; overflow: hidden; aspect-ratio: 4 / 5; background: var(--ink); }
+.photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
+body[data-photo="ink"] .photo img { filter: grayscale(1) contrast(1.45) brightness(1.08); }
+body[data-photo="ink"] .photo .frame::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 1.5px 1.5px, color-mix(in srgb, var(--ink) 55%, transparent) 1.1px, transparent 1.7px) 0 0 / 5px 5px; mix-blend-mode: multiply; }
+.photo .sfx { position: absolute; right: -14px; bottom: -14px; font: 900 34px/1 var(--f-jp); color: var(--orange); -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; rotate: -8deg; }
+.facts { display: grid; gap: 18px; margin: 0; }
+.facts > div { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 14px; align-items: baseline; border-bottom: 2px dashed var(--line); padding-bottom: 14px; }
+.facts dt { font: 400 20px/1 var(--f-display); letter-spacing: .05em; color: var(--gold); }
+.facts dd { margin: 0; font-size: 19px; font-weight: 600; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ---------- beam ---------- */
+.range { position: relative; height: clamp(150px, 20vw, 230px); border-block: 4px solid var(--ink); overflow: hidden; background: radial-gradient(60% 80% at 16% 50%, var(--range), var(--night) 70%); }
+.range canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* ---------- career: power ladder ---------- */
+.career { padding-block: 72px 56px; }
+body[data-career="scroll"] .ladder, body[data-career="ladder"] .forms { display: none; }
+.tier { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 26px; padding-block: 26px; border-top: 2px dashed var(--line); }
+.tier-h { position: sticky; top: 24px; align-self: start; }
+.tier-h p { margin: 0; font-size: clamp(36px, 4vw, 50px); line-height: .95; color: var(--paper); }
+.tier-h .pips { display: flex; gap: 4px; margin-top: 12px; }
+.tier-h .pips i { width: 26px; height: 9px; border: 2px solid var(--ink); background: var(--line); }
+.tier[data-level="3"] .tier-h p { color: var(--gold); }
+.tier[data-level="3"] .pips i { background: var(--gold); }
+.tier[data-level="2"] .tier-h p { color: var(--ki-soft); }
+.tier[data-level="2"] .pips i:nth-child(-n+2) { background: var(--ki); }
+.tier[data-level="1"] .pips i:nth-child(1) { background: var(--muted); }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; align-items: start; }
+.tier[data-level="3"] .cards { padding-top: 40px; row-gap: 62px; align-items: stretch; }
+.card { position: relative; isolation: isolate; display: grid; gap: 7px; align-content: start; background: var(--navy); border: 3px solid var(--ink); box-shadow: var(--shadow); padding: 18px 20px; transition: translate 120ms var(--ease-snap), box-shadow 120ms; }
+.card:hover { translate: -3px -3px; box-shadow: var(--shadow-lg); }
+.card h3 { font: 400 26px/1.02 var(--f-display); letter-spacing: .03em; margin: 0; color: var(--paper); }
+.card .meta { margin: 0; font-size: 14px; line-height: 1.35; color: var(--muted); }
+.card p { margin: 0; font-size: 16px; line-height: 1.45; }
+.card.max { background: linear-gradient(180deg, var(--aura-deep), var(--navy) 75%); }
+.crest { position: absolute; left: -4px; width: calc(100% + 8px); bottom: calc(100% - 6px); height: 58px; z-index: -1; pointer-events: none; overflow: visible; }
+.crest path { transform-origin: 50% 100%; transform-box: fill-box; }
+.crest path:nth-child(1) { fill: var(--orange); } .crest path:nth-child(2) { fill: var(--gold); } .crest path:nth-child(3) { fill: var(--gold-hi); }
+.card.max:hover .crest path:nth-child(1) { animation: sway 1.4s ease-in-out infinite alternate; }
+.card.max:hover .crest path:nth-child(2) { animation: sway 1.1s ease-in-out infinite alternate-reverse; }
+.card.max:hover .crest path:nth-child(3) { animation: sway .9s ease-in-out infinite alternate; }
+@keyframes sway { 0% { transform: skewX(-6deg) scaleY(.94); } 100% { transform: skewX(6deg) scaleY(1.08); } }
+
+/* ---------- career: transformation scroll (the locked behaviour, for comparison) ---------- */
+.forms { position: relative; height: 330vh; }
+.forms .sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 24px; }
+.scene { position: relative; height: 100%; display: grid; place-items: center; text-align: center; }
+.scene canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.scene > div { position: relative; }
+.scene .h2 { margin: 0; }
+.forms[data-stage="2"] .scene .h2 { color: var(--gold); }
+.scene .step { display: inline-block; font: 400 14px/1.2 var(--f-mono); color: var(--paper); background: var(--ink); padding: 7px 10px; margin-top: 14px; }
+.groups { position: relative; height: 100%; }
+.group { position: absolute; inset: 0; display: grid; align-content: center; gap: 16px; opacity: 0; translate: 0 40px; transition: opacity 320ms, translate 420ms var(--ease-snap); pointer-events: none; padding-bottom: 60px; }
+.forms[data-stage="0"] .group[data-g="0"], .forms[data-stage="1"] .group[data-g="1"], .forms[data-stage="2"] .group[data-g="2"] { opacity: 1; translate: none; pointer-events: auto; }
+.group[data-g="2"] { gap: 66px; }
+
+/* ---------- the lab ---------- */
+.labs { background: linear-gradient(90deg, color-mix(in srgb, var(--print) 10%, transparent) 1px, transparent 1px) 0 0 / 32px 32px, linear-gradient(0deg, color-mix(in srgb, var(--print) 10%, transparent) 1px, transparent 1px) 0 0 / 32px 32px, var(--lab); padding-block: 80px; border-block: 4px solid var(--ink); }
+.labs .kicker { color: var(--lens); }
+.lab-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: center; margin-bottom: 44px; }
+.lab-top .lede { color: var(--muted); margin: -8px 0 0; max-width: 56ch; }
+.print { border: 2px solid var(--print); padding: 14px; background: color-mix(in srgb, var(--lab-2) 70%, transparent); }
+.print svg { display: block; width: 100%; height: auto; }
+.print text { font: 400 12px var(--f-mono); fill: var(--print); }
+.print .hot { fill: var(--gold); }
+.draw { stroke-dasharray: 900; }
+.js .labs:not(.seen) .draw { stroke-dashoffset: 900; }
+.labs.seen .draw { animation: draw 1.8s ease-out both; }
+@keyframes draw { from { stroke-dashoffset: 900; } to { stroke-dashoffset: 0; } }
+.tubes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.tube { display: grid; grid-template-rows: 18px 210px 18px 1fr; }
+.cap { background: linear-gradient(180deg, var(--cap-hi), var(--cap-lo)); border: 3px solid var(--ink); border-radius: 6px; margin: 0 -4px; box-shadow: var(--shadow-sm); }
+.glass { position: relative; isolation: isolate; overflow: hidden; border-inline: 3px solid var(--ink); background: var(--lab-2); }
+.glass::after { content: ""; position: absolute; inset-block: 0; left: 14%; width: 8%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent); }
+.liq { position: absolute; inset-inline: 0; bottom: 0; height: 100%; z-index: -1; background: linear-gradient(180deg, color-mix(in srgb, var(--lens) 65%, transparent), color-mix(in srgb, var(--lens) 25%, transparent)); }
+.core { position: absolute; left: 50%; top: 46%; width: 64px; height: 64px; translate: -50% -50%; border-radius: 50%; border: 3px solid var(--ink); background: radial-gradient(circle at 38% 35%, #fff 0 12%, var(--gold-hi) 14% 30%, var(--gold) 32% 60%, var(--orange) 62%); }
+.js .tube:not(.full) .liq { height: 0; }
+.js .tube:not(.full) .core { scale: 0; }
+.tube.full .liq { transition: height 1.4s var(--ease-fill); }
+.tube.full .core { transition: scale 700ms var(--ease-snap) 900ms; }
+.tube:hover .core { animation: bob 1.6s ease-in-out infinite alternate; }
+@keyframes bob { from { translate: -50% -56%; } to { translate: -50% -44%; } }
+.bub { position: absolute; bottom: -12px; left: calc(18% + var(--i) * 20%); width: calc(6px + var(--i) * 2px); height: calc(6px + var(--i) * 2px); border-radius: 50%; border: 2px solid rgba(255,255,255,.6); opacity: 0; }
+.tube:hover .bub { animation: bub calc(1.5s + var(--i) * .25s) ease-in calc(var(--i) * .4s) infinite; }
+@keyframes bub { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: .9; } 100% { transform: translateY(-240px); opacity: 0; } }
+.plate { margin-top: 10px; border: 3px solid var(--ink); background: var(--lab); box-shadow: var(--shadow-sm); padding: 16px; display: grid; gap: 6px; align-content: start; }
+.plate .code { font: 400 11px/1 var(--f-mono); letter-spacing: .12em; color: var(--lens); }
+.plate h3 { font: 400 26px/1 var(--f-display); letter-spacing: .03em; margin: 0; color: var(--paper); }
+.plate p { margin: 0; font-size: 15px; line-height: 1.42; }
+.plate .status { justify-self: start; font: 400 11px/1 var(--f-mono); letter-spacing: .1em; padding: 4px 7px; color: var(--ink); background: var(--lens); margin-top: 4px; }
+
+/* ---------- beam struggle ---------- */
+.clash { position: relative; height: 240vh; background: var(--ink); }
+.clash .sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; background: radial-gradient(60% 60% at var(--x, 50%) 50%, #2a1a3e 0%, var(--ink) 70%); }
+.clash .beam { position: absolute; top: 50%; height: clamp(54px, 9vw, 110px); translate: 0 -50%; border: 5px solid var(--ink); }
+.clash .left { left: 0; width: var(--x, 0%); border-left: 0; border-radius: 0 60px 60px 0; background: linear-gradient(180deg, var(--ki) 0 18%, var(--ki-pale) 18% 36%, #fff 36% 64%, var(--ki-pale) 64% 82%, var(--ki) 82%); }
+.clash .right { right: 0; width: calc(100% - var(--x, 100%)); border-right: 0; border-radius: 60px 0 0 60px; background: linear-gradient(180deg, #a3197a 0 18%, #ff7ad0 18% 36%, #fff 36% 64%, #ff7ad0 64% 82%, #a3197a 82%); }
+.clash .ball { position: absolute; top: 50%; left: var(--x, 50%); width: clamp(120px, 18vw, 240px); aspect-ratio: 1; translate: -50% -50%; scale: var(--ball, 0); border-radius: 50%; background: radial-gradient(circle, #fff 0 28%, var(--gold-hi) 30% 46%, var(--gold) 48% 62%, transparent 64%); }
+.clash .ball::after { content: ""; position: absolute; inset: -30%; background: repeating-conic-gradient(var(--gold-hi) 0deg 4deg, transparent 4deg 18deg); -webkit-mask: radial-gradient(circle, transparent 0 34%, #000 36% 50%, transparent 70%); mask: radial-gradient(circle, transparent 0 34%, #000 36% 50%, transparent 70%); }
+.clash .sfx { position: absolute; top: 14%; left: 50%; translate: -50% 0; rotate: -5deg; font: 900 clamp(40px, 7vw, 90px)/1 var(--f-jp); color: var(--gold); -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; text-shadow: 5px 5px 0 #000; opacity: var(--sfx, 0); white-space: nowrap; }
+.clash .capn { position: absolute; bottom: 16%; left: 50%; translate: -50% 0; text-align: center; width: min(90%, 640px); }
+.clash .capn p { margin: 6px 0 0; color: var(--muted); }
+.clash .capn .cel { font-size: clamp(30px, 4.6vw, 54px); color: var(--paper); margin: 0; }
+.clash .white { position: absolute; inset: 0; background: var(--paper); opacity: var(--white, 0); pointer-events: none; }
+
+/* ---------- work: the manga chapter ---------- */
+.saga { background: var(--paper); color: var(--ink); padding-block: 72px; }
+.saga .kicker { color: var(--ember); }
+.saga :focus-visible { outline-color: var(--ink); }
+.tabs { display: flex; overflow-x: auto; scrollbar-width: none; border-bottom: 3px solid var(--ink); margin-bottom: 18px; }
+.tabs button { font: 400 19px/1 var(--f-display); letter-spacing: .05em; white-space: nowrap; color: var(--ink-soft); background: transparent; border: 3px solid transparent; border-bottom: 0; padding: 10px 14px 8px; }
+.tabs button:hover { color: var(--ink); }
+.tabs button[aria-selected="true"] { color: var(--ink); background: var(--gold); border-color: var(--ink); }
+.tabs :focus-visible { outline-offset: -4px; }
+.page { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); grid-auto-flow: dense; gap: 12px; }
+.pn { position: relative; overflow: hidden; display: grid; gap: 8px; align-content: start; min-width: 0; border: 4px solid var(--ink); background: #fff; padding: 18px; grid-column: span var(--s, 3); }
+.pn[hidden] { display: none; }
+.pn h3 { font: 400 clamp(26px, 2.8vw, 36px)/1 var(--f-display); letter-spacing: .03em; margin: 0; }
+.pn p { margin: 0; font-size: 15.5px; line-height: 1.45; }
+.pn .stack { font: 400 12.5px/1.5 var(--f-mono); color: var(--ink-soft); }
+.pn .go { display: flex; flex-wrap: wrap; gap: 4px 14px; font-weight: 700; font-size: 15px; }
+.pn .go a::after { content: " ➜"; }
+.speed { position: absolute; inset: 0; pointer-events: none; opacity: 0; background: repeating-linear-gradient(90deg, transparent 0 16px, color-mix(in srgb, var(--ink) 50%, transparent) 16px 18px); }
+.js .pn:not(.in) { opacity: 0; }
+.pn.in { animation: panel 600ms var(--ease-snap) calc(var(--o, 0) * 90ms) both; }
+.pn.in .speed { animation: speed 600ms ease-out calc(var(--o, 0) * 90ms) both; }
+@keyframes panel { from { opacity: 0; transform: translateX(var(--dx, -60px)); } }
+@keyframes speed { 0% { opacity: .9; } 100% { opacity: 0; } }
+.act { place-items: center; align-content: center; min-height: 130px; background: repeating-conic-gradient(var(--ink) 0deg 1.4deg, #fff 1.4deg 9deg); }
+.act::before { content: ""; position: absolute; width: 46%; aspect-ratio: 1; border-radius: 50%; background: #fff; }
+.act span { position: relative; font: 900 clamp(38px, 4.4vw, 56px)/1 var(--f-jp); color: var(--orange); -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; rotate: -6deg; }
+.endnote { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; align-items: baseline; margin-top: 18px; }
+.endnote .tbc { font: 400 24px/1.1 var(--f-display); letter-spacing: .05em; }
+.endnote .more { font-weight: 600; }
+
+/* ---------- scouter ---------- */
+.scout { padding-block: 80px; }
+.scout .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 36px; align-items: start; }
+.device { position: sticky; top: 30px; }
+.lens { position: relative; overflow: hidden; display: grid; align-content: center; gap: 8px; min-height: 280px; border: 4px solid var(--ink); border-radius: 10px 70px 10px 10px; padding: 26px; background: linear-gradient(160deg, color-mix(in srgb, var(--lens) 55%, transparent), color-mix(in srgb, var(--lens) 22%, transparent)), var(--lens-dark); box-shadow: var(--shadow-lg); font-family: var(--f-mono); color: var(--lens-text); }
+.lens::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent 0 3px, color-mix(in srgb, var(--ink) 12%, transparent) 3px 4px); }
+.lens .what { font: 400 clamp(34px, 4.6vw, 54px)/1 var(--f-display); letter-spacing: .04em; color: #fff; -webkit-text-stroke: 2px var(--lens-dark); paint-order: stroke fill; }
+.lens ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 14px; }
+.lens li::before { content: "▸ "; color: var(--gold); }
+.lens li.read { animation: read 120ms ease-out calc(200ms + var(--i) * 150ms) both; }
+@keyframes read { from { opacity: 0; transform: translateX(-6px); } }
+.boom { position: absolute; top: -40px; right: -10px; width: min(46%, 190px); aspect-ratio: 1.4; display: grid; place-items: center; z-index: 2; pointer-events: none; animation: boom 600ms var(--ease-snap) both; }
+.boom svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.boom span { position: relative; font: 900 clamp(26px, 3.4vw, 40px)/1 var(--f-jp); color: var(--gold); -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; rotate: -8deg; }
+@keyframes boom { 0% { opacity: 0; transform: scale(.4); } 60% { opacity: 1; transform: scale(1.1); } 100% { opacity: 1; transform: scale(1); } }
+.skills { display: grid; gap: 22px; }
+.skills h3 { font: 400 20px/1 var(--f-display); letter-spacing: .05em; color: var(--gold); margin: 0 0 10px; }
+.skills ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.skill { font: 600 15px/1 var(--f-body); color: var(--text); background: var(--navy); border: 2px solid var(--ink); box-shadow: var(--shadow-sm); padding: 10px 12px; cursor: crosshair; }
+.skill:hover, .skill[aria-pressed="true"] { background: var(--lens); color: var(--ink); }
+
+/* ---------- contact: caption-panel fields, charge to send ---------- */
+.contact { padding-block: 80px 110px; border-top: 4px solid var(--ink); background: linear-gradient(180deg, var(--night), #0a0e28); }
+.plain { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 36px; }
+.reach { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+.reach li { display: grid; gap: 3px; }
+.reach span { font: 400 18px/1 var(--f-display); letter-spacing: .05em; color: var(--gold); }
+.reach a { font-weight: 600; overflow-wrap: anywhere; }
+form { display: grid; gap: 16px; position: relative; }
+.fld { display: grid; min-width: 0; }
+.fld label { justify-self: start; position: relative; z-index: 1; font: 400 16px/1 var(--f-display); letter-spacing: .06em; color: var(--paper); background: var(--ink); padding: 6px 12px 4px; transition: background 120ms, color 120ms; }
+.fld:focus-within label { background: var(--gold); color: var(--ink); }
+.box { position: relative; isolation: isolate; margin: 0 8px 8px 0; }
+.box::after { content: ""; position: absolute; inset: 6px -6px -6px 6px; z-index: -1; background: repeating-linear-gradient(90deg, var(--shade, var(--ink)) 0 5px, transparent 5px 8px); transition: inset 120ms var(--ease-snap); }
+.box:focus-within { --shade: var(--gold); }
+.box:focus-within::after { inset: 8px -8px -8px 8px; }
+.box input, .box textarea { display: block; width: 100%; color: var(--ink); background: var(--paper); border: 3px solid var(--ink); border-radius: 0; padding: 12px 14px; color-scheme: light; resize: vertical; }
+.box textarea { min-height: 120px; }
+.box ::placeholder { color: var(--ink-quiet); }
+.box input:focus, .box textarea:focus { outline: none; }
+.send-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.send { position: relative; overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none; }
+.send i { position: absolute; left: 0; bottom: 0; height: 6px; width: calc(var(--charge, 0) * 100%); background: var(--ki); }
+.hint { font-size: 14px; color: var(--muted); margin: 0; }
+.fire { position: absolute; left: 0; right: 0; top: 50%; height: 34px; translate: 0 -50%; scale: 0 1; transform-origin: left; pointer-events: none; opacity: 0; border: 4px solid var(--ink); border-radius: 0 30px 30px 0; background: linear-gradient(180deg, var(--ki) 0 18%, var(--ki-pale) 18% 36%, #fff 36% 64%, var(--ki-pale) 64% 82%, var(--ki) 82%); }
+.fire.big { height: 80px; }
+.fire.go { animation: fire 650ms cubic-bezier(.5, 0, .2, 1) both; }
+@keyframes fire { 0% { opacity: 1; scale: 0 1; } 70% { opacity: 1; scale: 1 1; } 100% { opacity: 0; scale: 1 1; } }
+.toast { position: fixed; left: 10px; right: 10px; margin-left: auto; bottom: 88px; z-index: 45; display: grid; gap: 4px; max-width: 360px; font: 400 14px/1.45 var(--f-mono); color: var(--lens-text); background: color-mix(in srgb, var(--lens) 30%, var(--lens-dark)); border: 3px solid var(--ink); border-left: 10px solid var(--lens); box-shadow: var(--shadow-sm); padding: 10px 14px; }
+.toast[hidden] { display: none; }
+.toast b { font-weight: 400; letter-spacing: .1em; color: #fff; }
+.foot { padding-block: 26px 90px; font-size: 13px; color: var(--muted); background: var(--ink); }
+
+/* ---------- phone ---------- */
+@media (max-width: 760px) {
+  .gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); }
+  .ki-m { left: 0; right: 0; top: 0; bottom: auto; width: auto; height: 6px; border: 0; box-shadow: none; }
+  .ki-m i { top: 0; bottom: 0; height: auto; width: calc(var(--p, 0) * 100%); background: linear-gradient(90deg, var(--ki), var(--ki-pale)); }
+  .ki-m.gold i { background: linear-gradient(90deg, var(--orange), var(--gold), var(--gold-hi)); }
+  .name { -webkit-text-stroke: 4px var(--ink); text-shadow: 5px 5px 0 var(--ink); }
+  .about .grid { grid-template-columns: minmax(0, 1fr); gap: 34px; }
+  .photo { width: min(72%, 260px); justify-self: center; }
+  .facts > div { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .tier { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .tier-h { position: static; }
+  .cards { grid-template-columns: minmax(0, 1fr); }
+  .forms .sticky { grid-template-columns: minmax(0, 1fr); grid-template-rows: 28% 72%; gap: 0; }
+  .scene .h2 { font-size: 44px; }
+  .scene .kicker { display: none; }
+  .group { align-content: start; padding-top: 10px; gap: 10px; }
+  .group .card { padding: 12px 14px; }
+  .group .card h3 { font-size: 22px; }
+  .group .card p { font-size: 14px; }
+  .group[data-g="2"] { gap: 58px; padding-top: 50px; }
+  .lab-top, .scout .grid, .plain { grid-template-columns: minmax(0, 1fr); }
+  .tubes { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 14px; }
+  .tube { grid-template-rows: 18px 150px 18px 1fr; }
+  .core { width: 48px; height: 48px; }
+  .plate { padding: 12px; }
+  .plate h3 { font-size: 22px; overflow-wrap: anywhere; }
+  .plate p { font-size: 14px; }
+  .page { grid-template-columns: minmax(0, 1fr); }
+  .pn { grid-column: auto; }
+  .device { position: relative; top: 0; z-index: 1; }
+  .boom { right: 0; }
+}
+
+/* ---------- reduced motion: every sequence shows its final still frame ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .forms { height: auto; }
+  .forms .sticky { position: relative; height: auto; display: block; }
+  .scene { height: 180px; }
+  .groups { height: auto; }
+  .group { position: relative; opacity: 1; translate: none; margin-bottom: 30px; pointer-events: auto; }
+  .clash { height: auto; }
+  .clash .sticky { position: relative; height: 70vh; }
+  .js .pn:not(.in) { opacity: 1; }
+  .js .tube:not(.full) .liq { height: 100%; }
+  .js .tube:not(.full) .core { scale: 1; }
+  .js .labs:not(.seen) .draw { stroke-dashoffset: 0; }
+}
+</style>
+</head>
+<body data-career="ladder" data-photo="ink">
+
+<div class="mock gutter" aria-label="Mockup options, not part of the design">
+  <div><span>Career:</span> <button type="button" data-set="career" data-to="ladder" aria-pressed="true">Power ladder (all visible)</button> <button type="button" data-set="career" data-to="scroll" aria-pressed="false">Transformation scroll (locked mockup)</button></div>
+  <div><span>Photo:</span> <button type="button" data-set="photo" data-to="ink" aria-pressed="true">Manga ink</button> <button type="button" data-set="photo" data-to="colour" aria-pressed="false">Full colour</button></div>
+</div>
+
+<nav class="dock" aria-label="Sections">
+  <a class="mk" href="#top" aria-label="Back to the top" data-it>TS</a>
+  <a href="#forms" data-it data-track>Forms</a>
+  <a href="#lab" data-it data-track>Lab</a>
+  <a href="#work" data-it data-track>Work</a>
+  <a href="#scouter" data-it data-track>Scouter</a>
+  <a href="#contact" data-it data-track>Contact</a>
+</nav>
+<div class="ki-m" id="ki" aria-hidden="true"><i></i></div>
+<div class="it" id="it" aria-hidden="true"></div>
+
+<main id="top">
+  <section class="hero gutter" id="hero" aria-label="Introduction">
+    <div class="lines" aria-hidden="true"></div>
+    <canvas id="hero-aura" aria-hidden="true"></canvas>
+    <div class="flash" aria-hidden="true"></div>
+    <div class="wrap stage">
+      <div class="rumble" aria-hidden="true">ゴゴゴゴ</div>
+      <p class="eyebrow">Sydney · Web developer and AI integrator</p>
+      <h1 class="name cel" id="name">Tanveer<span>Singh</span></h1>
+      <p class="thesis">Websites, platforms and practical AI.</p>
+      <p class="roles"><b>Developer Programmer at Nobility Care Australia.</b><b>Head of Studio at Tinker Together.</b> I build websites and web platforms for organisations that want something made for them, not assembled from a template, and I add AI where it earns its place. Right now I'm also exploring game engines, starting with Godot.</p>
+      <div class="ctas">
+        <a class="btn" href="#work" data-it>See my work</a>
+        <a class="btn blue" href="#contact" data-it>Get in touch</a>
+        <button type="button" class="btn ghost" id="replay">Power up again</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="about gutter" aria-label="About">
+    <div class="wrap grid">
+      <div class="photo"><div class="frame"><img src="/images/profile.png" alt="Tanveer Singh"></div><span class="sfx" aria-hidden="true">ドン</span></div>
+      <dl class="facts">
+        <div><dt>Based in</dt><dd>Sydney, New South Wales, Australia</dd></div>
+        <div><dt>What I do</dt><dd>Web development and AI integration</dd></div>
+        <div><dt>Languages</dt><dd class="tags"><span class="chip">English</span><span class="chip">Hindi</span><span class="chip">Punjabi</span></dd></div>
+        <div><dt>Interests</dt><dd class="tags"><span class="chip">Games and gaming communities</span><span class="chip">Writing</span><span class="chip">Running AI on my own hardware</span></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="forms">
+    <div class="ladder career gutter"><div class="wrap">
+      <p class="kicker">変身 · Transformations</p>
+      <div id="ladder"></div>
+    </div></div>
+    <div class="forms gutter" id="forms-scroll" data-stage="0">
+      <div class="wrap sticky">
+        <div class="scene"><canvas id="forms-aura" aria-hidden="true"></canvas><div><p class="kicker">変身 · Transformations</p><p class="h2 cel" id="form-name">Base form</p><p class="step">keep scrolling to power up</p></div></div>
+        <div class="groups" id="groups"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="range" id="beam" aria-hidden="true"><canvas></canvas></div>
+
+  <section class="labs gutter" id="lab" aria-labelledby="lab-h">
+    <div class="wrap">
+      <div class="lab-top">
+        <div>
+          <p class="kicker">人造人間 · The lab</p>
+          <h2 class="h2 cel" id="lab-h">Built <em>intelligence</em></h2>
+          <p class="lede">I choose hosted or local models per job: Claude first, Gemini second, and local models (Ollama, LM Studio) when material shouldn't leave the building.</p>
+        </div>
+        <div class="print" aria-hidden="true">
+          <svg viewBox="0 0 420 240">
+            <circle class="draw" cx="210" cy="120" r="70" fill="none" stroke="#4fd6cf" stroke-width="2"/>
+            <circle class="draw" cx="210" cy="120" r="40" fill="none" stroke="#ffcf1f" stroke-width="2"/>
+            <path class="draw" d="M140 120 H40 M280 120 H380 M210 50 V16 M210 190 V224 M160 70 L96 30 M260 170 L330 212" stroke="#4fd6cf" stroke-width="1.5" fill="none"/>
+            <path class="draw" d="M190 120 h40 M210 100 v40" stroke="#ffcf1f" stroke-width="2" fill="none"/>
+            <text x="20" y="112">Primary: Claude</text>
+            <text x="296" y="112">Second: Gemini</text>
+            <text x="14" y="24">Offline: Ollama / LM Studio</text>
+            <text x="262" y="232">Pipelines: ComfyUI</text>
+            <text class="hot" x="228" y="14">Core: Vercel AI SDK</text>
+          </svg>
+        </div>
+      </div>
+      <div class="tubes" id="tubes"></div>
+    </div>
+  </section>
+
+  <section class="clash" id="clash" aria-label="Transition to the work">
+    <div class="sticky" id="clash-s">
+      <div class="beam left" aria-hidden="true"></div>
+      <div class="beam right" aria-hidden="true"></div>
+      <div class="ball" aria-hidden="true"></div>
+      <div class="sfx" aria-hidden="true">ゴゴゴゴ</div>
+      <div class="capn gutter"><p class="cel">Pushing through</p><p>Every project is a fight with a deadline. Scroll to win it.</p></div>
+      <div class="white" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <section class="saga gutter" id="work" aria-labelledby="work-h">
+    <div class="wrap">
+      <p class="kicker">第1話 · Chapter one</p>
+      <h2 class="h2 cel" id="work-h">The <em>work</em></h2>
+      <div class="tabs" role="tablist" aria-label="Project groups" id="tabs"></div>
+      <div class="page" id="page" role="tabpanel"></div>
+      <div class="endnote">
+        <p class="more" style="margin:0">More of the studio's work is at <a href="https://tinkertogether.studio">tinkertogether.studio</a>.</p>
+        <p class="tbc" style="margin:0">To be continued…</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="scout gutter" id="scouter" aria-labelledby="scout-h">
+    <div class="wrap grid">
+      <div class="device" id="device">
+        <div class="lens" aria-live="polite">
+          <span id="status">SCOUTER READY</span>
+          <span class="what" id="what">Pick a skill</span>
+          <ul id="lines"><li>1,000+ GitHub contributions in 2026 as of October, counted by GitHub</li></ul>
+        </div>
+      </div>
+      <div>
+        <p class="kicker">スカウター · Scouter</p>
+        <h2 class="h2 cel" id="scout-h">What I <em>fight</em> with</h2>
+        <div class="skills" id="skills"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact gutter" id="contact" aria-labelledby="contact-h">
+    <div class="wrap plain">
+      <div>
+        <p class="kicker">連絡 · Contact</p>
+        <h2 class="h2 cel" id="contact-h">Get in <em>touch</em></h2>
+        <ul class="reach">
+          <li><span>Email</span><a href="mailto:hello@tinkertogether.studio">hello@tinkertogether.studio</a></li>
+          <li><span>LinkedIn</span><a href="https://www.linkedin.com/in/tanveerfb">linkedin.com/in/tanveerfb</a></li>
+          <li><span>GitHub</span><a href="https://github.com/Tanveerfb">github.com/Tanveerfb</a></li>
+        </ul>
+      </div>
+      <form id="form" novalidate>
+        <div class="fld"><label for="f-n">Name</label><div class="box"><input id="f-n" autocomplete="name" placeholder="Your name"></div></div>
+        <div class="fld"><label for="f-e">Email</label><div class="box"><input id="f-e" type="email" autocomplete="email" placeholder="you@example.com"></div></div>
+        <div class="fld"><label for="f-m">Message</label><div class="box"><textarea id="f-m" rows="4" placeholder="What do you need?"></textarea></div></div>
+        <div class="send-row"><button class="btn blue send" id="send" type="submit"><i></i>Send message</button><p class="hint">Hold to charge it up</p></div>
+        <div class="fire" id="fire" aria-hidden="true"></div>
+      </form>
+    </div>
+  </section>
+</main>
+<footer class="foot gutter"><div class="wrap">Tanveer Singh · Sydney. A fan's homage to Dragon Ball Z, with original artwork and no connection to its owners.</div></footer>
+<div class="toast" id="toast" role="status" hidden><b>TRANSMISSION SENT</b><span id="toast-m"></span></div>
+
+<script>
+(() => {
+  document.documentElement.classList.add("js");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const $ = (s) => document.querySelector(s);
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+  const BLUE = ["#2a4fd0", "#8fb0ff", "#e8f0ff"], GOLD = ["#f47a1f", "#ffcf1f", "#fff4b8"];
+
+  // ---------- approved copy, as in src/content ----------
+  const TIERS = [
+    { name: "Full power", level: 3, mark: "全", entries: [
+      { t: "Nobility Care Australia", m: "Developer Programmer · Contract · Feb 2023 – present · Campbelltown, NSW", d: "I built and maintain the public website, the staff portal and the learning platform for this NDIS provider, and I look after the SharePoint and Microsoft 365 setup, including the Power Automate workflows." },
+      { t: "Tinker Together", m: "Head of Studio · Oct 2026 – present · Sydney", d: "My web development and AI studio in Sydney: custom websites, content management back ends, staff portals and learning platforms, with AI where it earns its place." } ] },
+    { name: "Powering up", level: 2, entries: [
+      { t: "Information Technology Consultant", m: "Truqorun · Freelance · Oct 2026 – present · Remote", d: "Full website design, front and back end." },
+      { t: "Information Technology Help Desk Support", m: "Simetrix Digital Technologies · Contract · Jan 2026 – present · Remote", d: "Full website design, front and back end." } ] },
+    { name: "Base form", level: 1, entries: [
+      { t: "Web Developer", m: "Freelance · Mar 2021 – Oct 2026 · Greater Sydney", d: "Websites and web apps for my own clients, until the work became a studio." },
+      { t: "Web Developer Intern", m: "Easylink Finance Australia · Apr 2022 – Jul 2022 · Greater Sydney" },
+      { t: "Bachelor of Information Technology, Computer Programming", m: "Kent Institute Australia · Sep 2018 – Mar 2021" },
+      { t: "Bachelor of Information Technology", m: "La Trobe University, Sydney campus · 2016 – 2018" } ] },
+  ];
+  const TUBES = [
+    ["UNIT · RDX", "Roleodex", "My private AI chat app, built around roles. It runs entirely on local models, and nothing goes to the cloud.", "LOCAL ONLY"],
+    ["UNIT · FLT", "fleet-standards", "My coding standard for AI coding agents: rules, templates and skills, published as a Claude Code plugin.", "PUBLISHED"],
+    ["UNIT · CUT", "Cutscene", "An agent-first video studio on my PC, where a person and an AI agent edit through the same engine. Its Shorts engine has already made its first Short.", "IN PROGRESS"],
+    ["UNIT · AIS", "AI Studio", "Tinker Together's AI work: features where they earn their place, on hosted or local models, and in-house image pipelines on ComfyUI.", "IN USE"],
+  ];
+  const NCA = "Nobility Care Australia", TT = "Tinker Together";
+  const PROJECTS = [
+    { n: "NCA public website", g: NCA, s: 4, d: "Sixteen service pages for an NDIS provider, in light, dark and high-contrast themes. A contrast audit fails the build on any WCAG AA failure, and an admin area runs the blog, news, FAQs, reviews, SIL vacancies and team.", k: "Next.js 16 · TypeScript · Tailwind v4 · SCSS · Firebase · next-intl · Leaflet · Vercel", l: [["nobilitycare.com.au", "https://www.nobilitycare.com.au"]] },
+    { act: "ドン!", g: NCA, s: 2 },
+    { n: "NCA learning platform", g: NCA, s: 3, d: "Staff training with block-based module authoring, learning paths by department, a compliance dashboard with escalations and an append-only audit log, certificates and Word import. First working version in under a week.", k: "Next.js 16 · Tiptap · Firebase · shadcn/ui · Zustand · Zod", l: [["learning.nobilitycare.com.au", "https://learning.nobilitycare.com.au"]] },
+    { n: "NCA staff portal", g: NCA, s: 3, d: "Folder-based document storage, view-only documents that can't be downloaded, user provisioning by invite, and a download and activity log. Internal.", k: "React · Firebase · React Bootstrap · Chart.js" },
+    { n: "NCA Links Hub", g: NCA, s: 2, d: "A staff forms directory behind Microsoft Entra sign-in, limited to company accounts, with favourites. Internal.", k: "Next.js 16 · Firebase · shadcn · Zustand" },
+    { n: "Microsoft 365 automation", g: NCA, s: 4, d: "SharePoint sites for the Supported Independent Living houses, data collection in Microsoft Forms, and Power Automate flows. Internal.", k: "SharePoint · Forms · Power Automate" },
+    { n: "Tinker Together website", g: TT, s: 2, d: "The studio's site: portfolio, a blog with scheduled publishing and its own admin, and a website brief wizard for new clients.", k: "Next.js 16 · Firebase · Vercel", l: [["tinkertogether.studio", "https://tinkertogether.studio"]] },
+    { n: "Toll", g: TT, s: 4, d: "A turn-based 3v3 team card battler for Windows, now in public beta: a shared hand of merging skill cards, 12 characters, online saves, a self-updating launcher with SHA-256 checks and rollback, and more than 500 automated tests. Its character art comes from my own pipeline on ComfyUI, running locally.", k: "Godot 4.7 · GDScript · Firebase · Python · ComfyUI", l: [["Public beta", "https://github.com/Tanveerfb/toll-beta/releases/latest"], ["Project page", "https://tinkertogether.studio/portfolio/toll"]] },
+    { act: "バン!", g: TT, s: 2 },
+    { n: "Truqorun website", g: TT, s: 4, d: "Site for an India-based agency with partners in India and Australia: a network map, enquiries to Firestore and Discord, and an admin leads list.", k: "Next.js 16 · TypeScript · Tailwind v4 · Firebase", l: [["truqorun.com", "https://truqorun.com"]] },
+    { n: "Phasmo Tourney", g: TT, s: 3, d: "Archive and live scoring for a five-tournament Phasmophobia series, each tournament in its own format.", k: "Next.js · Firebase · React Query · D3 · Chart.js", l: [["phasmo-tourney.vercel.app", "https://phasmo-tourney.vercel.app"]] },
+    { n: "SimetrixDT website", g: TT, s: 3, d: "Site for a digital twin, simulation, SCADA and cybersecurity firm in Parramatta, with an admin CMS for news, use cases and PDF documentation, and a Three.js background.", k: "Next.js · Firebase · Three.js", l: [["simetrixdt.com", "https://www.simetrixdt.com"]] },
+  ];
+  const SKILLS = [
+    ["Web", [["Next.js", ["NCA public website", "NCA learning platform", "Tinker Together website", "Roleodex"], 1], ["React", ["NCA staff portal"]], ["TypeScript", ["NCA public website"]], ["Tailwind CSS", ["NCA public website"]], ["WCAG", ["NCA public website: a contrast audit that fails the build, and three themes"]]]],
+    ["Back end", [["Firebase", ["NCA website, learning platform and staff portal", "Tinker Together website", "Toll's online saves"], 1], ["Zod", ["NCA learning platform"]]]],
+    ["AI", [["Claude", ["First choice for AI work", "Claude Code, with my own published standard"], 1], ["Gemini", ["Second choice for AI work"]], ["Local models", ["Roleodex, on Ollama or LM Studio", "For material that shouldn't leave the building"]], ["Vercel AI SDK", ["Roleodex"]], ["ComfyUI", ["Toll's character art, on my own local pipeline", "Tinker Together's image pipelines"]]]],
+    ["Games (exploring now)", [["Godot 4", ["Toll, in public beta", "More than 500 automated tests"]], ["Python", ["Toll's tooling"]]]],
+    ["Microsoft 365", [["SharePoint", ["NCA's site structure, permissions and SIL house sites"]], ["Power Automate", ["NCA's workflows"]]]],
+  ];
+
+  // ---------- build the data-driven sections ----------
+  function flamePath(w, h, n, k, seed) {
+    let s = seed; const r = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+    const step = w / n; let d = `M0 ${h}`;
+    for (let i = 0; i < n; i++) {
+      const x0 = i * step, x1 = x0 + step, tx = x0 + step * (.35 + r() * .3), ty = h - h * k * (.45 + r() * .55);
+      d += ` C ${x0 + step * .1} ${h * .55}, ${tx - step * .25} ${ty + h * .25}, ${tx} ${ty} C ${tx + step * .2} ${ty + h * .3}, ${x1 - step * .1} ${h * .6}, ${x1} ${h}`;
+    }
+    return d + " Z";
+  }
+  const CREST = `<svg class="crest" viewBox="0 0 400 58" preserveAspectRatio="none" aria-hidden="true"><path d="${flamePath(400, 58, 13, 1, 7)}"/><path d="${flamePath(400, 58, 11, .78, 3)}"/><path d="${flamePath(400, 58, 9, .5, 11)}"/></svg>`;
+  const card = (e, max) => `<article class="card${max ? " max" : ""}">${max ? CREST : ""}<h3>${esc(e.t)}</h3><p class="meta">${esc(e.m)}</p>${e.d ? `<p>${esc(e.d)}</p>` : ""}</article>`;
+  $("#ladder").innerHTML = TIERS.map((t) => `<div class="tier" data-level="${t.level}"><div class="tier-h"><p class="cel">${t.name}</p><div class="pips" aria-hidden="true"><i></i><i></i><i></i></div></div><div class="cards">${t.entries.map((e) => card(e, t.level === 3)).join("")}</div></div>`).join("");
+  $("#groups").innerHTML = [...TIERS].reverse().map((t, i) => `<div class="group" data-g="${i}">${t.entries.map((e) => card(e, t.level === 3)).join("")}</div>`).join("");
+  $("#tubes").innerHTML = TUBES.map(([c, n, d, s], i) => `<article class="tube" style="--o:${i}"><div class="cap"></div><div class="glass" aria-hidden="true"><span class="liq"></span><span class="core"></span>${[0, 1, 2, 3].map((b) => `<i class="bub" style="--i:${b}"></i>`).join("")}</div><div class="cap"></div><div class="plate"><span class="code">${c}</span><h3>${n}</h3><p>${esc(d)}</p><span class="status">${s}</span></div></article>`).join("");
+  const page = $("#page");
+  page.innerHTML = PROJECTS.map((p, i) => p.act
+    ? `<div class="pn act" data-g="${p.g}" style="--s:${p.s};--o:${i % 3};--dx:60px" aria-hidden="true"><div class="speed"></div><span>${p.act}</span></div>`
+    : `<article class="pn" data-g="${p.g}" style="--s:${p.s};--o:${i % 3};--dx:${i % 2 ? "60px" : "-60px"}"><div class="speed"></div><span class="chip"><b aria-hidden="true">${p.g === NCA ? "ド" : "バ"}</b>${p.g}</span><h3>${esc(p.n)}</h3><p>${esc(p.d)}</p><span class="stack">${esc(p.k)}</span>${p.l ? `<span class="go">${p.l.map(([t, h]) => `<a href="${h}">${t}</a>`).join("")}</span>` : ""}</article>`).join("");
+  const TABS = ["All", NCA, TT], tabs = $("#tabs");
+  tabs.innerHTML = TABS.map((t, i) => `<button type="button" role="tab" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}">${t}</button>`).join("");
+  const tabBtns = [...tabs.children];
+  const pick = (b, focus) => {
+    tabBtns.forEach((x) => { x.setAttribute("aria-selected", String(x === b)); x.tabIndex = x === b ? 0 : -1; });
+    if (focus) b.focus();
+    page.querySelectorAll(".pn").forEach((p) => {
+      p.hidden = !(b.textContent === "All" || p.dataset.g === b.textContent);
+      if (!reduce && !p.hidden) { p.classList.remove("in"); void p.offsetWidth; p.classList.add("in"); }
+    });
+  };
+  tabBtns.forEach((b, i) => {
+    b.addEventListener("click", () => pick(b));
+    b.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") pick(tabBtns[(i + 1) % tabBtns.length], true);
+      if (e.key === "ArrowLeft") pick(tabBtns[(i - 1 + tabBtns.length) % tabBtns.length], true);
+    });
+  });
+  $("#skills").innerHTML = SKILLS.map(([g, list]) => `<div><h3>${g}</h3><ul>${list.map(([s]) => `<li><button class="skill" type="button" aria-pressed="false">${s}</button></li>`).join("")}</ul></div>`).join("");
+
+  // ---------- mockup switches ----------
+  document.querySelectorAll("[data-set]").forEach((b) => b.addEventListener("click", () => {
+    document.body.dataset[b.dataset.set] = b.dataset.to;
+    document.querySelectorAll(`[data-set="${b.dataset.set}"]`).forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    onScroll();
+  }));
+
+  // ---------- flowing aura ----------
+  function flowFlame(ctx, b, scale, color, t, phase, lean) {
+    const n = 14; ctx.beginPath();
+    for (let i = 0; i <= 20; i++) { const a = Math.PI - (i / 20) * Math.PI, x = b.cx + Math.cos(a) * b.rx * scale, y = b.cy + Math.sin(a) * b.ry * scale * .55; i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
+    for (let i = 0; i < n; i++) {
+      const a0 = (i / n) * Math.PI, a1 = ((i + 1) / n) * Math.PI, am = (a0 + a1) / 2, up = Math.sin(am), wave = .55 + .45 * Math.sin(t * 2.2 + i * 1.7 + phase);
+      const x1 = b.cx + Math.cos(a1) * b.rx * scale, y1 = b.cy - Math.sin(a1) * b.ry * scale, x0 = b.cx + Math.cos(a0) * b.rx * scale, y0 = b.cy - Math.sin(a0) * b.ry * scale;
+      const tipX = b.cx + Math.cos(am) * b.rx * scale * 1.05 + (lean + Math.sin(t * 1.3 + i) * .25) * up * b.ry * .6, tipY = b.cy - Math.sin(am) * b.ry * scale - up * b.ry * scale * (.5 + 1.1 * wave);
+      ctx.bezierCurveTo(x0, y0 - b.ry * .35 * up, tipX + (x0 - tipX) * .2, tipY + b.ry * .3, tipX, tipY);
+      ctx.bezierCurveTo(tipX + (x1 - tipX) * .2, tipY + b.ry * .3, x1, y1 - b.ry * .35 * up, x1, y1);
+    }
+    ctx.closePath(); ctx.fillStyle = color; ctx.fill();
+  }
+  const layers = (ctx, b, c, t, lean, s = 1) => { [[1.15, .6, 0], [.98, .8, 2], [.78, .7, 4]].forEach(([k, al, ph], i) => { ctx.globalAlpha = al; flowFlame(ctx, b, k * s, c[i], t, ph, lean); }); ctx.globalAlpha = 1; };
+  function setup(cv) { const ctx = cv.getContext("2d"); return { ctx, cv, w: 0, h: 0, fit() { const r = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2); this.w = r.width; this.h = r.height; cv.width = Math.max(1, r.width * d); cv.height = Math.max(1, r.height * d); ctx.setTransform(d, 0, 0, d, 0, 0); } }; }
+
+  // ---------- hero: transformation on load, then the aura leans toward the cursor ----------
+  const hero = $("#hero"), H = setup($("#hero-aura")), nameEl = $("#name");
+  let hb, hGold = false, lean = 0, hRaf = 0, hUntil = 0, t0 = 0, rocks = [], prev = 0;
+  const heroBox = () => { H.fit(); const r = hero.getBoundingClientRect(), n = nameEl.getBoundingClientRect(); hb = { cx: n.left - r.left + n.width / 2, cy: n.top - r.top + n.height * .55, rx: Math.min(H.w * .48, n.width * .62), ry: n.height * .58 }; };
+  const makeRocks = () => { rocks = Array.from({ length: Math.round(H.w / 90) }, () => { const s = 6 + Math.random() * 14; return { x: Math.random() * H.w, y: H.h - Math.random() * 40, v: .02 + Math.random() * .05, rot: Math.random() * 3, shape: [[-s, 0], [-s * .4, -s * .8], [s * .6, -s * .6], [s, s * .2], [s * .2, s * .8], [-s * .7, s * .5]] }; }); };
+  const heroFrame = (now) => {
+    const dt = prev ? now - prev : 16; prev = now;
+    if (!hGold && now - t0 > 900) { hGold = true; hero.classList.add("gold", "flash-on"); }
+    const c = H.ctx; c.clearRect(0, 0, H.w, H.h); layers(c, hb, hGold ? GOLD : BLUE, (now - t0) / 1000, lean);
+    for (const r of rocks) { r.y -= r.v * dt * 2; c.save(); c.translate(r.x, r.y); c.rotate(r.rot); c.beginPath(); r.shape.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); c.closePath(); c.fillStyle = "#3b3550"; c.fill(); c.lineWidth = 2.5; c.strokeStyle = "#0a0a14"; c.stroke(); c.restore(); }
+    if (now < hUntil) hRaf = requestAnimationFrame(heroFrame); else { hRaf = 0; prev = 0; hero.classList.remove("shake"); }
+  };
+  const runHero = (ms) => { hUntil = Math.max(hUntil, performance.now() + ms); if (!hRaf) hRaf = requestAnimationFrame(heroFrame); };
+  function powerUp() {
+    hero.classList.remove("gold", "flash-on", "shake"); void hero.offsetWidth; heroBox(); makeRocks();
+    if (reduce) { hGold = true; hero.classList.add("gold"); layers(H.ctx, hb, GOLD, 2, 0); return; }
+    hGold = false; hero.classList.add("shake"); t0 = performance.now(); hUntil = 0; runHero(3000);
+  }
+  hero.addEventListener("pointermove", (e) => { if (reduce || !hGold) return; const r = hero.getBoundingClientRect(); lean = clamp((e.clientX - r.left - hb.cx) / (r.width / 2), -1, 1) * .6; rocks = []; runHero(500); });
+  hero.addEventListener("pointerleave", () => { lean = 0; if (!reduce && hGold) runHero(400); });
+  $("#replay").addEventListener("click", powerUp);
+
+  // ---------- career as transformation scroll ----------
+  const formsS = $("#forms-scroll"), F = setup($("#forms-aura")), formName = $("#form-name");
+  const STAGES = [["Base form", BLUE, .5], ["Powering up", BLUE, .8], ["Full power", GOLD, 1.1]];
+  let fStage = -1, fRaf = 0, fUntil = 0;
+  const fFrame = (now) => { F.fit(); const b = { cx: F.w / 2, cy: F.h * .56, rx: Math.min(F.w * .42, 300), ry: Math.min(F.h * .2, 120) }, st = STAGES[Math.max(0, fStage)]; F.ctx.clearRect(0, 0, F.w, F.h); layers(F.ctx, b, st[1], now / 1000, 0, st[2]); fRaf = now < fUntil ? requestAnimationFrame(fFrame) : 0; };
+  function onForms() {
+    if (document.body.dataset.career !== "scroll") return;
+    const r = formsS.getBoundingClientRect(), p = clamp(-r.top / Math.max(1, r.height - innerHeight)), s = p < .34 ? 0 : p < .67 ? 1 : 2;
+    if (s !== fStage) { fStage = s; formsS.dataset.stage = String(s); formName.textContent = STAGES[s][0]; }
+    if (r.top < innerHeight && r.bottom > 0) { fUntil = performance.now() + (reduce ? 0 : 500); if (!fRaf) fRaf = requestAnimationFrame(fFrame); }
+  }
+
+  // ---------- beam struggle, driven by scroll ----------
+  const clash = $("#clash"), cs = $("#clash-s");
+  function onClash() {
+    const r = clash.getBoundingClientRect(), p = reduce ? .55 : clamp(-r.top / Math.max(1, r.height - innerHeight));
+    let x, ball, sfx = 0, white = 0;
+    if (p < .22) { const k = p / .22; x = 50; ball = k * .6; cs.style.setProperty("--grow", k); }
+    else if (p < .72) { const k = (p - .22) / .5; x = 50 - 14 * Math.sin(k * Math.PI) + Math.sin(k * 40) * 2; ball = .8 + .2 * Math.sin(k * 30); sfx = 1; }
+    else { const k = clamp((p - .72) / .2); x = 50 + 50 * k * k; ball = 1 - k * .6; white = p > .9 ? clamp((p - .9) / .06) * (1 - clamp((p - .96) / .04)) : 0; }
+    cs.style.setProperty("--x", x + "%"); cs.style.setProperty("--ball", ball.toFixed(3)); cs.style.setProperty("--sfx", sfx); cs.style.setProperty("--white", white.toFixed(3));
+  }
+
+  // ---------- ki meter, dock state ----------
+  const ki = $("#ki"), track = [...document.querySelectorAll("[data-track]")];
+  function onScroll() {
+    const p = clamp(scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight));
+    ki.style.setProperty("--p", p.toFixed(3)); ki.classList.toggle("gold", p > .3);
+    let cur = null; for (const a of track) { const t = document.querySelector(a.getAttribute("href")); if (t && t.getBoundingClientRect().top < innerHeight * .5) cur = a; }
+    track.forEach((a) => a.setAttribute("aria-current", String(a === cur)));
+    if (cur) { const d = cur.parentElement; d.scrollLeft = cur.offsetLeft - (d.clientWidth - cur.offsetWidth) / 2; }
+    onForms(); onClash();
+  }
+  addEventListener("scroll", onScroll, { passive: true });
+
+  // ---------- instant transmission ----------
+  const it = $("#it");
+  document.querySelectorAll("[data-it]").forEach((a) => a.addEventListener("click", (e) => {
+    const target = document.querySelector(a.getAttribute("href")); if (!target) return;
+    e.preventDefault();
+    const jump = () => { target.scrollIntoView({ behavior: "instant", block: "start" }); onScroll(); };
+    if (reduce) { jump(); return; }
+    it.className = "it out";
+    setTimeout(() => { jump(); it.className = "it in"; }, 200);
+    setTimeout(() => { it.className = "it"; }, 500);
+  }));
+
+  // ---------- impact-frame beam ----------
+  const CHARGE = 750, TRAVEL = 420, END = 2900, FRAME = 60;
+  const C = { ink: "#0a0a14", paper: "#fff8e8", ki: "#4f8cff", pale: "#bfe0ff", white: "#ffffff", hi: "#fff4b8", orange: "#f47a1f" };
+  const ease = (p) => 1 - Math.pow(1 - clamp(p), 3);
+  function star(ctx, x, y, r, n, inner, rot) { ctx.beginPath(); for (let i = 0; i < n * 2; i++) { const a = rot + i * Math.PI / n, R = i % 2 ? r * inner : r; ctx.lineTo(x + Math.cos(a) * R, y + Math.sin(a) * R); } ctx.closePath(); }
+  function drawBeam(ctx, w, h, t) {
+    const cy = h / 2, ox = Math.max(h * .3, 44), tip = w - h * .42, or = h * .19, k = ease((t - CHARGE) / TRAVEL), hx = ox + (tip - ox) * k, dt = t - CHARGE;
+    const flash = dt >= 0 && dt < FRAME ? 1 : dt >= FRAME && dt < FRAME * 2 ? 2 : 0;
+    if (flash) { ctx.fillStyle = flash === 1 ? C.ink : C.paper; ctx.fillRect(0, 0, w, h); }
+    if (dt > 0) { ctx.fillStyle = flash === 2 ? C.ink : C.paper; ctx.globalAlpha = flash ? 1 : .22; const R = w * 1.3; for (let i = 0; i < 34; i++) { const a = i / 34 * Math.PI * 2 + .08, s = .022 + (i % 3) * .01; ctx.beginPath(); ctx.moveTo(ox + Math.cos(a) * or * 1.5, cy + Math.sin(a) * or * 1.5); ctx.lineTo(ox + Math.cos(a - s) * R, cy + Math.sin(a - s) * R); ctx.lineTo(ox + Math.cos(a + s) * R, cy + Math.sin(a + s) * R); ctx.closePath(); ctx.fill(); } ctx.globalAlpha = 1; }
+    const ch = t / CHARGE;
+    if (ch < 1) for (let i = 0; i < 16; i++) { const a = i * 2.399, d = (1 - ((ch * 1.6 + i * .13) % 1)) * h * .6 + or * .6; ctx.beginPath(); ctx.arc(ox + Math.cos(a) * d, cy + Math.sin(a) * d * .7, 2.2 + (i % 3), 0, Math.PI * 2); ctx.fillStyle = i % 2 ? C.pale : C.white; ctx.fill(); ctx.lineWidth = 1.5; ctx.strokeStyle = C.ink; ctx.stroke(); }
+    if (k > 0) {
+      const j = t < END - 300 ? Math.sin(t * .05) * 1.2 : 0;
+      (flash === 1 ? [[.23, C.white]] : flash === 2 ? [[.23, C.ink]] : [[.23, C.ki], [.16, C.pale], [.08, C.white]]).forEach(([s, col], i) => { const half = h * s + j, hh = half * (.62 + .38 * ((hx - ox) / (tip - ox))); ctx.beginPath(); ctx.moveTo(ox, cy - half * .62); ctx.lineTo(hx, cy - hh); ctx.arc(hx, cy, hh, -Math.PI / 2, Math.PI / 2); ctx.lineTo(ox, cy + half * .62); ctx.closePath(); ctx.fillStyle = col; ctx.fill(); if (!i && !flash) { ctx.lineWidth = 5; ctx.strokeStyle = C.ink; ctx.stroke(); } });
+      if (!flash) { star(ctx, hx + h * .06, cy, h * .36, 11, .42, .3); ctx.fillStyle = C.hi; ctx.fill(); ctx.lineWidth = 4; ctx.strokeStyle = C.ink; ctx.stroke(); const fs = Math.round(h * .24 * ease((dt - 200) / 160)); if (fs > 3) { ctx.save(); ctx.font = `900 ${fs}px "Noto Sans JP", sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.lineJoin = "round"; ctx.lineWidth = Math.max(3, fs * .12); ctx.strokeStyle = C.ink; ctx.translate(tip - h * .55, h * .19); ctx.rotate(-.1); ctx.strokeText("ドン!", 0, 0); ctx.fillStyle = C.orange; ctx.fillText("ドン!", 0, 0); ctx.restore(); } }
+    }
+    if (!flash) { const r = or * 1.1 * ease(ch); [[1, C.ki], [.66, C.pale], [.36, C.white]].forEach(([s, col], i) => { ctx.beginPath(); ctx.arc(ox, cy, r * s, 0, Math.PI * 2); ctx.fillStyle = col; ctx.fill(); if (!i) { ctx.lineWidth = 5; ctx.strokeStyle = C.ink; ctx.stroke(); } }); }
+  }
+  const bHost = $("#beam"), B = setup(bHost.querySelector("canvas"));
+  let bRaf = 0, bStart = 0;
+  const bPaint = (t) => { B.ctx.clearRect(0, 0, B.w, B.h); drawBeam(B.ctx, B.w, B.h, t); };
+  const bFrame = (now) => { const t = now - bStart; bPaint(Math.min(t, END)); bRaf = t < END ? requestAnimationFrame(bFrame) : 0; };
+  const fireBeam = () => { B.fit(); if (reduce) { bPaint(END); return; } bStart = performance.now(); bRaf = requestAnimationFrame(bFrame); };
+
+  // ---------- reveal on view ----------
+  const io = new IntersectionObserver((es) => es.forEach((en) => {
+    if (!en.isIntersecting) return; const el = en.target; io.unobserve(el);
+    if (el.classList.contains("labs")) el.classList.add("seen");
+    if (el.classList.contains("tube")) setTimeout(() => el.classList.add("full"), (+el.style.getPropertyValue("--o") || 0) * 120);
+    if (el.classList.contains("pn")) el.classList.add("in");
+    if (el === bHost) fireBeam();
+  }), { threshold: .25 });
+  document.querySelectorAll(".labs, .tube, .pn").forEach((el) => io.observe(el));
+
+  // ---------- scouter ----------
+  const device = $("#device"), statusEl = $("#status"), what = $("#what"), lines = $("#lines"), skillBtns = [...document.querySelectorAll(".skill")];
+  const READ = Object.fromEntries(SKILLS.flatMap(([, list]) => list.map(([s, l, o]) => [s, { l, o }])));
+  const BOOM = `<div class="boom" aria-hidden="true"><svg viewBox="0 0 200 140" preserveAspectRatio="none"><polygon points="100,4 116,40 160,14 140,54 196,58 146,78 178,122 124,96 104,136 88,98 30,128 58,82 4,66 56,52 30,12 82,40" fill="#fff4b8" stroke="#0a0a14" stroke-width="3"/></svg><span>ボン!</span></div>`;
+  skillBtns.forEach((b) => b.addEventListener("click", () => {
+    const d = READ[b.textContent];
+    skillBtns.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    device.querySelector(".boom")?.remove();
+    what.textContent = b.textContent; statusEl.textContent = reduce ? "READING COMPLETE" : "SCANNING…";
+    lines.innerHTML = d.l.map((t, i) => `<li class="read" style="--i:${i}">${esc(t)}</li>`).join("");
+    const done = () => { statusEl.textContent = "READING COMPLETE"; if (d.o) device.insertAdjacentHTML("beforeend", BOOM); };
+    if (reduce) done(); else lines.lastElementChild.addEventListener("animationend", done, { once: true });
+  }));
+
+  // ---------- contact: hold to charge, or just click ----------
+  const send = $("#send"), fire = $("#fire"), toast = $("#toast");
+  let charge = 0, chRaf = 0, chStart = 0, charging = false;
+  const chFrame = (now) => { charge = clamp((now - chStart) / 900); send.style.setProperty("--charge", charge.toFixed(3)); if (charging) chRaf = requestAnimationFrame(chFrame); };
+  send.addEventListener("pointerdown", () => { if (reduce) return; charging = true; chStart = performance.now(); chRaf = requestAnimationFrame(chFrame); });
+  const stop = () => { charging = false; cancelAnimationFrame(chRaf); };
+  send.addEventListener("pointerleave", () => { if (charging) { stop(); charge = 0; send.style.setProperty("--charge", "0"); } });
+  $("#form").addEventListener("submit", (e) => {
+    e.preventDefault(); stop();
+    fire.classList.toggle("big", charge >= 1); fire.classList.remove("go"); void fire.offsetWidth; if (!reduce) fire.classList.add("go");
+    charge = 0; send.style.setProperty("--charge", "0");
+    $("#toast-m").textContent = `Message sent. I'll reply to ${$("#f-e").value || "you@example.com"}. (Mockup: nothing was sent.)`;
+    toast.hidden = false; setTimeout(() => { toast.hidden = true; }, 6000);
+  });
+
+  // ---------- boot ----------
+  addEventListener("resize", () => { heroBox(); if (!reduce) runHero(100); if (!bRaf) { B.fit(); bPaint(END); } onScroll(); });
+  document.fonts.ready.then(async () => { await document.fonts.load('900 40px "Noto Sans JP"', "ドン!").catch(() => {}); powerUp(); B.fit(); bPaint(END); io.observe(bHost); onScroll(); });
+})();
+</script>
+</body>
+</html>

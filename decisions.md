@@ -270,3 +270,29 @@ TypeScript checks it at build time. New sections came with the copy: **About**, 
 facts, and **Work tabs** by organisation. Neither has a locked design yet; both come with the home
 page mockup.
 
+---
+
+## 2026-11-06 — Home page locked
+
+**`docs/design/home.html` is the locked home page**, with the **power ladder** for the career and
+the **manga ink** photo. Where it and `motif.html` differ, this wins.
+
+The site is a glorified resume, so the career section drops the motif's pinned transformation
+scroll: that showed one tier at a time and reached Nobility Care last. The ladder shows every role
+and date as you scroll, highest tier first. The transformation moment stays in the hero and the
+beam struggle. An about band sits straight under the hero, and the dock replaces the motif's top bar.
+
+---
+
+## 2026-11-06 — Contact form and how the hero animates
+
+**The form posts through a Server Action to the Discord webhook**, validated with zod on the server
+(§FORMS). A hidden field catches simple bots; there is no rate limit yet. Mentions in visitor text
+are switched off, so nobody can ping the channel. `DISCORD_CONTACT_WEBHOOK_URL` stays optional so
+previews build without it: unset, visitors see the "not sent" message with the studio email, and the
+server logs why. **The beam fires only on a real send**, not on every press, so it never claims
+something that failed.
+
+**The hero's charging look is held by CSS animations**, with the golden form as the resting style.
+A slow load or reduced motion therefore lands on gold rather than depending on script.
+

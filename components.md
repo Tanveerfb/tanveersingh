@@ -31,7 +31,7 @@ primitive exists; everything visible is ours (§SHADCN).
 | File | Exports | Design | Notes |
 | --- | --- | --- | --- |
 | `aura.tsx` | `Aura` | B, flowing flames | Canvas; blue, then gold; leans toward the cursor. New `key` replays |
-| `scouter.tsx` | `Scouter`, `ScouterReading` | A, green lens | Readings passed in: real facts only; `overload` sets off the ボン |
+| `scouter.tsx` | `Scouter`, `ScouterReading` | A, green lens | Lens beside grouped skill buttons; readings passed in: real facts only; `overload` sets off the ボン; `children` sit above the buttons |
 | `specimen-tube.tsx` | `SpecimenTube` | B, capsule chamber | Fills on view; boils on hover |
 | `manga-panel.tsx` | `MangaPage`, `MangaPanel`, `MangaPanelTitle`, `MangaPanelText`, `MangaActionPanel` | A, black and white | Panels slide in with speed lines; `from`, `order`, `wide` |
 | `beam.tsx` | `Beam` | Impact frame (`fields-beam.html`, option B) | Canvas. Fires on view, then rests on its final still. New `key` fires again |
@@ -50,7 +50,19 @@ primitive exists; everything visible is ours (§SHADCN).
 | `src/lib/css-duration.ts` | Reads a duration token in milliseconds, whichever unit the minifier left it in |
 | `src/features/kit-preview/` | The `/kit` page's contents; sample text from the mockups |
 
-## Not built yet
+## Home page — `src/features/home/`
 
-Page-level sequences from `motif.html`, built with the home page: the hero transformation (rumble,
-flash), ki meter, transformation scroll, beam struggle, charge to send.
+Built from `docs/design/home.html`. Only `page.tsx` composes these; a second consumer moves one to
+`components/` (§STRUCTURE).
+
+| File | Job |
+| --- | --- |
+| `hero-section.tsx` | The transformation: resting style is the golden form, CSS holds the charging look |
+| `about-section.tsx` | Photo in manga ink, and the resume facts |
+| `career-section.tsx` | The power ladder, highest tier first |
+| `lab-section.tsx`, `blueprint.tsx` | The AI lab and its self-drawing schematic |
+| `beam-struggle.tsx` | The scroll-driven clash before the work |
+| `work-section.tsx` | The manga chapter, with tabs by organisation |
+| `contact-section.tsx`, `contact-form.tsx`, `contact-action.ts` | Reach details, the charge-to-send form, the Server Action that posts to Discord |
+| `ki-meter.tsx` | Fills with page scroll |
+| `section-heading.tsx` | A section's kicker and cel-lettered title |

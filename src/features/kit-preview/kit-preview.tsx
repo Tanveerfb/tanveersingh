@@ -16,10 +16,8 @@ import { Scouter } from "@/components/ui/scouter";
 import { SpecimenTube } from "@/components/ui/specimen-tube";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ToastProvider } from "@/components/ui/toast";
-import { SKILL_GROUPS } from "@/content/skills";
+import { SKILL_GROUPS, SKILLS_HEADING } from "@/content/skills";
 import { useToast } from "@/hooks/use-toast";
-
-const READINGS = SKILL_GROUPS.flatMap((group) => group.readings);
 
 // Elsewhere this route uses sample text from the locked mockups, to show each state.
 
@@ -184,7 +182,7 @@ export function KitPreview() {
 
         <Band id="signature" title="Aura">
           <Aura key={auraRun} className="h-75 border-2 border-ink">
-            <p className="cel-lettering m-0 text-center font-display text-cel-hero tracking-cel text-gold uppercase">
+            <p data-aura-target className="cel-lettering m-0 mx-auto w-fit text-center font-display text-cel-hero tracking-cel text-gold uppercase">
               Tanveer
               <span className="block text-orange">Singh</span>
             </p>
@@ -197,9 +195,7 @@ export function KitPreview() {
         </Band>
 
         <Band title="Scouter">
-          <div className="max-w-xl">
-            <Scouter readings={READINGS} />
-          </div>
+          <Scouter groups={SKILL_GROUPS} restingLine={SKILLS_HEADING.restingReading} />
         </Band>
 
         <Band title="Specimen tube">
@@ -215,7 +211,7 @@ export function KitPreview() {
         </Band>
 
         <Band title="Manga panel">
-          <MangaPage key={pageRun}>
+          <MangaPage key={pageRun} className="p-3.5">
             <MangaPanel wide>
               <Chip mark="ド" label="Nobility Care Australia" />
               <MangaPanelTitle>NCA public website</MangaPanelTitle>

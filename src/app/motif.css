@@ -26,6 +26,15 @@
     calc(var(--i, 0) * var(--duration-panel-step)) both;
   --animate-bob: bob 1.6s ease-in-out infinite alternate;
   --animate-bubble: bubble calc(1.5s + var(--i, 0) * 0.25s) ease-in calc(var(--i, 0) * 0.4s) infinite;
+  --animate-charging-color: charging-color var(--duration-aura-charge) linear;
+  --animate-charging-layer: charging-layer var(--duration-aura-charge) linear;
+  --animate-shake: shake 90ms linear 10;
+  --animate-flash: flash var(--duration-flash) ease-out var(--duration-aura-charge) forwards;
+  --animate-lines: lines var(--duration-burst) var(--ease-snap) var(--duration-aura-charge) both;
+  --animate-rumble: rumble var(--duration-pop) var(--ease-snap) var(--duration-aura-charge) both;
+  --animate-debris: debris var(--duration-transform) linear calc(var(--i, 0) * -180ms) both;
+  --animate-draw: draw 1.8s ease-out both;
+  --animate-fire: fire 650ms var(--ease-beam) both;
 
   @keyframes cel-spin {
     to {
@@ -140,6 +149,87 @@
       opacity: 0;
     }
   }
+  /* Holds a charging look until the hero's charge ends; the resting style is the golden form. */
+  @keyframes charging-color {
+    from,
+    to {
+      color: var(--charging-color);
+    }
+  }
+  @keyframes charging-layer {
+    from,
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes shake {
+    25% {
+      transform: translate(-4px, 2px);
+    }
+    50% {
+      transform: translate(3px, -3px);
+    }
+    75% {
+      transform: translate(-2px, -1px);
+    }
+  }
+  @keyframes flash {
+    0% {
+      opacity: 0.95;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes lines {
+    0% {
+      opacity: 0;
+      scale: 1.3;
+    }
+    30% {
+      opacity: 1;
+    }
+  }
+  @keyframes rumble {
+    0% {
+      scale: 0.6;
+    }
+    60% {
+      scale: 1.15;
+    }
+  }
+  @keyframes debris {
+    0% {
+      opacity: 1;
+      translate: 0 0;
+    }
+    100% {
+      opacity: 0;
+      translate: 0 -70vh;
+    }
+  }
+  @keyframes draw {
+    from {
+      stroke-dashoffset: 900;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes fire {
+    0% {
+      opacity: 1;
+      scale: 0 1;
+    }
+    70% {
+      opacity: 1;
+      scale: 1 1;
+    }
+    100% {
+      opacity: 0;
+      scale: 1 1;
+    }
+  }
   @keyframes bob {
     from {
       translate: -50% -56%;
@@ -172,6 +262,90 @@
 @utility sfx-lettering {
   -webkit-text-stroke: var(--cel-stroke-sm) var(--color-ink);
   paint-order: stroke fill;
+}
+
+@utility cel-lettering-lg {
+  -webkit-text-stroke: var(--cel-stroke) var(--color-ink);
+  paint-order: stroke fill;
+  text-shadow: 5px 5px 0 var(--color-ink);
+  @media (width >= 48rem) {
+    -webkit-text-stroke-width: var(--cel-stroke-lg);
+    text-shadow: 7px 7px 0 var(--color-ink);
+  }
+}
+
+/* ---------- page layout ---------- */
+/* Leaves room for the ki meter on the left, which becomes a top bar on a phone. */
+@utility gutter {
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  @media (width >= 48rem) {
+    padding-left: max(44px, env(safe-area-inset-left, 0px));
+  }
+}
+@utility accent-gold {
+  & em {
+    font-style: normal;
+    color: var(--color-gold);
+  }
+}
+
+/* ---------- hero ---------- */
+@utility hero-sky-charging {
+  background: radial-gradient(90% 70% at 50% 62%, var(--color-sky-charging) 0%, var(--color-night) 70%);
+}
+@utility hero-lines {
+  background: repeating-conic-gradient(from 0deg at 50% 42%, color-mix(in srgb, var(--color-gold-hi) 30%, transparent) 0deg 1deg, transparent 1deg 7deg);
+  mask: radial-gradient(circle at 50% 42%, transparent 0 22%, #000 46%);
+}
+@utility debris-rock {
+  left: calc(3% + var(--i, 0) * 11%);
+  bottom: 0;
+  width: calc(14px + var(--i, 0) * 2px);
+  height: calc(14px + var(--i, 0) * 2px);
+  background: var(--color-debris);
+  clip-path: polygon(0 40%, 30% 0, 80% 10%, 100% 60%, 60% 100%, 15% 85%);
+}
+
+/* ---------- about ---------- */
+@utility photo-ink {
+  filter: grayscale(1) contrast(1.45) brightness(1.08);
+}
+@utility photo-halftone {
+  background: radial-gradient(circle at 1.5px 1.5px, color-mix(in srgb, var(--color-ink) 55%, transparent) 1.1px, transparent 1.7px) 0 0 / 5px 5px;
+  mix-blend-mode: multiply;
+}
+
+/* ---------- the lab ---------- */
+@utility lab-grid {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--color-print) 10%, transparent) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(0deg, color-mix(in srgb, var(--color-print) 10%, transparent) 1px, transparent 1px) 0 0 / 32px 32px,
+    var(--color-lab);
+}
+@utility blueprint-stroke {
+  stroke-dasharray: 900;
+}
+
+/* ---------- beam struggle ---------- */
+@utility clash-glow {
+  background: radial-gradient(60% 60% at var(--x, 50%) 50%, var(--color-clash) 0%, var(--color-ink) 70%);
+}
+@utility beam-bands {
+  background: linear-gradient(180deg, var(--color-ki) 0 18%, var(--color-ki-pale) 18% 36%, var(--color-white) 36% 64%, var(--color-ki-pale) 64% 82%, var(--color-ki) 82%);
+}
+@utility rival-bands {
+  background: linear-gradient(180deg, var(--color-rival) 0 18%, var(--color-rival-pale) 18% 36%, var(--color-white) 36% 64%, var(--color-rival-pale) 64% 82%, var(--color-rival) 82%);
+}
+@utility clash-ball {
+  background: radial-gradient(circle, var(--color-white) 0 28%, var(--color-gold-hi) 30% 46%, var(--color-gold) 48% 62%, transparent 64%);
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -30%;
+    background: repeating-conic-gradient(var(--color-gold-hi) 0deg 4deg, transparent 4deg 18deg);
+    mask: radial-gradient(circle, transparent 0 34%, #000 36% 50%, transparent 70%);
+  }
 }
 
 /* ---------- shapes ---------- */

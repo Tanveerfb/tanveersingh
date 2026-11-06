@@ -16,7 +16,7 @@ const POINTER_MOVE_RUN_MS = 500;
 const POINTER_LEAVE_RUN_MS = 400;
 
 type AuraProps = {
-  /** What burns: the aura sizes itself around this. */
+  /** What burns: the aura sizes itself around this, or around a child marked `data-aura-target`. */
   children: ReactNode;
   className?: string;
 };
@@ -56,7 +56,7 @@ export function Aura({ children, className }: AuraProps) {
 
     const measure = () => {
       const stageRect = stage.getBoundingClientRect();
-      const targetRect = target.getBoundingClientRect();
+      const targetRect = (target.querySelector("[data-aura-target]") ?? target).getBoundingClientRect();
       const ratio = Math.min(window.devicePixelRatio || 1, 2);
       width = stageRect.width;
       height = stageRect.height;
@@ -135,7 +135,9 @@ export function Aura({ children, className }: AuraProps) {
   return (
     <div ref={stageRef} className={cn("aura-stage relative isolate grid place-items-center overflow-hidden", className)}>
       <canvas ref={canvasRef} className="absolute inset-0 -z-10 size-full" aria-hidden="true" />
-      <div ref={targetRef}>{children}</div>
+      <div ref={targetRef} className="w-full">
+        {children}
+      </div>
     </div>
   );
 }

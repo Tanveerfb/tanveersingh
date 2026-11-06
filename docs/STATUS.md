@@ -3,11 +3,11 @@
 ## Start here
 
 **State:** Rebuild on the `rebuild` branch. Next.js 16 on fleet v3.8.0. Design locked; the core
-kit and signature components are built and visible at `/kit` in development (`components.md`).
-The owner's approved copy is in `src/content/`. The site itself is still a holding page.
-**Next:** The home page mockup: About and the Work tabs need designs, and the resume facts must
-read at a glance through the motion (Open item 1).
-**Blocked on:** nothing.
+kit and signature components are built (`/kit`, development only). The home page is built on
+`rebuild` from `docs/design/home.html` and the owner's approved copy in `src/content/`.
+**Next:** The owner sets `DISCORD_CONTACT_WEBHOOK_URL` on Vercel and looks over a preview. Then find
+what serves the live site (Open item 1) before any merge.
+**Blocked on:** the owner, for the webhook; until it's set the form says the message wasn't sent.
 **Don't trust:** which repo serves the live site. `about-tanveer.md` says
 tanveersingh22.vercel.app is a React Three Fiber portfolio, but neither `master` nor `Beta`
 here contains three.js. Check the Vercel project before merging `rebuild` anywhere.
@@ -59,21 +59,21 @@ this file.
 
 ## Open items
 
-1. **Home page** — mockup first, then composed from the kit and `src/content/`, following
-   `motif.html` and the picks, with the page-level sequences (`components.md`, *Not built yet*).
-   The scouter needs its resting reading from `skills.ts`
-2. **Contact form** — Server Action → Discord webhook; `environment.md` once the webhook exists
-3. **Light scheme** — the manga-page scheme needs its own mockup round before light tokens
-4. **Vitest** wired to `npm test`
-5. **Filename lint rule** offered (§NAMING)
-6. **Domain** — tanveersingh22.vercel.app or `tanveer.tinkertogether.studio`; decide at launch
-7. **`npm audit`** advisories reviewed
-8. **Live-site source** — find which repo/Vercel project serves tanveersingh22.vercel.app
+1. **Live-site source** — find which repo/Vercel project serves tanveersingh22.vercel.app
    before any merge
+2. **Webhook** — owner creates it and sets `DISCORD_CONTACT_WEBHOOK_URL` on Vercel; then send one
+   real message
+3. **Reduced motion** — seen only partly; the owner to try the site with the setting on
+4. **Domain** — tanveersingh22.vercel.app or `tanveer.tinkertogether.studio`; decide at launch.
+   `NEXT_PUBLIC_SITE_URL` and share metadata follow from it
+5. **Light scheme** — the manga-page scheme needs its own mockup round before light tokens
+6. **Vitest** wired to `npm test`; `contact-schema.ts` is the first thing to test
+7. **Filename lint rule** offered (§NAMING)
+8. **`npm audit`** advisories reviewed
 9. **Propose to fleet-standards:** drop Playwright from §TESTING (`decisions.md`, 2026-11-06)
-10. **Reduced motion** — seen only partly; the owner to try `/kit` with the setting on
+10. **Contact rate limit** — none yet; add one if spam arrives
 
-(Renumbered 2026-11-06: the kit and the content files are done.)
+(Renumbered 2026-11-06: the kit, content files, home page and contact form are done.)
 
 ---
 
@@ -84,6 +84,13 @@ this file.
   closes on Escape and returns focus; toasts, scouter overload, tube fill, manga panels, beam and
   instant transmission all ran; arrow keys move between tabs. Toast swipe not exercised
 - A production server answers 404 at `/kit` and 200 at `/` — 2026-11-06
+- Home page in the built-in browser at desktop and 375px: no horizontal scroll; hero settles on
+  gold; ladder, lab, struggle, work and contact seen; dock tracks and keeps the current section
+  in sight. Scouter overload on desktop by measurement
+- Contact form on a production build: validation errors keep what was typed; a send reached a local
+  stand-in for Discord with mentions off; with no webhook it shows the "not sent" message. No client
+  bundle mentions the webhook variable. **Not tested against real Discord**
+- Not exercised by hand: holding to charge the send button, the beam fired on send
 - Reduced motion, by measurement only, with the setting emulated before the owner ruled out
   Playwright: aura paints gold, jump is immediate, scouter finishes at once, panels and beam are
   in their final frame. Not looked at by eye; tube liquid not measured (its height token was
@@ -121,6 +128,11 @@ fields' jagged error overlapped its text and he was unsure of them; the beam "co
 better". A new mockup round chose caption panel fields and the impact frame beam, both now built.
 The aura and beam were reading duration tokens in the wrong unit once minified (`css-duration.ts`
 fixes it), so the aura had been cutting its animation short.
+
+Copy approved after researching `E:\Projects`; the owner calls himself a web developer and AI
+integrator, and wants the site read as a glorified resume. Home page locked and built with the
+contact form. A stale Toll Wiki service worker sits on localhost:3001 in the browser pane, which
+hijacks anything tested on that port; use another.
 
 ### 2026-11-02 (1st session) — rebuild set up, design locked
 

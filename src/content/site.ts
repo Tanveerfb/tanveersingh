@@ -6,6 +6,8 @@ export const PAGE = {
     "Tanveer Singh is a web developer and AI integrator in Sydney: Developer Programmer at Nobility Care Australia and Head of Studio at Tinker Together.",
 };
 
+export const PAGE_OWNER = "Tanveer Singh";
+
 export const DOCK = {
   mark: { href: "#top", label: "TS" },
   links: [
