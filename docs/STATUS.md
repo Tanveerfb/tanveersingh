@@ -5,7 +5,8 @@
 **State:** Rebuild on the `rebuild` branch. Next.js 16 on fleet v3.8.0. Design locked; the core
 kit and signature components are built and visible at `/kit` in development (`components.md`).
 The site itself is still a holding page.
-**Next:** The owner looks over `/kit`. Then content files, drafted for his approval (Open item 1).
+**Next:** The owner approves the copy in `docs/content-draft.md`. Then it becomes typed content
+files and the draft is deleted (Open item 1).
 **Blocked on:** nothing.
 **Don't trust:** which repo serves the live site. `about-tanveer.md` says
 tanveersingh22.vercel.app is a React Three Fiber portfolio, but neither `master` nor `Beta`
@@ -65,8 +66,7 @@ this file.
 4. **Light scheme** — the manga-page scheme needs its own mockup round before light tokens
 5. **Vitest** wired to `npm test`
 6. **Filename lint rule** offered (§NAMING)
-7. **Owner questions** — photo (`public/images/profile.png`?), domain, interests to show,
-   language levels, whether the beam struggle's pink opposing beam stays
+7. **Domain** — tanveersingh22.vercel.app or `tanveer.tinkertogether.studio`; decide at launch
 8. **`npm audit`** advisories reviewed
 9. **Live-site source** — find which repo/Vercel project serves tanveersingh22.vercel.app
    before any merge

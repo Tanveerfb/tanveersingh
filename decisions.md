@@ -221,3 +221,40 @@ dock and buttons were approved as built.
 Impact frame's two inverted frames flash once per firing, which stays under the three-flashes-a-
 second limit, and reduced motion skips straight to the final still.
 
+---
+
+## 2026-11-06 — The site is a glorified resume; content answers
+
+**The owner: "think of my portfolio site as a glorified resume".** So no testimonials; visitors who
+want client words are pointed to Tinker Together. Mohammed Mustafa's quote and Nobility Care's
+testimonial stay on the studio site only, which makes the salvaged
+`public/images/muhammad-mustafa.png` unused.
+
+Changes to the projects cleared on 2026-11-02:
+
+- **sudoku-game:** dropped; the owner plans to delete it
+- **Better Care Supports:** dropped; no longer active
+- **SimetrixDT website:** shown with its link; no longer paused (answered 200 on 2026-11-06)
+
+The Truqorun and Simetrix roles read "Full website design, front and back end" (owner). The beam
+struggle's pink opposing beam stays, closing the question from the motif lock.
+
+---
+
+## 2026-11-06 — How he describes himself; photo and domain
+
+**"A web developer and an AI integrator"** (owner): web development and AI integration is the work,
+with game engines being explored now, Godot first. The site leads with this. Asked to research the
+work rather than rely on the fact sheet, so the copy draft was rechecked against `E:\Projects`.
+
+**Photo:** `public/images/profile.png`. **Interests shown:** games communities, writing, running AI
+on his own hardware. **Language levels:** not shown.
+
+**Domain:** tanveersingh22.vercel.app is on now; `tanveer.tinkertogether.studio` is available as an
+option. Not yet decided.
+
+**Also answered:** languages shown are English, Hindi and Punjabi. Toll's art may be described
+publicly as coming from his own local ComfyUI pipeline. Phasmo Tourney links to its live site as it
+stands. **The Lair of Evil is dropped** (its link answers 404), and no other projects are added: the
+list cleared on 2026-11-02, as changed above, is final for now.
+
